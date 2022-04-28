@@ -2,6 +2,9 @@ import path from "path";
 import webpack from "webpack";
 import ErrorOverlayPlugin from "error-overlay-webpack-plugin";
 import nodeExternals from "webpack-node-externals";
+import LiveReloadPlugin from "webpack-livereload-plugin";
+
+ 
 
 const getIPAdress = () => {
   let interfaces = require("os").networkInterfaces();
@@ -111,6 +114,10 @@ export default {
     new webpack.HotModuleReplacementPlugin(),
     // 有跨域问题
     // new ErrorOverlayPlugin(),
+    // 刷新
+    new LiveReloadPlugin({
+      delay:200
+    })
   ],
   devServer: {
     overlay: {
@@ -131,7 +138,7 @@ export default {
     },
     index: path.resolve(process.cwd(), "/dist/index.html"), // dist/index 主页面
     contentBase: path.join(process.cwd(), "/dist"), //访问主页的界面 目录
-    port: 8080, // 开启服务器的端口
+    port: 8089, // 开启服务器的端口
     open: true, // 是否开启在浏览器中打开
     host: getIPAdress(), //获取本机地址
     // // quiet:false,  //不要把任何东西输出到控制台。

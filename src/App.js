@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-28 20:07:48
+ * @LastEditTime: 2022-04-28 22:01:50
  * @FilePath: /webpack-config/src/App.js
  * @Description:
  */
@@ -16,11 +16,11 @@ import "./App.css";
 console.log("process=", process); // 'test'
 
 var server_api_key = APP_CONFIG.api_key;
-56789ghjk
+// 56789ghjk
 console.log("APP_CONFIG=", APP_CONFIG);
 // console.log("process=", process);
-
-debugger;
+ 
+ 
 
 const App = () => {
   return (
