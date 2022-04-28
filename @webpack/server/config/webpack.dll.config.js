@@ -8,7 +8,6 @@ const os = require("os");
 //添加smp.wrap
 const smp = new SpeedMeasurePlugin();
 module.exports = smp.wrap({
-  mode: "development",
   // node: {
   //   // __filename: true,
   //   // __dirname: true,
@@ -20,16 +19,11 @@ module.exports = smp.wrap({
   entry: {
     // 项目中用到该两个依赖库文件
     //编译vue dll文件
-    // vue: [path.join(__dirname, "../../node_modules/vue")],
+    vue: [path.join(__dirname, "../../node_modules/vue")],
     // myVue: [path.join(__dirname, "myVue.js")],
-    vendor: ["vue", "react"],
-    // 编译react dll文件
-    //   react: [
 
-    //     path.join(process.cwd(), "/node_modules/react")
-    //     // path.join(__dirname, "../../../node_modules/vue")
-
-    // ],
+    //编译react dll文件
+    // react: [path.join(__dirname, "../../node_modules/react")],
     // 编译不了koa和mysql 会报错。 难道是不能编译后端包？
     // koa: [path.join(__dirname, "../../node_modules/koa/dist/koa.mjs")],
     // mysql: [path.join(__dirname, "../../node_modules/_mysql@2.18.1@mysql")],
@@ -101,18 +95,18 @@ module.exports = smp.wrap({
   resolve: {
     // 1.不需要node polyfilss webpack 去掉了node polyfilss 需要自己手动添加
     alias: {
-      // crypto: false,
-      // stream: "stream-browserify",
+      crypto: false,
+      stream: "stream-browserify",
     },
     // 2.手动添加polyfills
     fallback: {
-      // path: require.resolve("path-browserify"),
-      // crypto: require.resolve("crypto-browserify"),
-      // stream: require.resolve("stream-browserify"),
-      // util: require.resolve("util/"),
-      // assert: require.resolve("assert/"),
-      // http: require.resolve("stream-http"),
-      // timers: require.resolve("timers-browserify"),
+      path: require.resolve("path-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+      util: require.resolve("util/"),
+      assert: require.resolve("assert/"),
+      http: require.resolve("stream-http"),
+      timers: require.resolve("timers-browserify"),
     },
   },
 
@@ -122,12 +116,12 @@ module.exports = smp.wrap({
     filename: "[name].dll.js",
     // filename: "[name]-dll.[hash:8].js", // 分离出来的第三方插件文件名称
     // 将输出的文件放到dist目录下
-    path: path.join(process.cwd(), "/dist/static"), //path.resolve("/dist/static"),
+    path: path.resolve("/dist/dllFile"),
     /*
      存放相关的dll文件的全局变量名称，比如对于jquery来说的话就是 _dll_jquery, 在前面加 _dll
      是为了防止全局变量冲突。
     */
-    // library: "[name].dll",
+    library: "_dll_[name]",
   },
   plugins: [
     //编译进度条
@@ -140,15 +134,9 @@ module.exports = smp.wrap({
        该插件的name属性值需要和 output.library保存一致，该字段值，也就是输出的 manifest.json文件中name字段的值。
        比如在jquery.manifest文件中有 name: '_dll_jquery'
       */
-      name: "[name].dll",
+      name: "_dll_[name]",
       /* 生成manifest文件输出的位置和文件名称 */
-      path: path.join(process.cwd(), "/dist/static", "[name].manifest.json"),
-
-      // path.join(
-      //   __dirname,
-      //   "../../../dist/static",
-      //   "[name].manifest.json"
-      // ),
+      path: path.join(__dirname, "../../dist/dllFile", "[name].manifest.json"),
     }),
   ],
 });

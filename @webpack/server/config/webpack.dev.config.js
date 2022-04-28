@@ -1,16 +1,8 @@
-/*
- * @Date: 2022-04-24 11:07:22
- * @Author: Yao guan shou
- * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-26 13:58:07
- * @FilePath: /webpackClient/scripts/webpack/config/webpack.dev.config.js
- * @Description: 
- */
 import path from "path";
 import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
 export default {
-  mode: "development",
+  mode:'development',
   entry: {},
   output: {
     //告诉 webpack 在 bundle 中引入「所包含模块信息」的相关注释
@@ -55,20 +47,15 @@ export default {
     //启用，会主动缓存模块，但并不安全。传递 true 将缓存一切
     unsafeCache: true,
   },
-  // optimization: {
-  //   // 压缩
-  //   minimize: false,
-  //   minimizer: [],
-  //   //  任何字符串：用于设置 process.env.NODE_ENV 的值。
-  //   nodeEnv: "development",
-  //   moduleIds: "named",
-  //   chunkIds: "named",
-
-  //   // 开启这个编译包更小
-  //   // runtimeChunk: {
-  //   //   name: (entrypoint) => `runtime~${entrypoint.name}`,
-  //   // },
-  // },
+  optimization: {
+    // 压缩
+    minimize: false,
+    minimizer: [],
+    //  任何字符串：用于设置 process.env.NODE_ENV 的值。
+    nodeEnv: "development",
+    moduleIds: "named",
+    chunkIds: "named",
+  },
   devtool: "source-map", // 生产环境和开发环境判断
   mode: "development",
   plugins: [

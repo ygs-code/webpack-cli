@@ -1,4 +1,4 @@
-import "@babel/polyfill";
+// import "@babel/polyfill";
 // import koa from 'koa';
 import fs from "fs";
 import express from "express";
@@ -11,15 +11,15 @@ import isObject from "is-object";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import connectHistoryApiFallback from "connect-history-api-fallback";
 import ora from "ora";
+import rm from "rimraf";
 // chalk插件，用来在命令行中输入不同颜色的文字
 import chalk from "chalk";
 // opn插件是用来打开特定终端的，此文件用来在默认浏览器中打开链接 opn(url)
 import opn from "opn";
 // 引入http-proxy-middleware插件，此插件是用来代理请求的只能用于开发环境，目的主要是解决跨域请求后台api
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { getArgv, stabilization } from "./utils";
+import { getArgv, stabilization } from "../utils";
 
-console.log("config.output.publicPath=", config.output.publicPath);
 class App {
   constructor() {
     this.app = new express();
@@ -27,14 +27,14 @@ class App {
   }
 
   async init() {
-    this.environment();
-
-    this.middleware();
+    this.config = await config();
+    await this.environment();
+    await this.middleware();
     // 启动服务器
     await this.listen();
   }
 
-  environment() {
+  async environment() {
     let webpackEnv = getArgv("webpackEnv");
     const NODE_ENV = process.env.NODE_ENV; // 环境参数
     //    是否是测试开发环境
@@ -43,11 +43,22 @@ class App {
     this.isEnvProduction = NODE_ENV === "production";
   }
   // 编译
-  setCompiler() {
+  async setCompiler() {
     // 开启转圈圈动画
     const spinner = ora("building.....");
     spinner.start();
-    const compiler = webpack(config, (err, stats) => {
+
+    await new Promise((resolve, reject) => {
+      rm(path.join(process.cwd(), "/dist"), (err) => {
+        if (err) {
+          reject();
+          throw err;
+        }
+        resolve();
+      });
+    });
+
+    const compiler = webpack(this.config, (err, stats) => {
       spinner.stop();
 
       // stabilization(500).then(() => {
@@ -162,121 +173,116 @@ class App {
     // }
     return compiler;
   }
+
+  // 重新刷新浏览器
+  onReload() {
+    require("eventsource-polyfill");
+    var hotClient = require("webpack-hot-middleware/client?noInfo=true&reload=true");
+
+    hotClient.subscribe(function (event) {
+      if (event.action === "reload") {
+        window.location.reload();
+      }
+    });
+  }
   //浏览器服务器
   setDevMiddleware(compiler) {
     const {
       devServer: {
         open: autoOpenBrowser, // 是否自动开启浏览器
       } = {},
-    } = config;
+    } = this.config;
 
-    console.log("config.output.publicPath=", config.output.publicPath);
+    console.log(
+      "this.config.output.publicPath=",
+      this.config.output.publicPath
+    );
 
     this.devMiddleware = webpackDevMiddleware(compiler, {
-      publicPath: config.output.publicPath,
-      serverSideRender: true, // 是否是服务器渲染
+      publicPath: this.config.output.publicPath,
+      // serverSideRender: true, // 是否是服务器渲染
       // quiet: true,
     });
     // 下面是加载动画
     this.devMiddleware.waitUntilValid(() => {
       // 启动服务器
-      console.log(">第一次代码编译完成");
+      console.log("第一次代码编译完成");
       // when env is testing, don't need open it
       //  测试环境不打开浏览器
       if (autoOpenBrowser && process.env.NODE_ENV !== "testing") {
         const url = "http://localhost:" + this.port;
-        console.log("url============", url);
+        console.log("客户端地址:", url);
         opn(url);
       }
 
-      const filename = this.devMiddleware.getFilenameFromUrl("/index.js");
+      // const filename = this.devMiddleware.getFilenameFromUrl("/index.js");
 
-      console.log(`Filename is ${filename}`);
+      // console.log(`Filename is ${filename}`);
     });
     // 挂载静态资源 编译
     this.app.use(this.devMiddleware);
-
-    // This function makes server rendering of asset references consistent with different webpack chunk/entry configurations
-    function normalizeAssets(assets) {
-      console.log("assets===========", assets);
-      if (isObject(assets)) {
-        return Object.values(assets);
-      }
-
-      return Array.isArray(assets) ? assets : [assets];
-    }
-    let index = 0;
-    // The following middleware would not be invoked until the latest build is finished.
-//     this.app.use((req, res) => {
-//       const { devMiddleware } = res.locals.webpack;
-//       // console.log('res.locals=',res.locals)
-//       // console.log('devMiddleware.context=',devMiddleware)
-//       const outputFileSystem = devMiddleware.outputFileSystem;
-//       const jsonWebpackStats = devMiddleware.stats.toJson();
-//       const { assetsByChunkName, outputPath } = jsonWebpackStats;
-//       // console.log("jsonWebpackStats=======", jsonWebpackStats);
-//       // console.log("outputPath=======", outputPath);
-//       // //3，同步往文件写入内容
-//       // fs.writeSync("./" + index + ".js",'234');
-
-//       fs.writeFile("./" + index + ".js",JSON.stringify(jsonWebpackStats),function(error){
-//         if(!error){
-//             console.log("写入成功");
-//         }
-//     });
-
-//       index++;
-//       // Then use `assetsByChunkName` for server-side rendering
-//       // For example, if you have only one main chunk:
-//       res.send(`
-// <html>
-//   <head>
-//     <title>My App</title>
-//     <style>
-//     ${normalizeAssets(assetsByChunkName)
-//       .filter((path) => {
-//         console.log("path======", path);
-//         return path[0].endsWith(".css");
-//       })
-//       .map((path) => outputFileSystem.readFileSync(path.join(outputPath, `${path[0]}`)))
-//       .join("\n")}
-//     </style>
-//   </head>
-//   <body>
-//     <div id="root"></div>
-//     ${normalizeAssets(assetsByChunkName)
-//       .filter((path) => path[0].endsWith(".js"))
-//       .map((path) => `<script src="${path.join(outputPath, `${path[0]}`)}"></script>`)
-//       .join("\n")}
-//   </body>
-// </html>
-//   `);
-//    });
 
     return this.devMiddleware;
   }
 
   // // 做兼容
-  // hook(compiler, hookName, fn) {
-  //   if (compiler.hooks) {
-  //     compiler.hooks[hookName].tap(hookName, fn);
-  //   } else {
-  //     compiler.plugin(hookName, fn);
-  //   }
-  // }
+  hook(compiler, hookName, fn) {
+    // if (compiler.hooks) {
+    //   compiler.hooks[hookName].tap(hookName, fn);
+    // } else {
+    //   compiler.plugin(hookName, fn);
+    // }
+
+    // compiler.hooks.entryOption.tap(
+    //   "html-webpack-plugin-after-emit",
+    //   (context, entry) => {
+    //     console.log("compilation2==========");
+    //   }
+    // );
+
+    // compiler.hooks.beforeCompile.tapAsync(
+    //   "html-webpack-plugin-after-emit",
+    //   (params, callback) => {
+    //     params["MyPlugin - data"] =
+    //       "important stuff my plugin will use later";
+    //     console.log("compilation3==========");
+    //     callback();
+    //   }
+    // );
+
+    compiler.hooks.shouldEmit.tap(hookName, (compilation) => {
+      fn(compilation);
+      // 返回 true 以输出 output 结果，否则返回 false
+      return true;
+    });
+
+    // compiler.hooks.assetEmitted.tap(
+    //   "html-webpack-plugin-after-emit",
+    //   (file, { content, source, outputPath, compilation, targetPath }) => {
+    //     console.log("compilation5==========");
+    //     console.log(content); // <Buffer 66 6f 6f 62 61 72>
+    //   }
+    // );
+  }
   //设置编译缓存
   setHotMiddleware(compiler) {
+    const {
+      devServer: {
+        open: autoOpenBrowser, // 是否自动开启浏览器
+        liveReload, // 是否自动刷新
+      } = {},
+    } = this.config;
     this.hotMiddleware = webpackHotMiddleware(compiler, {
       log: () => {},
     });
 
-    // // 开启编译缓存
-    // this.hook("compilation", (compilation) => {
-    //   this.hook("html-webpack-plugin-after-emit", (data, cb) => {
-    //     this.hotMiddleware.publish({ action: "reload" });
-    //     cb();
-    //   });
-    // });
+    this.hook(compiler, "compilation", () => {
+      stabilization(100).then(() => {
+        this.hook(compiler, "html-webpack-plugin-after-emit", () => {
+          console.log("编译成功，自动重新刷新浏览器");
+        });
+      });
+    });
 
     this.app.use(this.hotMiddleware);
     return this.hotMiddleware;
@@ -287,7 +293,7 @@ class App {
   }
   // 代理服务器
   setProxyMiddleware() {
-    const { devServer: { proxy } = {} } = config;
+    const { devServer: { proxy } = {} } = this.config;
     const type = Object.prototype.toString.call(proxy).toLowerCase();
 
     if (proxy && type == "[object object]") {
@@ -311,8 +317,6 @@ class App {
           "[object array]"
         ) {
           for (let contextItem of context) {
-            console.log("contextItem========", contextItem);
-            console.log("item========", item);
             this.app.use(createProxyMiddleware(contextItem, item));
           }
         } else {
@@ -323,24 +327,26 @@ class App {
   }
   // 设置静态资源服务器
   setStatic() {
-    console.log("setStatic==========");
     //静态资源子目录
     const assetsSubDirectory = "static";
-    //访问静态资源公开路径
-    const assetsPublicPath = "/";
 
-    // serve pure static assets
-    const staticPath = path.posix.join(assetsPublicPath, assetsSubDirectory);
-    console.log("staticPath=", staticPath);
-    console.log('express.static("./static")=', express.static("./static"));
+    const staticPath = path.posix.join(
+      this.config.output.publicPath, //访问静态资源公开路径
+      assetsSubDirectory
+    );
+
     // 挂载静态资源，下面的方法是用虚拟目录来访问资源，staticPath就是虚拟目录路径，其实不管设不设置都是static
     this.app.use(staticPath, express.static("./static"));
   }
 
-  middleware() {
+  async middleware() {
     // 编译代码
-    let compiler = this.setCompiler();
-    //代理
+    let compiler = await this.setCompiler();
+
+    if (this.isEnvProduction) {
+      return Promise.reject();
+    }
+
     // 开启代理
     this.setProxyMiddleware();
     // handle fallback for HTML5 history API
@@ -348,26 +354,21 @@ class App {
     // 这个插件是用来解决单页面应用，点击刷新按钮和通过其他search值定位页面的404错误
     this.setConnectHistoryApiFallback();
 
-    console.log("setDevMiddleware======");
     // // 开启dev服务器
     this.setDevMiddleware(compiler);
 
-    console.log("setHotMiddleware======");
     // 开启编译缓存
     this.setHotMiddleware(compiler);
 
-    console.log("setStatic======");
+    // 设置静态目录
     this.setStatic();
   }
 
   async listen() {
-    let { devServer: { port } = {} } = config;
-
+    let { devServer: { port } = {} } = this.config;
     // 设置静态服务器
-
     // 默认端口设置
     port = port || process.env.PORT;
-
     portfinder.basePort = port;
     this.port = await new Promise((resolve, reject) => {
       //查找端口号

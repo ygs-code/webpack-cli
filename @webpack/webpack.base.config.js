@@ -40,9 +40,9 @@ const cacheLoader = (happypackId) => {
       ]
     : [`happypack/loader?id=${happypackId}`];
 };
-console.log("__dirname : " + __dirname);
-console.log("resolve   : " + resolve("./"));
-console.log("cwd       : " + process.cwd());
+// console.log("__dirname : " + __dirname);
+// console.log("resolve   : " + resolve("./"));
+// console.log("cwd       : " + process.cwd());
 export default {
   resolve: {
     // //决定请求是否应该被缓存的函数。函数传入一个带有 path 和 request 属性的对象。默认：
@@ -100,7 +100,7 @@ export default {
     hints: "warning",
     // 过滤文件
     assetFilter: function (assetFilename) {
-      // console.log('assetFilename==========', assetFilename,assetFilename.endsWith('.js'))
+      
       // 只要监听js文件，过滤其他文件判断
       return assetFilename.endsWith(".js");
     },

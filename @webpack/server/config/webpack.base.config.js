@@ -1,38 +1,35 @@
-// var   "@babel/polyfill")
-var   webpack = require(  "webpack")
-var   fs = require(  "fs")
-var   path, { resolve } = require(  "path")
-var   nodeExternals = require(  "webpack-node-externals")
-var   { CleanWebpackPlugin } = require(  "clean-webpack-plugin")
-var   WebpackBar = require(  "webpackbar")
-var   HappyPack = require(  "happypack")
-var   FriendlyErrorsPlugin = require(  "friendly-errors-webpack-plugin")
-var   CaseSensitivePathsPlugin = require(  "case-sensitive-paths-webpack-plugin")
-var   DirectoryNamedWebpackPlugin = require(  "directory-named-webpack-plugin")
-var   { CheckerPlugin } = require(  "awesome-typescript-loader")
-var   os = require(  "os")
-// var   bannerPlugin = require(  "./bannerPlugin")
-// var   MyExampleWebpackPlugin = require(  "./definePlugin/MyExampleWebpackPlugin")
-var   { getArgv } = require(  "../utils")
-var   NpmInstallPlugin = require(  "npm-install-webpack-plugin")
-var   TerserPlugin = require(  "terser-webpack-plugin")
-var   HtmlWebpackPlugin = require(  "html-webpack-plugin")
-var   { BundleAnalyzerPlugin } = require(  "webpack-bundle-analyzer")
-var   WebpackBuildDllPlugin = require(  "webpack-build-dll-plugin")
-var   DllReferencePlugin = require(  "webpack/lib/DllReferencePlugin")
-var   HardSourceWebpackPlugin = require(  "hard-source-webpack-plugin")
+import "@babel/polyfill";
+import webpack from "webpack";
+import fs from "fs";
+import path, { resolve } from "path";
+import nodeExternals from "webpack-node-externals";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import WebpackBar from "webpackbar";
+import HappyPack from "happypack";
+import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin";
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
+import DirectoryNamedWebpackPlugin from "directory-named-webpack-plugin";
+import { CheckerPlugin } from "awesome-typescript-loader";
+import os from "os";
+// import bannerPlugin from "./bannerPlugin";
+// import MyExampleWebpackPlugin from "./definePlugin/MyExampleWebpackPlugin";
+import { getArgv } from "../../utils";
+import NpmInstallPlugin from "npm-install-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import WebpackBuildDllPlugin from "webpack-build-dll-plugin";
+import DllReferencePlugin from "webpack/lib/DllReferencePlugin";
+import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
 
-
-
-
 const NODE_ENV = process.env.NODE_ENV; // 环境参数
 //    是否是生产环境
-const isEnvProduction = NODE_ENV === "production")
+const isEnvProduction = NODE_ENV === "production";
 //   是否是测试开发环境
-const isEnvDevelopment = NODE_ENV === "development")
+const isEnvDevelopment = NODE_ENV === "development";
 
 const cacheLoader = (happypackId) => {
   return isEnvDevelopment
@@ -43,24 +40,22 @@ const cacheLoader = (happypackId) => {
       ]
     : [`happypack/loader?id=${happypackId}`];
 };
-console.log("__dirname : " + __dirname);
-console.log("resolve   : " + resolve("./"));
-console.log("cwd       : " + process.cwd());
+// console.log("__dirname : " + __dirname);
+// console.log("resolve   : " + resolve("./"));
+// console.log("cwd       : " + process.cwd());
 export default {
   // 基目录，绝对路径，用于解析配置中的入口点和加载器。
-  // context: path.join(process.cwd(), "/src"),
+  // context: path.join(process.cwd(), "/app"),
   // 入口
   entry: {
-    // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
-
-    
+    // myVue: [path.join(process.cwd(), "/app/myVue.js")], // 公共包抽取
     index: [
-      // "@babel/polyfill",
+      "@babel/polyfill",
       //添加编译缓存
-      // "webpack/hot/poll?1000",
-      //  path.join(process.cwd(), "/src/index.js")
+      "webpack/hot/poll?1000",
+      //  path.join(process.cwd(), "/app/index.js")
       //入口主文件
-      path.join(process.cwd(), "/src/index.js"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
+      path.join(process.cwd(), "/app/index.js"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../app/index.js")
     ],
   },
   // 出口
@@ -73,29 +68,29 @@ export default {
     filename: "[name].js",
     chunkFilename: "[name][contenthash].js",
     // 访问静态资源目录 比如 css img
-    publicPath: "./",
-    // // 导出库(exported library)的名称
-    // library: "server",
-    // //   导出库(exported library)的类型
-    // libraryTarget: "umd",
-    // // 在 UMD 库中使用命名的 AMD 模块
-    // umdNamedDefine: true,
-    // globalObject: "this",
+    publicPath: "/",
+    // 导出库(exported library)的名称
+    library: "server",
+    //   导出库(exported library)的类型
+    libraryTarget: "umd",
+    // 在 UMD 库中使用命名的 AMD 模块
+    umdNamedDefine: true,
+    globalObject: "this",
     // chunk 请求到期之前的毫秒数，默认为 120000
-    // chunkLoadTimeout: 120000,
-    // // 「devtool 中模块」的文件名模板 调试webpack的配置问题
-    // // 你的文件在chrome开发者工具中显示为webpack:///foo.js?a93h, 。如果我们希望文件名显示得更清晰呢，比如说 webpack:///path/to/foo.js
-    // devtoolModuleFilenameTemplate: (info) => {
-    //   // "webpack://[namespace]/[resource-path]?[loaders]"
-    //   return `webpack:///${info.resourcePath}?${info.loaders}`;
-    // },
-    // // 如果多个模块产生相同的名称，使用
-    // devtoolFallbackModuleFilenameTemplate: (info) => {
-    //   return `webpack:///${info.resourcePath}?${info.loaders}`;
-    // },
-    // // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
-    // // 并且重启webpack的时候也会删除cache缓存
-    // strictModuleExceptionHandling: true,
+    chunkLoadTimeout: 120000,
+    // 「devtool 中模块」的文件名模板 调试webpack的配置问题
+    // 你的文件在chrome开发者工具中显示为webpack:///foo.js?a93h, 。如果我们希望文件名显示得更清晰呢，比如说 webpack:///path/to/foo.js
+    devtoolModuleFilenameTemplate: (info) => {
+      // "webpack://[namespace]/[resource-path]?[loaders]"
+      return `webpack:///${info.resourcePath}?${info.loaders}`;
+    },
+    // 如果多个模块产生相同的名称，使用
+    devtoolFallbackModuleFilenameTemplate: (info) => {
+      return `webpack:///${info.resourcePath}?${info.loaders}`;
+    },
+    // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
+    // 并且重启webpack的时候也会删除cache缓存
+    strictModuleExceptionHandling: true,
   },
 
   // 是否监听文件
@@ -115,7 +110,7 @@ export default {
         // 排除
         exclude: /node_modules/,
         //入口文件
-        include: [path.join(process.cwd(), "/src")],
+        include: [path.join(process.cwd(), "/app")],
       }),
     ],
     // //启用，会主动缓存模块，但并不安全。传递 true 将缓存一切
@@ -127,28 +122,28 @@ export default {
     // 详细教程: https://blog.csdn.net/u012987546/article/details/97389078
     modules: [
       path.join(process.cwd(), "/node_modules"),
-      path.join(process.cwd(), "/src"),
+      path.join(process.cwd(), "/app"),
     ],
     // 可以省略引用后缀
     extensions: [".tsx", ".ts", ".js", ".graphql", ".json", ".node"],
     // 1.不需要node polyfilss webpack 去掉了node polyfilss 需要自己手动添加
     //dllPlugin 插件需要的包
     alias: {
-      // buffer: "buffer",
-      // crypto: "crypto-browserify",
-      // vm: "vm-browserify",
-      // crypto: false,
-      // stream: "stream-browserify",
-      "@": path.join(process.cwd(), "/src"),
+      buffer: "buffer",
+      crypto: "crypto-browserify",
+      vm: "vm-browserify",
+      crypto: false,
+      stream: "stream-browserify",
+      "@": path.join(process.cwd(), "/app"),
     },
     // 2.手动添加polyfills
     fallback: {
-      // path: require.resolve("path-browserify"),
-      // crypto: require.resolve("crypto-browserify"),
-      // stream: require.resolve("stream-browserify"),
-      // util: require.resolve("util/"),
-      // assert: require.resolve("assert/"),
-      // http: require.resolve("stream-http"),
+      path: require.resolve("path-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+      util: require.resolve("util/"),
+      assert: require.resolve("assert/"),
+      http: require.resolve("stream-http"),
     },
   },
   // 打包文件大小监听
@@ -202,7 +197,7 @@ export default {
     mergeDuplicateChunks: true,
     //告知 webpack 确定和标记出作为其他 chunk 子集的那些 chunk，其方式是在已经加载过较大的 chunk 之后，就不再去加载这些 chunk 子集。
     flagIncludedChunks: true,
-    //告知 webpack 去确定那些由模块提供的导出内容，为 export * = require(  ... 生成更多高效的代码。
+    //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。
     providedExports: true,
     //告知 webpack 是否对未使用的导出内容，实施内部图形分析(graph analysis)。
     innerGraph: true,
@@ -257,15 +252,13 @@ export default {
     },
     // Chunk end
   },
-  // 配置web环境
-  target: "web",
   //配置node环境
-  // target: "node",
-  // node: {
-  //   __filename: true,
-  //   __dirname: true,
-  //   global: false,
-  // },
+  target: "node",
+  node: {
+    __filename: true,
+    __dirname: true,
+    global: false,
+  },
   // 捕获时机信息
   profile: true,
   // 限制并行处理模块的数量
@@ -358,26 +351,26 @@ export default {
     // warningsFilter: "filter" | /filter/ | ["filter", /filter/] | (warning) => ... return true|false
   },
 
-  //防止将某些 var   的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
+  //防止将某些 import 的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
   externals: [
     //引入缓存
-    // nodeExternals({
-    //   allowlist: ["webpack/hot/poll?1000"],
-    // }),
-    // //将node_modules目录下的所有模块加入到externals中    告知 webpack  ，并忽略 externals 中的模块
-    // (() => {
-    //   const nodeModules = {};
-    //   fs.readdirSync(path.join(process.cwd(), "/node_modules"))
-    //     .filter((catalogue) => {
-    //       return [".bin"].indexOf(catalogue) === -1;
-    //     })
-    //     .forEach((mod) => {
-    //       if (mod.indexOf(".") === 0) return;
-    //       nodeModules[mod] = "commonjs " + mod;
-    //     });
+    nodeExternals({
+      allowlist: ["webpack/hot/poll?1000"],
+    }),
+    //将node_modules目录下的所有模块加入到externals中    告知 webpack  ，并忽略 externals 中的模块
+    (() => {
+      const nodeModules = {};
+      fs.readdirSync(path.join(process.cwd(), "/node_modules"))
+        .filter((catalogue) => {
+          return [".bin"].indexOf(catalogue) === -1;
+        })
+        .forEach((mod) => {
+          if (mod.indexOf(".") === 0) return;
+          nodeModules[mod] = "commonjs " + mod;
+        });
 
-    //   return nodeModules;
-    // })(),
+      return nodeModules;
+    })(),
   ],
   module: {
     rules: [
@@ -388,7 +381,7 @@ export default {
         ),
       },
       {
-        include: path.join(process.cwd(), "/src"),
+        include: path.join(process.cwd(), "/app"),
         sideEffects: true,
       },
       {
@@ -504,7 +497,7 @@ export default {
     //    告诉webpack使用了哪些第三方库代码
     // new webpack.DllReferencePlugin({
     //   // vue 映射到json文件上去
-    //   manifest: path.join(process.cwd(), "/dist/static", "vue.manifest.json"),
+    //   manifest: path.join(process.cwd(), "/dist/dllFile", "vue.manifest.json"),
     // }),
     // dll end dll配置
     // //体积包分析插件
@@ -619,7 +612,7 @@ export default {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       //配置清理文件 如果不清理则加 ！
-      cleanOnceBeforeBuildPatterns: ["*", "!static*"],
+      cleanOnceBeforeBuildPatterns: ["*", "!dllFile*"],
       // cleanOnceBeforeBuildPatterns: [
       //   "index.html",
       //   "**/index*.js",
@@ -645,16 +638,16 @@ export default {
 
     // webpack.BannerPlugin 为每一个头文件添加一个文件，这里可以加入公共文件
     // source-map-support 源映射(Source Map)是一种数据格式，它存储了源代码和生成代码之间的位置映射关系。
-    // new webpack.BannerPlugin({
-    //   banner: 'require("source-map-support").install();',
-    //   raw: true,
-    //   entryOnly: false,
-    // }),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false,
+    }),
 
     // // 自定义插件
     // new MyExampleWebpackPlugin({
     //   // 出口
-    //   outputPath: path.join(process.cwd(), "/src"),
+    //   outputPath: path.join(process.cwd(), "/app"),
     // }),
 
     // // 这样利用原理可以动态加入公共库

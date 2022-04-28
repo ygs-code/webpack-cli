@@ -5,7 +5,7 @@ import express from "express";
 import path from "path";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
-import config from "./config/index";
+// import config from "./config/index";
 import portfinder from "portfinder";
 import isObject from "is-object";
 import webpackHotMiddleware from "webpack-hot-middleware";
@@ -18,7 +18,11 @@ import chalk from "chalk";
 import opn from "opn";
 // 引入http-proxy-middleware插件，此插件是用来代理请求的只能用于开发环境，目的主要是解决跨域请求后台api
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { getArgv, stabilization } from "../utils";
+import { getArgv, stabilization } from "./utils";
+import clientWebpackConfig from "./client";
+import serverWebpackConfig from "./server";
+const webpackEnv = getArgv("webpackEnv"); // 环境参数
+const target = getArgv("target"); // 环境参数
 
 class App {
   constructor() {
@@ -27,7 +31,12 @@ class App {
   }
 
   async init() {
-    this.config = await config();
+    // 获取配置
+    this.config =
+      target == "web"
+        ? await clientWebpackConfig()
+        : await serverWebpackConfig();
+
     await this.environment();
     await this.middleware();
     // 启动服务器
@@ -100,8 +109,6 @@ class App {
     });
     // console.log(chalk.rgb(13, 188, 121)("Build complete .\n"));
     // });
-    //  console.log('compiler.hooks=',compiler.hooks)
-    //  console.log('compiler.hooks=',compiler.hooks)
 
     // compiler.hooks.SyncHook.tap('compile',()=>{
     //    console.log('watchRun======')
@@ -193,6 +200,11 @@ class App {
       } = {},
     } = this.config;
 
+    console.log(
+      "this.config.output.publicPath=",
+      this.config.output.publicPath
+    );
+
     this.devMiddleware = webpackDevMiddleware(compiler, {
       publicPath: this.config.output.publicPath,
       // serverSideRender: true, // 是否是服务器渲染
@@ -221,43 +233,16 @@ class App {
   }
 
   // // 做兼容
-  hook(compiler, hookName, fn) {
-    // if (compiler.hooks) {
-    //   compiler.hooks[hookName].tap(hookName, fn);
-    // } else {
-    //   compiler.plugin(hookName, fn);
-    // }
-
-    // compiler.hooks.entryOption.tap(
-    //   "html-webpack-plugin-after-emit",
-    //   (context, entry) => {
-    //     console.log("compilation2==========");
-    //   }
-    // );
-
-    // compiler.hooks.beforeCompile.tapAsync(
-    //   "html-webpack-plugin-after-emit",
-    //   (params, callback) => {
-    //     params["MyPlugin - data"] =
-    //       "important stuff my plugin will use later";
-    //     console.log("compilation3==========");
-    //     callback();
-    //   }
-    // );
-
-    compiler.hooks.shouldEmit.tap(hookName, (compilation) => {
-      fn(compilation);
-      // 返回 true 以输出 output 结果，否则返回 false
-      return true;
-    });
-
-    // compiler.hooks.assetEmitted.tap(
-    //   "html-webpack-plugin-after-emit",
-    //   (file, { content, source, outputPath, compilation, targetPath }) => {
-    //     console.log("compilation5==========");
-    //     console.log(content); // <Buffer 66 6f 6f 62 61 72>
-    //   }
-    // );
+  hook(compiler, hookName, pluginName, fn) {
+    if (arguments.length == 3) {
+      fn = pluginName;
+      pluginName = hookName;
+    }
+    if (compiler.hooks) {
+      compiler.hooks[hookName].tap(pluginName, fn);
+    } else {
+      compiler.plugin(hookName, fn);
+    }
   }
   //设置编译缓存
   setHotMiddleware(compiler) {
@@ -271,12 +256,12 @@ class App {
       log: () => {},
     });
 
-    this.hook(compiler, "compilation", () => {
-      stabilization(100).then(() => {
-        this.hook(compiler, "html-webpack-plugin-after-emit", () => {
-          console.log("编译成功，自动重新刷新浏览器");
-        });
+    this.hook(compiler, "done", "compilation", () => {
+      // stabilization(100).then(() => {
+      this.hook(compiler, "done", "html-webpack-plugin-after-emit", () => {
+        console.log("编译成功，自动重新刷新浏览器");
       });
+      // });
     });
 
     this.app.use(this.hotMiddleware);
@@ -342,6 +327,13 @@ class App {
       return Promise.reject();
     }
 
+    // 开启编译缓存
+    this.setHotMiddleware(compiler);
+
+    // 如果是node不启动服务器
+    if (target == "node") {
+      return Promise.reject();
+    }
     // 开启代理
     this.setProxyMiddleware();
     // handle fallback for HTML5 history API
@@ -349,11 +341,8 @@ class App {
     // 这个插件是用来解决单页面应用，点击刷新按钮和通过其他search值定位页面的404错误
     this.setConnectHistoryApiFallback();
 
-    // // 开启dev服务器
+    //  开启dev服务器
     this.setDevMiddleware(compiler);
-
-    // 开启编译缓存
-    this.setHotMiddleware(compiler);
 
     // 设置静态目录
     this.setStatic();
