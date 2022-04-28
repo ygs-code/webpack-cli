@@ -18,12 +18,15 @@ import chalk from "chalk";
 import opn from "opn";
 // 引入http-proxy-middleware插件，此插件是用来代理请求的只能用于开发环境，目的主要是解决跨域请求后台api
 import { createProxyMiddleware } from "http-proxy-middleware";
+import checkVersions from "./check-versions";
 import { getArgv, stabilization } from "./utils";
 import clientWebpackConfig from "./client";
 import serverWebpackConfig from "./server";
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
 const target = getArgv("target"); // 环境参数
 
+// 检查node和npm版本
+checkVersions();
 class App {
   constructor() {
     this.app = new express();

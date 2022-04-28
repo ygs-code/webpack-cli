@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-04-28 12:15:45
+ * @LastEditTime: 2022-04-28 16:41:09
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-config/@webpack/server/config/index.js
@@ -11,9 +11,8 @@ import { merge } from "webpack-merge";
 import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
 import { createVariants } from "parallel-webpack";
 import { default as serverBaseConfig } from "./webpack.base.config";
-import baseConfig from "../../webpack.base.config";
 import devConfig from "./webpack.dev.config";
-import prdConfig from "./webpack.prd.config";
+import prodConfig from "./webpack.prd.config";
 import testConfig from "./webpack.test.config";
 import { getArgv } from "../../utils";
 
@@ -58,7 +57,6 @@ export default async () => {
   if (webpackEnv == "test") {
     //   测试代码打包
     config = merge(
-    //   baseConfig,
       serverBaseConfig,
       testConfig,
       isEnvDevelopment ? devConfig : prodConfig,
@@ -68,7 +66,6 @@ export default async () => {
   } else {
     // 源码打包
     config = merge(
-    //   baseConfig,
       serverBaseConfig,
       isEnvDevelopment ? devConfig : prodConfig,
       isEnvDevelopment ? userDevConfig : userProdConfig

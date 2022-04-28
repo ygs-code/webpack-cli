@@ -2,7 +2,7 @@
  * @Date: 2022-04-27 20:24:09
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-28 12:52:10
+ * @LastEditTime: 2022-04-28 18:13:53
  * @FilePath: /webpack-config/user-webpack-config/webpack.dev.config.js
  * @Description:
  */
@@ -11,10 +11,10 @@ import os from "os";
 import webpack from "webpack";
 import path from "path";
 import HappyPack from "happypack";
+import ExtendedDefinePlugin from "extended-define-webpack-plugin";
 import { getArgv } from "../@webpack/utils";
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
-
 const NODE_ENV = process.env.NODE_ENV; // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === "production";
@@ -127,6 +127,21 @@ export default {
   //   // ],
   // },
   plugins: [
+    // 注入全局常量
+    new ExtendedDefinePlugin({
+      APP_CONFIG: {
+        api_key: "1234567890ABCDEFG",
+        fb_conf: {
+          use_social: true,
+          api_key: "123456790",
+        },
+      },
+    }),
+    // 自定义插件
+    new MyExampleWebpackPlugin({
+      // 出口
+      outputPath: path.join(process.cwd(), "/app"),
+    }),
     // new HappyPack({
     //   id: "graphql",
     //   use: [
@@ -151,20 +166,14 @@ export default {
     //   threadPool: happyThreadPool,
     // }),
 
-    // 如果是配置前端就很好注入插件
-    new webpack.DefinePlugin({
-      //也可以注入插件 能 注入vue 但是不能注入 Koa
-      // vue,
-      //不能注入 Koa
-      // Koa,
-      //注入一个环境变量
-      "process.env": { BUILD_TARGET: "BUILD_TARGET" },
-    }),
-
-    // 自定义插件
-    new MyExampleWebpackPlugin({
-      // 出口
-      outputPath: path.join(process.cwd(), "/app"),
-    }),
+    // // 如果是配置前端就很好注入插件
+    // new webpack.DefinePlugin({
+    //   //也可以注入插件 能 注入vue 但是不能注入 Koa
+    //   // vue,
+    //   //不能注入 Koa
+    //   // Koa,
+    //   //注入一个环境变量
+    //   "process.env": { BUILD_TARGET: "BUILD_TARGET" },
+    // }),
   ],
 };

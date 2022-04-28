@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-04-28 13:43:56
+ * @LastEditTime: 2022-04-28 16:36:43
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-config/@webpack/client/config/index.js
@@ -11,12 +11,9 @@ import { merge } from "webpack-merge";
 import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
 // import { createVariants } from "parallel-webpack";
 import { default as clientBaseConfig } from "./webpack.base.config";
-// import baseConfig from "../../webpack.base.config";
 import devConfig from "./webpack.dev.config";
 import prodConfig from "./webpack.prod.config";
 import testConfig from "../../webpack.test.config";
-// import nodeConfig from "./webpack.node.config";
-// import webConfig from "./webpack.web.config";
 import { getArgv } from "../../utils";
 
 const webpackEnv = getArgv("webpackEnv"); // 环境参数

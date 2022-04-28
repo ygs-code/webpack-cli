@@ -21,6 +21,7 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import WebpackBuildDllPlugin from "webpack-build-dll-plugin";
 import DllReferencePlugin from "webpack/lib/DllReferencePlugin";
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
+import ExtendedDefinePlugin from "extended-define-webpack-plugin";
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
@@ -44,7 +45,6 @@ const cacheLoader = (happypackId) => {
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
 export default {
-
   // 入口
   entry: {
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
@@ -607,7 +607,7 @@ export default {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       //配置清理文件 如果不清理则加 ！
-      cleanOnceBeforeBuildPatterns: ["*", "!dllFile*"],
+      cleanOnceBeforeBuildPatterns: ["*", "!dll*"],
       // cleanOnceBeforeBuildPatterns: [
       //   "index.html",
       //   "**/index*.js",
@@ -617,19 +617,16 @@ export default {
     }),
     // //缓存包 热启动
     // new webpack.HotModuleReplacementPlugin(),
-
     //使用 NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
     new webpack.NoEmitOnErrorsPlugin(),
     //DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用
-    // 如果是配置前端就很好注入插件
-    // new webpack.DefinePlugin({
-    //   //也可以注入插件 能 注入vue 但是不能注入 Koa
-    //   // vue,
-    //   //不能注入 Koa
-    //   // Koa,
-    //   //注入一个环境变量
-    //   "process.env": { BUILD_TARGET: "BUILD_TARGET" },
-    // }),
+    new ExtendedDefinePlugin({
+      process: {
+        env: {
+          NODE_ENV: process.env.NODE_ENV, // 将属性转化为全局变量，让代码中可以正常访问
+        },
+      },
+    }),
 
     // webpack.BannerPlugin 为每一个头文件添加一个文件，这里可以加入公共文件
     // source-map-support 源映射(Source Map)是一种数据格式，它存储了源代码和生成代码之间的位置映射关系。
