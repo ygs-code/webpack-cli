@@ -9,7 +9,9 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import portfinder from "portfinder";
 import isObject from "is-object";
 import webpackHotMiddleware from "webpack-hot-middleware";
+import webpackHotServerMiddleware from "webpack-hot-server-middleware";
 import connectHistoryApiFallback from "connect-history-api-fallback";
+
 import ora from "ora";
 import rm from "rimraf";
 // chalk插件，用来在命令行中输入不同颜色的文字
@@ -39,6 +41,25 @@ class App {
       target == "web"
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
+
+    let { devServer: { port } = {} } = this.config;
+    // 设置静态服务器
+    // 默认端口设置
+    port = port || process.env.PORT;
+    portfinder.basePort = port;
+    this.port = await new Promise((resolve, reject) => {
+      //查找端口号
+      portfinder.getPort((err, port) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        // 新端口
+        resolve(port);
+      });
+    });
+    this.config.devServer = this.config.devServer || {};
+    this.config.devServer.port = this.port || {};
 
     await this.environment();
     await this.middleware();
@@ -74,33 +95,33 @@ class App {
       spinner.stop();
 
       // stabilization(500).then(() => {
-      if (err) {
-        console.log("Errors:" + chalk.red(err.stack || err));
-        if (err.details) {
-          console.log("Errors:" + chalk.red(err.details));
-        }
-        return;
-      }
+      // if (err) {
+      //   console.log("Errors:" + chalk.red(err.stack || err));
+      //   if (err.details) {
+      //     console.log("Errors:" + chalk.red(err.details));
+      //   }
+      //   return;
+      // }
 
-      if (stats.hasErrors()) {
-        console.log(
-          "Errors:" +
-            chalk.red(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
-      } else if (stats.hasWarnings()) {
-        console.log(
-          "Warnings:" +
-            chalk.yellow(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
-      }
+      // if (stats.hasErrors()) {
+      //   console.log(
+      //     "Errors:" +
+      //       chalk.red(
+      //         stats.toString({
+      //           colors: true,
+      //         }) + "\n\n"
+      //       )
+      //   );
+      // } else if (stats.hasWarnings()) {
+      //   console.log(
+      //     "Warnings:" +
+      //       chalk.yellow(
+      //         stats.toString({
+      //           colors: true,
+      //         }) + "\n\n"
+      //       )
+      //   );
+      // }
 
       // else {
       //     process.stdout.write(
@@ -184,17 +205,6 @@ class App {
     return compiler;
   }
 
-  // 重新刷新浏览器
-  onReload() {
-    require("eventsource-polyfill");
-    var hotClient = require("webpack-hot-middleware/client?noInfo=true&reload=true");
-
-    hotClient.subscribe(function (event) {
-      if (event.action === "reload") {
-        window.location.reload();
-      }
-    });
-  }
   //浏览器服务器
   setDevMiddleware(compiler) {
     const {
@@ -203,21 +213,24 @@ class App {
       } = {},
     } = this.config;
 
-    console.log(
-      "this.config.output.publicPath=",
-      this.config.output.publicPath
-    );
-
     this.devMiddleware = webpackDevMiddleware(compiler, {
+      //设置允许跨域
+      headers: () => {
+        return {
+          // "Last-Modified": new Date(),
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "content-type",
+          "Access-Control-Allow-Methods": "DELETE,PUT,POST,GET,OPTIONS",
+        };
+      },
       publicPath: this.config.output.publicPath,
-      // serverSideRender: true, // 是否是服务器渲染
+      serverSideRender: true, // 是否是服务器渲染
       // quiet: true,
     });
     // 下面是加载动画
     this.devMiddleware.waitUntilValid(() => {
       // 启动服务器
       console.log("第一次代码编译完成");
-      // when env is testing, don't need open it
       //  测试环境不打开浏览器
       if (autoOpenBrowser && process.env.NODE_ENV !== "testing") {
         const url = "http://localhost:" + this.port;
@@ -226,7 +239,6 @@ class App {
       }
 
       // const filename = this.devMiddleware.getFilenameFromUrl("/index.js");
-
       // console.log(`Filename is ${filename}`);
     });
     // 挂载静态资源 编译
@@ -259,16 +271,25 @@ class App {
       log: () => {},
     });
 
-    this.hook(compiler, "done", "compilation", () => {
-      // stabilization(100).then(() => {
-      this.hook(compiler, "done", "html-webpack-plugin-after-emit", () => {
-        console.log("编译成功，自动重新刷新浏览器");
+    this.hook(compiler, "shouldEmit", "compilation", () => {
+      stabilization(100).then(() => {
+        this.hook(
+          compiler,
+          "shouldEmit",
+          "html-webpack-plugin-after-emit",
+          () => {
+            console.log("编译成功，自动重新刷新浏览器");
+          }
+        );
       });
-      // });
     });
 
     this.app.use(this.hotMiddleware);
     return this.hotMiddleware;
+  }
+
+  setHotServerMiddleware(compiler) {
+    this.app.use(webpackHotServerMiddleware(compiler));
   }
   setConnectHistoryApiFallback() {
     this.connectHistoryApiFallback = connectHistoryApiFallback();
@@ -330,13 +351,19 @@ class App {
       return Promise.reject();
     }
 
-    // 开启编译缓存
-    this.setHotMiddleware(compiler);
-
     // 如果是node不启动服务器
     if (target == "node") {
       return Promise.reject();
     }
+    //  开启dev服务器
+    this.setDevMiddleware(compiler);
+
+    // 开启编译缓存
+    this.setHotMiddleware(compiler);
+
+    // 设置缓存服务器
+    // this.setHotServerMiddleware(compiler);
+
     // 开启代理
     this.setProxyMiddleware();
     // handle fallback for HTML5 history API
@@ -344,31 +371,13 @@ class App {
     // 这个插件是用来解决单页面应用，点击刷新按钮和通过其他search值定位页面的404错误
     this.setConnectHistoryApiFallback();
 
-    //  开启dev服务器
-    this.setDevMiddleware(compiler);
-
     // 设置静态目录
     this.setStatic();
   }
 
   async listen() {
     let { devServer: { port } = {} } = this.config;
-    // 设置静态服务器
-    // 默认端口设置
-    port = port || process.env.PORT;
-    portfinder.basePort = port;
-    this.port = await new Promise((resolve, reject) => {
-      //查找端口号
-      portfinder.getPort((err, port) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        // 新端口
-        resolve(port);
-      });
-    });
-    this.server = this.app.listen(this.port, () => {
+    this.server = this.app.listen(port, () => {
       console.log(`\n编译代码服务器端口:${port}\n`);
     });
   }

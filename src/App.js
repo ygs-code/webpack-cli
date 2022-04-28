@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-28 18:12:28
+ * @LastEditTime: 2022-04-28 20:07:48
  * @FilePath: /webpack-config/src/App.js
  * @Description:
  */
@@ -13,15 +13,10 @@ import store from "./redux/store";
 import "./App.css";
 // import "./index.css";
 
-
-
-
-   console.log('process=',process); // 'test'
-
- 
+console.log("process=", process); // 'test'
 
 var server_api_key = APP_CONFIG.api_key;
-
+56789ghjk
 console.log("APP_CONFIG=", APP_CONFIG);
 // console.log("process=", process);
 

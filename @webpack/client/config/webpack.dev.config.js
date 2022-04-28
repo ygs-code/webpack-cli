@@ -1,6 +1,8 @@
 import path from "path";
 import webpack from "webpack";
+import ErrorOverlayPlugin from "error-overlay-webpack-plugin";
 import nodeExternals from "webpack-node-externals";
+
 const getIPAdress = () => {
   let interfaces = require("os").networkInterfaces();
   for (let devName in interfaces) {
@@ -99,7 +101,7 @@ export default {
     //   name: (entrypoint) => `runtime~${entrypoint.name}`,
     // },
   },
-  devtool: "source-map", // 生产环境和开发环境判断
+  devtool: "cheap-module-source-map", // 生产环境和开发环境判断
   plugins: [
     //这个Webpack插件将强制所有必需模块的整个路径与磁盘上实际路径的确切情况相匹配。
     // 使用此插件有助于缓解OSX上的开发人员不遵循严格的路径区分大小写的情况，
@@ -107,8 +109,15 @@ export default {
     // new CaseSensitivePathsPlugin()
     //缓存包 热启动
     new webpack.HotModuleReplacementPlugin(),
+    // 有跨域问题
+    // new ErrorOverlayPlugin(),
   ],
   devServer: {
+    overlay: {
+      warnings: true,
+      errors: true,
+      inline: true,
+    },
     watchFiles: [
       path.resolve(process.cwd(), "/src/**/*"),
       path.resolve(process.cwd(), "/src/*"),
