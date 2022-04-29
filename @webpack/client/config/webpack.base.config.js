@@ -22,6 +22,7 @@ import WebpackBuildDllPlugin from "webpack-build-dll-plugin";
 import DllReferencePlugin from "webpack/lib/DllReferencePlugin";
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
 import ExtendedDefinePlugin from "extended-define-webpack-plugin";
+import eslintFriendlyFormatter from "eslint-friendly-formatter";
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
@@ -350,6 +351,22 @@ export default {
   externals: [],
   module: {
     rules: [
+      // {
+      //   test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
+      //   enforce: "pre", //编译前检查
+      //   loader: "eslint-loader",
+      //   // use: [{ loader: "eslint-loader" }],
+      //   // 排除
+      //   exclude: /node_modules/,
+      //   //入口文件
+      //   include: [path.join(process.cwd(), "/src")],
+      //   options: {
+      //     // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
+      //     // formatter: eslintFriendlyFormatter, // 指定错误报告的格式规范
+      //     formatter: require("eslint-friendly-formatter"), // 指定错误报告的格式规范
+      //   },
+      // },
+
       {
         test: /(\.tsx?$)|(\.ts?$)/,
         use: ["awesome-typescript-loader"].concat(
@@ -542,7 +559,7 @@ export default {
       id: "node",
       use: ["node-loader"],
       // 输出执行日志
-      verbose: true,
+      // verbose: true,
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),
@@ -552,7 +569,7 @@ export default {
       use: ["babel-loader"],
       // use: ["babel-loader", "unicode-loader"],
       // 输出执行日志
-      verbose: true,
+      // verbose: true,
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),
@@ -575,7 +592,7 @@ export default {
         },
       ],
       // 输出执行日志
-      verbose: true,
+      // verbose: true,
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),

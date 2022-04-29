@@ -9,7 +9,7 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import portfinder from "portfinder";
 import isObject from "is-object";
 import webpackHotMiddleware from "webpack-hot-middleware";
-import webpackHotServerMiddleware from "webpack-hot-server-middleware";
+// import webpackHotServerMiddleware from "webpack-hot-server-middleware";
 import connectHistoryApiFallback from "connect-history-api-fallback";
 
 import ora from "ora";
@@ -95,33 +95,33 @@ class App {
       spinner.stop();
 
       // stabilization(500).then(() => {
-      // if (err) {
-      //   console.log("Errors:" + chalk.red(err.stack || err));
-      //   if (err.details) {
-      //     console.log("Errors:" + chalk.red(err.details));
-      //   }
-      //   return;
-      // }
+      if (err) {
+        console.log("Errors:" + chalk.red(err.stack || err));
+        if (err.details) {
+          console.log("Errors:" + chalk.red(err.details));
+        }
+        return;
+      }
 
-      // if (stats.hasErrors()) {
-      //   console.log(
-      //     "Errors:" +
-      //       chalk.red(
-      //         stats.toString({
-      //           colors: true,
-      //         }) + "\n\n"
-      //       )
-      //   );
-      // } else if (stats.hasWarnings()) {
-      //   console.log(
-      //     "Warnings:" +
-      //       chalk.yellow(
-      //         stats.toString({
-      //           colors: true,
-      //         }) + "\n\n"
-      //       )
-      //   );
-      // }
+      if (stats.hasErrors()) {
+        console.log(
+          "Errors:" +
+            chalk.red(
+              stats.toString({
+                colors: true,
+              }) + "\n\n"
+            )
+        );
+      } else if (stats.hasWarnings()) {
+        console.log(
+          "Warnings:" +
+            chalk.yellow(
+              stats.toString({
+                colors: true,
+              }) + "\n\n"
+            )
+        );
+      }
 
       // else {
       //     process.stdout.write(
@@ -288,9 +288,9 @@ class App {
     return this.hotMiddleware;
   }
 
-  setHotServerMiddleware(compiler) {
-    this.app.use(webpackHotServerMiddleware(compiler));
-  }
+  // setHotServerMiddleware(compiler) {
+  //   this.app.use(webpackHotServerMiddleware(compiler));
+  // }
   setConnectHistoryApiFallback() {
     this.connectHistoryApiFallback = connectHistoryApiFallback();
     this.app.use(this.connectHistoryApiFallback);
@@ -361,7 +361,7 @@ class App {
     // 开启编译缓存
     this.setHotMiddleware(compiler);
 
-    // 设置缓存服务器
+    // // 设置缓存服务器
     // this.setHotServerMiddleware(compiler);
 
     // 开启代理

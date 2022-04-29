@@ -68,9 +68,9 @@ export default {
     ignored: "/node_modules/",
   },
   //启用编译缓存日志输出
-  infrastructureLogging: {
-    level: "log",
-  },
+  // infrastructureLogging: {
+  //   level: "log",
+  // },
   // 使用缓存
   cache: {
     type: "filesystem", //  'memory' | 'filesystem'
