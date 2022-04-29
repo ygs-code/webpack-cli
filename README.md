@@ -5,7 +5,7 @@
 
 
 
-## webpack-config 配置说明
+## webpack-cli 配置说明
 
 ### @webpack 目录中
 
