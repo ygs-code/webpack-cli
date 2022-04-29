@@ -49,7 +49,7 @@ export default {
   // 入口
   entry: {
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
-    vendor: ["vue", "react"],
+    vendor: ["react"],
     index: [
       // "@babel/polyfill",
       //添加编译缓存
