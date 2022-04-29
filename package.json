@@ -139,6 +139,8 @@
     "lingzhi-webpack-cli": "./@webpack-cli/index.js"
   },
   "scripts": {
+    "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
+    "copy": "node  copy",
     "//注释1:": "web端dev环境运行",
     "web:c:dev": "cross-env NODE_ENV=development   node  @webpack-cli-cjs/index.js  webpackEnv=dev  target=web  ",
     "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack-cli/index.js  webpackEnv=dev  target=web  ",
