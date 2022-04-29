@@ -2,8 +2,8 @@
  * @Date: 2022-04-27 20:24:09
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 19:00:09
- * @FilePath: /webpack-cli/user-webpack-config/webpack.dev.config.js
+ * @LastEditTime: 2022-04-29 19:13:26
+ * @FilePath: /scrm-fe/user-webpack-config/webpack.dev.config.js
  * @Description:
  */
 const MyExampleWebpackPlugin = require("./definePlugin/MyExampleWebpackPlugin");
@@ -20,7 +20,7 @@ const NODE_ENV = process.env.NODE_ENV; // 环境参数
 const isEnvProduction = NODE_ENV === "production";
 //   是否是测试开发环境
 const isEnvDevelopment = NODE_ENV === "development";
-
+let a = 1234567890
 const cacheLoader = (happypackId) => {
   return isEnvDevelopment
     ? [

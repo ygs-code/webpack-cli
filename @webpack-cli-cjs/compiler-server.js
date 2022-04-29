@@ -41,7 +41,7 @@ class App {
       target == "web"
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
-
+   console.log(' this.config =',   this.config )
     let { devServer: { port } = {} } = this.config;
     // 设置静态服务器
     // 默认端口设置

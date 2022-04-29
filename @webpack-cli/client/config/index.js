@@ -91,7 +91,7 @@ export default async () => {
         //在所有js中 添加WebPACK热中间件  https://www.npmjs.com/package/webpack-hot-middleware
         config.entry[name] = [
           // 把中间件打包进去每个js中
-          path.join(process.cwd(), "/@webpack-cli/client/dev-client-reload.js"),
+          path.join(__dirname, "../dev-client-reload.js"),
         ].concat(config.entry[name]);
       });
     }
