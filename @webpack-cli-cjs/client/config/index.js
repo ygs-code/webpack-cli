@@ -1,20 +1,24 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-04-29 18:44:05
+ * @LastEditTime: 2022-04-29 18:55:57
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
- * @FilePath: /webpack-cli/@webpack-cli/client/config/index.js
+ * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
  */
-import path from "path";
-import { merge } from "webpack-merge";
-import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
-// import { createVariants } from "parallel-webpack";
-import { default as clientBaseConfig } from "./webpack.base.config";
-import devConfig from "./webpack.dev.config";
-import prodConfig from "./webpack.prod.config";
-import testConfig from "../../webpack.test.config";
-import { getArgv } from "../../utils";
+const path = require("path");
+const { merge } = require("webpack-merge");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+// const           { createVariants } = require( "parallel-webpack";
+const clientBaseConfig = require("./webpack.base.config");
+const devConfig = require("./webpack.dev.config");
+const prodConfig = require("./webpack.prod.config");
+const testConfig = require("../../webpack.test.config");
+
+const userDevConfig = require("../../user-webpack-config/webpack.dev.config");
+const userProdConfig = require("../../user-webpack-config/webpack.prod.config");
+
+const { getArgv } = require("../../utils");
 
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
 const target = getArgv("target"); // 环境参数
@@ -31,33 +35,32 @@ const isEnvProduction = NODE_ENV === "production";
 
 //添加smp.wrap会有bug 编译缓存出问题
 const smp = new SpeedMeasurePlugin();
+module.exports = async () => {
+  // let userDevConfig = await new Promise(async (resolve, reject) => {
+  //   import(
+  //     path.join(process.cwd(), "/user-webpack-config/webpack.dev.config.js")
+  //   )
+  //     .then((module) => {
+  //       resolve(module.default || {});
+  //     })
+  //     .catch((error) => {
+  //       console.error("userDevConfig error:", error);
+  //       resolve({});
+  //     });
+  // });
 
-export default async () => {
-  let userDevConfig = await new Promise(async (resolve, reject) => {
-    import(
-      path.join(process.cwd(), "/user-webpack-config/webpack.dev.config.js")
-    )
-      .then((module) => {
-        resolve(module.default || {});
-      })
-      .catch((error) => {
-        console.error("userDevConfig error:", error);
-        resolve({});
-      });
-  });
-
-  let userProdConfig = await new Promise(async (resolve, reject) => {
-    import(
-      path.join(process.cwd(), "/user-webpack-config/webpack.prod.config.js")
-    )
-      .then((module) => {
-        resolve(module.default || {});
-      })
-      .catch((error) => {
-        console.error("userProdConfig error:", error);
-        resolve({});
-      });
-  });
+  // let userProdConfig = await new Promise(async (resolve, reject) => {
+  //   import(
+  //     path.join(process.cwd(), "/user-webpack-config/webpack.prod.config.js")
+  //   )
+  //     .then((module) => {
+  //       resolve(module.default || {});
+  //     })
+  //     .catch((error) => {
+  //       console.error("userProdConfig error:", error);
+  //       resolve({});
+  //     });
+  // });
 
   let config = {};
   if (webpackEnv == "test") {

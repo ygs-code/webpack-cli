@@ -1,15 +1,15 @@
 /*
- * @Date: 2022-04-29 18:16:47
+ * @Date: 2022-04-29 18:16:58
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 18:41:45
- * @FilePath: /webpack-cli/@webpack-cli/client/config/webpack.prod.config.js
- * @Description: 
+ * @LastEditTime: 2022-04-29 18:41:57
+ * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/webpack.prod.config.js
+ * @Description:
  */
 
-import path from "path";
-import webpack from "webpack";
-import nodeExternals from "webpack-node-externals";
+const path = require("path");
+const webpack = require("webpack");
+const nodeExternals = require("webpack-node-externals");
 function getIPAdress() {
   let interfaces = require("os").networkInterfaces();
   for (let devName in interfaces) {
@@ -27,7 +27,7 @@ function getIPAdress() {
   }
 }
 
-export default {
+module.exports = {
   mode: "production",
   output: {
     publicPath: "./", // dev 服务器需要是绝对，而编译出来需要是相对

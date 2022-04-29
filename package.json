@@ -140,6 +140,7 @@
   },
   "scripts": {
     "//注释1:": "web端dev环境运行",
+    "web:c:dev": "cross-env NODE_ENV=development   node  @webpack-cli-cjs/index.js  webpackEnv=dev  target=web  ",
     "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack-cli/index.js  webpackEnv=dev  target=web  ",
     "//注释2:": "web端生产环境运行",
     "web:build": "cross-env NODE_ENV=production   babel-node  @webpack-cli/index.js  webpackEnv=prod  target=web  ",

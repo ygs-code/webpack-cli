@@ -1,9 +1,9 @@
 /*
- * @Date: 2022-04-28 10:55:26
+ * @Date: 2022-04-29 18:16:58
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 18:57:51
- * @FilePath: /webpack-cli/user-webpack-config/definePlugin/MyExampleWebpackPlugin.js
+ * @LastEditTime: 2022-04-29 18:26:26
+ * @FilePath: /webpack-cli/@webpack-cli-cjs/server/config/definePlugin/MyExampleWebpackPlugin.js
  * @Description:
  */
 const fs = require("fs");
@@ -17,16 +17,12 @@ class MyExampleWebpackPlugin {
     outputPath = outputPath + "/myVue.js";
     fs.writeFileSync(outputPath, data);
   }
-  // // 做兼容
-  hook(compiler, hookName, pluginName, fn) {
-    if (arguments.length == 3) {
-      fn = pluginName;
-      pluginName = hookName;
-    }
+  // 做兼容
+  hook(compiler, hookName, fn) {
     if (compiler.hooks) {
-      compiler.hooks[hookName].tap(pluginName, fn);
+      compiler.hooks[hookName].tap("MyExampleWebpackPlugin:" + hookName, fn);
     } else {
-      compiler.plugin(pluginName, fn);
+      compiler.plugin(hookName, fn);
     }
   }
 
@@ -35,50 +31,32 @@ class MyExampleWebpackPlugin {
     let data = `
          export default class Vue {
                 extends() {}
-         } 
+         }
     `;
-    // this.write.call(this, data);
+    this.write.call(this, data);
 
-    // this.hook(compiler, "entryOption", () => {
-    //   console.log("entryOption======== 开始");
-    //   // this.write(data);
-    // });
-
-    // this.hook(compiler, "beforeCompile", () => {
-    //   //编译中
-    //   console.log("beforeCompile======");
-    // });
-
-    // this.hook(compiler, "shouldEmit", () => {
-    //   console.log("shouldEmit==========");
-    // });
-
-    // this.hook(compiler, "assetEmitted", () => {
-    //   console.log("assetEmitted==========");
-    // });
-    // // // // 编译完成
-    // this.hook(compiler, "done", () => {
-    //   console.log("done:编译完成");
-    // });
-
-    // // // 开始编译 只会调用一次
-    // this.hook(compiler, "afterPlugins", () => {
-    //   console.log("afterPlugins======== 开始");
-    //   // this.write(data);
-    // });
-    // // // 开始编译
-    // this.hook(compiler, "compile", () => {
-    //   //编译中
-    //    console.log("compile======");
-    // });
-    // // // 编译完成
-    // this.hook(compiler, "watchRun", () => {
-    //    console.log("watchRun==========");
-    // });
-    // // // 编译中期
-    // this.hook(compiler, "invalid", () => {
-    //    console.log("invalid==========");
-    // });
+    // 开始编译 只会调用一次
+    this.hook(compiler, "afterPlugins", () => {
+      // console.log("afterPlugins======== 开始");
+      // this.write(data);
+    });
+    // 开始编译
+    this.hook(compiler, "compile", () => {
+      //编译中
+      // console.log("compile======");
+    });
+    // 编译完成
+    this.hook(compiler, "watchRun", () => {
+      // console.log("watchRun==========");
+    });
+    // 编译中期
+    this.hook(compiler, "invalid", () => {
+      // console.log("invalid==========");
+    });
+    // 编译完成
+    this.hook(compiler, "done", () => {
+      // console.log("done========== 完成");
+    });
 
     //   compiler.hooks.compile.tap("MyPlugin", (params) => {
     //     console.log("以同步方式触及 compile 钩子。");
