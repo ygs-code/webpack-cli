@@ -135,6 +135,9 @@
     "react-app-polyfill/jsdom"
   ],
   "devDependencies": {},
+  "bin": {
+    "lingzhi-webpack-cli": "./@webpack-cli/index.js"
+  },
   "scripts": {
     "//注释1:": "web端dev环境运行",
     "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack-cli/index.js  webpackEnv=dev  target=web  ",
