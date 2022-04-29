@@ -2,7 +2,7 @@
  * @Date: 2022-04-29 18:51:13
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 18:53:42
+ * @LastEditTime: 2022-04-29 19:14:38
  * @FilePath: /webpack-cli/copy.js
  * @Description:
  */
@@ -40,9 +40,9 @@ var checkDirectory = function (src, dst, callback) {
 };
 const SOURCES_DIRECTORY = path.join(process.cwd(), "/user-webpack-config"); //源目录
 const copyDirectory = path.join(
-  process.cwd(),
-  "/@webpack-cli-cjs/user-webpack-config"
-); //源目录
+    __dirname,
+    "/@webpack-cli-cjs/user-webpack-config"
+  ); //目标
 checkDirectory(
   SOURCES_DIRECTORY,
   copyDirectory,
