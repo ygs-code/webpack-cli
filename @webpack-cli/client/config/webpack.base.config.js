@@ -10,6 +10,7 @@ import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin";
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
 import DirectoryNamedWebpackPlugin from "directory-named-webpack-plugin";
 import { CheckerPlugin } from "awesome-typescript-loader";
+import { ESBuildPlugin, ESBuildMinifyPlugin } from "esbuild-loader";
 import os from "os";
 // import bannerPlugin from "./bannerPlugin";
 // import MyExampleWebpackPlugin from "./definePlugin/MyExampleWebpackPlugin";
@@ -22,8 +23,11 @@ import WebpackBuildDllPlugin from "webpack-build-dll-plugin";
 import DllReferencePlugin from "webpack/lib/DllReferencePlugin";
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
 import ExtendedDefinePlugin from "extended-define-webpack-plugin";
-import eslintFriendlyFormatter from "eslint-friendly-formatter";
+// import eslintFriendlyFormatter from "eslint-friendly-formatter";
+import ESLintPlugin from "eslint-webpack-plugin";
 
+const eslintrc = require(process.cwd()+"/.eslintrc.js");
+// console.log('eslintrc========',eslintrc)
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
 
@@ -42,6 +46,7 @@ const cacheLoader = (happypackId) => {
       ]
     : [`happypack/loader?id=${happypackId}`];
 };
+
 // console.log("__dirname : " + __dirname);
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
@@ -212,16 +217,16 @@ export default {
     // },
     //
     splitChunks: {
-      name: false,
-      chunks: "all",
-      // minSize: 20000,
-      minRemainingSize: 0,
-      // maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      automaticNameDelimiter: "~",
-      enforceSizeThreshold: 50000,
+      // name: false,
+      // chunks: "all",
+      // // minSize: 20000,
+      // minRemainingSize: 0,
+      // // maxSize: 0,
+      // minChunks: 1,
+      // maxAsyncRequests: 30,
+      // maxInitialRequests: 30,
+      // automaticNameDelimiter: "~",
+      // enforceSizeThreshold: 50000,
       cacheGroups: {
         // vendor: {
         //     //第三方依赖
@@ -240,16 +245,16 @@ export default {
         //     minSize: 1000, //大小超过1000个字节
         //     minChunks: 3, //最少引入了3次
         // },
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
+        // defaultVendors: {
+        //   test: /[\\/]node_modules[\\/]/,
+        //   priority: -10,
+        //   reuseExistingChunk: true,
+        // },
+        // default: {
+        //   minChunks: 2,
+        //   priority: -20,
+        //   reuseExistingChunk: true,
+        // },
       },
     },
     // Chunk end
@@ -351,6 +356,16 @@ export default {
   externals: [],
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: "esbuild-loader",
+        options: {
+          loader: "jsx",
+          target: "es2015",
+          jsxFactory: "React.createElement",
+          jsxFragment: "React.Fragment",
+        },
+      },
       // {
       //   test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
       //   enforce: "pre", //编译前检查
@@ -362,8 +377,7 @@ export default {
       //   include: [path.join(process.cwd(), "/src")],
       //   options: {
       //     // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
-      //     // formatter: eslintFriendlyFormatter, // 指定错误报告的格式规范
-      //     formatter: require("eslint-friendly-formatter"), // 指定错误报告的格式规范
+      //     formatter: eslintFriendlyFormatter, // 指定错误报告的格式规范
       //   },
       // },
 
@@ -456,6 +470,12 @@ export default {
   },
 
   plugins: [
+    // new ESLintPlugin({
+    //   // eslintPath: process.cwd() + "/.eslintrc.js",
+    //   // outputReport:process.cwd() + "/eslintError"
+    //   fix: true,
+    // }),
+    new ESBuildPlugin(),
     // html静态页面
     new HtmlWebpackPlugin({
       title: "Custom template using Handlebars",
