@@ -25,7 +25,7 @@ import ExtendedDefinePlugin from "extended-define-webpack-plugin";
 // import eslintFriendlyFormatter from "eslint-friendly-formatter";
 import ESLintPlugin from "eslint-webpack-plugin";
 
-const eslintrc = require(process.cwd() + "/.eslintrc.js");
+// const eslintrc = require(process.cwd() + "/.eslintrc.js");
 // console.log('eslintrc========',eslintrc)
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
@@ -216,16 +216,16 @@ export default {
     // },
     //
     splitChunks: {
-      // name: false,
-      // chunks: "all",
-      // // minSize: 20000,
-      // minRemainingSize: 0,
-      // // maxSize: 0,
-      // minChunks: 1,
-      // maxAsyncRequests: 30,
-      // maxInitialRequests: 30,
-      // automaticNameDelimiter: "~",
-      // enforceSizeThreshold: 50000,
+      name: false,
+      chunks: "all",
+      // minSize: 20000,
+      minRemainingSize: 0,
+      // maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      automaticNameDelimiter: "~",
+      enforceSizeThreshold: 50000,
       cacheGroups: {
         // vendor: {
         //     //第三方依赖
@@ -244,16 +244,16 @@ export default {
         //     minSize: 1000, //大小超过1000个字节
         //     minChunks: 3, //最少引入了3次
         // },
-        // defaultVendors: {
-        //   test: /[\\/]node_modules[\\/]/,
-        //   priority: -10,
-        //   reuseExistingChunk: true,
-        // },
-        // default: {
-        //   minChunks: 2,
-        //   priority: -20,
-        //   reuseExistingChunk: true,
-        // },
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
       },
     },
     // Chunk end

@@ -42,24 +42,26 @@ class App {
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
 
-    let { devServer: { port } = {} } = this.config;
-    // 设置静态服务器
-    // 默认端口设置
-    port = port || process.env.PORT;
-    portfinder.basePort = port;
-    this.port = await new Promise((resolve, reject) => {
-      //查找端口号
-      portfinder.getPort((err, port) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        // 新端口
-        resolve(port);
+    if (this.isEnvDevelopment) {
+      let { devServer: { port = undefined } = {} } = this.config;
+      // 设置静态服务器
+      // 默认端口设置
+      port = port || process.env.PORT;
+      portfinder.basePort = port;
+      this.port = await new Promise((resolve, reject) => {
+        //查找端口号
+        portfinder.getPort((err, port) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          // 新端口
+          resolve(port);
+        });
       });
-    });
-    this.config.devServer = this.config.devServer || {};
-    this.config.devServer.port = this.port || {};
+      this.config.devServer = this.config.devServer || {};
+      this.config.devServer.port = this.port || {};
+    }
 
     await this.environment();
     await this.middleware();
@@ -113,14 +115,14 @@ class App {
             )
         );
       } else if (stats.hasWarnings()) {
-        console.log(
-          "Warnings:" +
-            chalk.yellow(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
+        // console.log(
+        //   "Warnings:" +
+        //     chalk.yellow(
+        //       stats.toString({
+        //         colors: true,
+        //       }) + "\n\n"
+        //     )
+        // );
       }
 
       // else {
@@ -223,7 +225,7 @@ class App {
           "Access-Control-Allow-Methods": "DELETE,PUT,POST,GET,OPTIONS",
         };
       },
-      writeToDisk:true, //是否写入硬盘
+      writeToDisk: false, //是否写入硬盘
       publicPath: this.config.output.publicPath,
       serverSideRender: true, // 是否是服务器渲染
       // quiet: true,
@@ -351,6 +353,8 @@ class App {
     if (this.isEnvProduction) {
       return Promise.reject();
     }
+
+    console.log("this.isEnvProduction============", this.isEnvProduction);
 
     // 如果是node不启动服务器
     if (target == "node") {

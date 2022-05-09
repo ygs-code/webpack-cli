@@ -107,7 +107,7 @@ export default {
   module: {
     rules: [
       {
-        test: /(\.tsx?$)|(\.ts?$)|(\.js?$)/,
+        test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
         loader: "esbuild-loader",
         options: {
           loader: "jsx",

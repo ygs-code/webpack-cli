@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-09 12:21:13
+ * @LastEditTime: 2022-05-09 12:54:35
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -21,7 +21,7 @@ console.log("APP_CONFIG=", APP_CONFIG);
 // console.log("process=", process);
 
 const App = () => {
-  return <Provider store={store}>23 ad asdfasdfasf sdf4 sdf sd3asdf44</Provider>;
+  return <Provider store={store}>23saddsf a4</Provider>;
 };
 
 export default App;

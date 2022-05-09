@@ -2,14 +2,17 @@
  * @Date: 2022-04-29 18:16:47
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 18:41:45
+ * @LastEditTime: 2022-05-09 13:23:04
  * @FilePath: /webpack-cli/@webpack-cli/client/config/webpack.prod.config.js
- * @Description: 
+ * @Description:
  */
 
 import path from "path";
 import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
+import OptimizeCssAssetsWebpackPlugin from "optimize-css-assets-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+
 function getIPAdress() {
   let interfaces = require("os").networkInterfaces();
   for (let devName in interfaces) {
@@ -31,12 +34,11 @@ export default {
   mode: "production",
   output: {
     publicPath: "./", // dev 服务器需要是绝对，而编译出来需要是相对
-    
   },
-  watch: true,
+  watch: false,
   optimization: {
     // 压缩
-    minimize: false,
+    minimize: true,
     minimizer: [],
     //  任何字符串：用于设置 process.env.NODE_ENV 的值。
     nodeEnv: "production",
@@ -48,5 +50,5 @@ export default {
     // },
   },
   devtool: "source-map", // 生产环境和开发环境判断
-  plugins: [],
+  plugins: [new TerserPlugin(), new OptimizeCssAssetsWebpackPlugin()],
 };
