@@ -3,8 +3,7 @@ import webpack from "webpack";
 import ErrorOverlayPlugin from "error-overlay-webpack-plugin";
 import nodeExternals from "webpack-node-externals";
 import LiveReloadPlugin from "webpack-livereload-plugin";
-
- 
+import { ESBuildPlugin, ESBuildMinifyPlugin } from "esbuild-loader";
 
 const getIPAdress = () => {
   let interfaces = require("os").networkInterfaces();
@@ -105,7 +104,22 @@ export default {
     // },
   },
   devtool: "cheap-module-source-map", // 生产环境和开发环境判断
+  module: {
+    rules: [
+      {
+        test: /(\.tsx?$)|(\.ts?$)|(\.js?$)/,
+        loader: "esbuild-loader",
+        options: {
+          loader: "jsx",
+          target: "es2015",
+          jsxFactory: "React.createElement",
+          jsxFragment: "React.Fragment",
+        },
+      },
+    ],
+  },
   plugins: [
+    new ESBuildPlugin(),
     //这个Webpack插件将强制所有必需模块的整个路径与磁盘上实际路径的确切情况相匹配。
     // 使用此插件有助于缓解OSX上的开发人员不遵循严格的路径区分大小写的情况，
     // 这些情况将导致与其他开发人员或运行其他操作系统（需要正确使用大小写正确的路径）的构建箱发生冲突。
@@ -116,8 +130,8 @@ export default {
     // new ErrorOverlayPlugin(),
     // 刷新
     new LiveReloadPlugin({
-      delay:200
-    })
+      delay: 200,
+    }),
   ],
   devServer: {
     overlay: {

@@ -10,7 +10,6 @@ import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin";
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
 import DirectoryNamedWebpackPlugin from "directory-named-webpack-plugin";
 import { CheckerPlugin } from "awesome-typescript-loader";
-import { ESBuildPlugin, ESBuildMinifyPlugin } from "esbuild-loader";
 import os from "os";
 // import bannerPlugin from "./bannerPlugin";
 // import MyExampleWebpackPlugin from "./definePlugin/MyExampleWebpackPlugin";
@@ -26,7 +25,7 @@ import ExtendedDefinePlugin from "extended-define-webpack-plugin";
 // import eslintFriendlyFormatter from "eslint-friendly-formatter";
 import ESLintPlugin from "eslint-webpack-plugin";
 
-const eslintrc = require(process.cwd()+"/.eslintrc.js");
+const eslintrc = require(process.cwd() + "/.eslintrc.js");
 // console.log('eslintrc========',eslintrc)
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
@@ -356,16 +355,6 @@ export default {
   externals: [],
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: "esbuild-loader",
-        options: {
-          loader: "jsx",
-          target: "es2015",
-          jsxFactory: "React.createElement",
-          jsxFragment: "React.Fragment",
-        },
-      },
       // {
       //   test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
       //   enforce: "pre", //编译前检查
@@ -376,11 +365,12 @@ export default {
       //   //入口文件
       //   include: [path.join(process.cwd(), "/src")],
       //   options: {
-      //     // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
-      //     formatter: eslintFriendlyFormatter, // 指定错误报告的格式规范
+      //     loader: "jsx",
+      //     target: "es2015",
+      //     jsxFactory: "React.createElement",
+      //     jsxFragment: "React.Fragment",
       //   },
       // },
-
       {
         test: /(\.tsx?$)|(\.ts?$)/,
         use: ["awesome-typescript-loader"].concat(
@@ -475,7 +465,6 @@ export default {
     //   // outputReport:process.cwd() + "/eslintError"
     //   fix: true,
     // }),
-    new ESBuildPlugin(),
     // html静态页面
     new HtmlWebpackPlugin({
       title: "Custom template using Handlebars",

@@ -2,7 +2,7 @@
  * @Date: 2022-05-09 11:13:39
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-09 12:00:51
+ * @LastEditTime: 2022-05-09 12:20:53
  * @FilePath: /webpack-cli/.eslintrc.js
  * @Description:
  */
@@ -19,7 +19,11 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  plugins: ["react", "jsx-a11y", "import"],
+  plugins: [
+      
+    "react", "jsx-a11y", "import"
+
+],
   extends: [
     // 扩展配置
     // 'plugin:vue/essential', // vue里必须的规则
@@ -28,7 +32,7 @@ module.exports = {
   ],
   parserOptions: {
     // 对新语法使用eslint
-    // parser: "babel-eslint", // 使用babel-eslint 来解析新语法ES6
+    parser: "babel-eslint", // 使用babel-eslint 来解析新语法ES6
     sourceType: "module",
   },
   // 这里可以进行自定义规则配置
