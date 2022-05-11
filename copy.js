@@ -2,7 +2,7 @@
  * @Date: 2022-04-29 18:51:13
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 19:14:38
+ * @LastEditTime: 2022-05-11 11:54:38
  * @FilePath: /webpack-cli/copy.js
  * @Description:
  */
@@ -28,9 +28,12 @@ var copy = function (src, dst) {
     });
   });
 };
+
+// 检查目录是否存在
 var checkDirectory = function (src, dst, callback) {
   fs.access(dst, fs.constants.F_OK, (err) => {
     if (err) {
+      // 如果不存在则创建目录
       fs.mkdirSync(dst);
       callback(src, dst);
     } else {
@@ -39,7 +42,7 @@ var checkDirectory = function (src, dst, callback) {
   });
 };
 const SOURCES_DIRECTORY = path.join(process.cwd(), "/user-webpack-config"); //源目录
-const copyDirectory = path.join(
+const copyDirectory = path.join( // 需要拷贝的路劲
     __dirname,
     "/@webpack-cli-cjs/user-webpack-config"
   ); //目标
