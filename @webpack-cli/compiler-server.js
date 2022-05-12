@@ -1,6 +1,8 @@
 // import "@babel/polyfill";
 // import koa from 'koa';
 import fs from "fs";
+import http from "http";
+import WebSocket, { WebSocketServer } from "ws";
 import express from "express";
 import path from "path";
 import webpack from "webpack";
@@ -11,7 +13,6 @@ import isObject from "is-object";
 import webpackHotMiddleware from "webpack-hot-middleware";
 // import webpackHotServerMiddleware from "webpack-hot-server-middleware";
 import connectHistoryApiFallback from "connect-history-api-fallback";
-
 import ora from "ora";
 import rm from "rimraf";
 // chalk插件，用来在命令行中输入不同颜色的文字
@@ -32,6 +33,20 @@ checkVersions();
 class App {
   constructor() {
     this.app = new express();
+    this.server = http.createServer(this.app);
+
+    var wss = new WebSocket.Server({ server: this.server });
+    wss.on("connection", function (ws) {
+      console.log("connection==========");
+      // 远程socket
+      //   var stream = new WebSocketJSONStream(ws);
+      //   // stream.write({
+      //   //   name:'abc'
+      //   // })
+      // //  console.log('backend.listen1')
+      //   backend.listen(stream);
+    });
+
     this.init();
   }
 
@@ -43,7 +58,7 @@ class App {
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
 
-        console.log('this.isEnvDevelopment=========',this.isEnvDevelopment)
+    console.log("this.isEnvDevelopment=========", this.isEnvDevelopment);
     if (this.isEnvDevelopment) {
       let { devServer: { port = undefined } = {} } = this.config;
       // 设置静态服务器
@@ -65,7 +80,6 @@ class App {
       this.config.devServer.port = this.port || {};
     }
 
-
     await this.middleware();
     // 启动服务器
     await this.listen();
@@ -81,9 +95,10 @@ class App {
   }
   // 编译
   async setCompiler() {
+    // 建立一个socket
     // 开启转圈圈动画
-    const spinner = ora("building.....");
-    spinner.start();
+    // const spinner = ora("building.....");
+    // spinner.start();
 
     await new Promise((resolve, reject) => {
       rm(path.join(process.cwd(), "/dist"), (err) => {
@@ -95,46 +110,52 @@ class App {
       });
     });
 
-    const compiler = webpack(this.config, (err, stats) => {
-      spinner.stop();
+    const compiler = webpack(this.config, 
+      
+    //   (err, stats) => {
+    //   spinner.stop();
 
-      // stabilization(500).then(() => {
-      if (err) {
-        console.log("Errors:" + chalk.red(err.stack || err));
-        if (err.details) {
-          console.log("Errors:" + chalk.red(err.details));
-        }
-        return;
-      }
+    //   // stabilization(500).then(() => {
+    //   if (err) {
+    //     console.log("err============================");
+    //     console.log("Errors:" + chalk.red(err.stack || err));
+    //     if (err.details) {
+    //       console.log("Errors:" + chalk.red(err.details));
+    //     }
+    //     return;
+    //   }
 
-      if (stats.hasErrors()) {
-        console.log(
-          "Errors:" +
-            chalk.red(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
-      } else if (stats.hasWarnings()) {
-        // console.log(
-        //   "Warnings:" +
-        //     chalk.yellow(
-        //       stats.toString({
-        //         colors: true,
-        //       }) + "\n\n"
-        //     )
-        // );
-      }
+    //   if (stats.hasErrors()) {
+    //     console.log("hasErrors============================");
+    //     console.log(
+    //       "Errors:" +
+    //         chalk.red(
+    //           stats.toString({
+    //             colors: true,
+    //           }) + "\n\n"
+    //         )
+    //     );
+    //   } else if (stats.hasWarnings()) {
+    //     // console.log(
+    //     //   "Warnings:" +
+    //     //     chalk.yellow(
+    //     //       stats.toString({
+    //     //         colors: true,
+    //     //       }) + "\n\n"
+    //     //     )
+    //     // );
+    //   }
 
-      // else {
-      //     process.stdout.write(
-      //         stats.toString({
-      //             colors: true,
-      //         }) + '\n\n'
-      //     );
-      // }
-    });
+    //   // else {
+    //   //     process.stdout.write(
+    //   //         stats.toString({
+    //   //             colors: true,
+    //   //         }) + '\n\n'
+    //   //     );
+    //   // }
+    // }
+    
+    );
     // console.log(chalk.rgb(13, 188, 121)("Build complete .\n"));
     // });
 
@@ -317,7 +338,7 @@ class App {
       });
     }
 
-    if (proxy && type == "[object array]") {
+    if (proxy && type === "[object array]") {
       for (let item of proxy) {
         let { context } = item;
         delete item.context;
@@ -359,7 +380,7 @@ class App {
     console.log("this.isEnvProduction============", this.isEnvProduction);
 
     // 如果是node不启动服务器
-    if (target == "node") {
+    if (target === "node") {
       return Promise.reject();
     }
     //  开启dev服务器
@@ -384,7 +405,7 @@ class App {
 
   async listen() {
     let { devServer: { port } = {} } = this.config;
-    this.server = this.app.listen(port, () => {
+    this.server.listen(port, () => {
       console.log(`\n编译代码服务器端口:${port}\n`);
     });
   }

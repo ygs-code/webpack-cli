@@ -2,8 +2,8 @@
  * @Date: 2022-04-24 11:14:20
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 10:47:10
- * @FilePath: /webpack-config/src/index.js
+ * @LastEditTime: 2022-05-12 20:33:49
+ * @FilePath: /webpack-cli/src/index.js
  * @Description:
  */
 import React from "react";
@@ -11,7 +11,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./App.css";
 import App from "./App";  
-// fugihojp8tyoupi[]
+  //  fugihojp8tyoupi[]
 
 
 const container = document.getElementById("root");

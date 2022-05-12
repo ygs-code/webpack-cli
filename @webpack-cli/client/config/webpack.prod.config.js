@@ -2,7 +2,7 @@
  * @Date: 2022-04-29 18:16:47
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-09 13:42:07
+ * @LastEditTime: 2022-05-12 14:02:53
  * @FilePath: /webpack-cli/@webpack-cli/client/config/webpack.prod.config.js
  * @Description:
  */
@@ -12,6 +12,7 @@ import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
 import OptimizeCssAssetsWebpackPlugin from "optimize-css-assets-webpack-plugin";
 import TerserWebpackPlugin from "terser-webpack-plugin";
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 function getIPAdress() {
   let interfaces = require("os").networkInterfaces();

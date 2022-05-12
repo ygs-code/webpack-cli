@@ -2,11 +2,12 @@
  * @Date: 2022-04-27 20:24:09
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-29 19:00:09
+ * @LastEditTime: 2022-05-12 19:36:35
  * @FilePath: /webpack-cli/user-webpack-config/webpack.dev.config.js
  * @Description:
  */
 const MyExampleWebpackPlugin = require("./definePlugin/MyExampleWebpackPlugin");
+const HelloWorldCheckerPlugin = require("./definePlugin/HelloWorldCheckerPlugin");
 const os = require("os");
 const webpack = require("webpack");
 const path = require("path");
@@ -30,6 +31,10 @@ const cacheLoader = (happypackId) => {
       ]
     : [`happypack/loader?id=${happypackId}`];
 };
+
+
+// console.log('BrowserReloadPlugin=',BrowserReloadPlugin)
+
 // 用户自定义webpack
 module.exports = {
   module: {
@@ -127,6 +132,13 @@ module.exports = {
   //   // ],
   // },
   plugins: [
+    // new BrowserReloadPlugin(),
+    // new HelloWorldCheckerPlugin({ path: "toinspect.txt" }),
+    // 自定义插件
+    new MyExampleWebpackPlugin({
+      // 出口
+      outputPath: path.join(process.cwd(), "/app"),
+    }),
     // 注入全局常量
     new ExtendedDefinePlugin({
       APP_CONFIG: {
@@ -137,11 +149,7 @@ module.exports = {
         },
       },
     }),
-    // 自定义插件
-    new MyExampleWebpackPlugin({
-      // 出口
-      outputPath: path.join(process.cwd(), "/app"),
-    }),
+
     // new HappyPack({
     //   id: "graphql",
     //   use: [
