@@ -1,3 +1,11 @@
+/*
+ * @Date: 2022-04-24 12:01:52
+ * @Author: Yao guan shou
+ * @LastEditors: Yao guan shou
+ * @LastEditTime: 2022-05-12 11:03:33
+ * @FilePath: /webpack-cli/src/utils/SubscribePublished.js
+ * @Description: 
+ */
 import { CheckDataType } from './CheckDataType'
 //按方式 kye 导出
 
@@ -56,7 +64,7 @@ SubscribePublished.prototype = {
   },
   emit(type) {
     let args = [...arguments].slice(1)
-    if (type !== this.type || args.length == 1) {
+    if (type !== this.type || args.length === 1) {
       args = [type]
       type = this.type
     }

@@ -8,7 +8,7 @@
   "main": "@webpack-cli/index.js",
   "dependencies": {
     "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.9",
+    "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/node": "^7.16.8",
     "@babel/plugin-proposal-async-generator-functions": "^7.12.12",
@@ -163,6 +163,8 @@
     "test": "npm run jest",
     "//注释9": "生成测试覆盖率报告",
     "coverage": "jest --coverage --config jest.config.ts",
+    "//注释10": "eslint校验",
+    "eslint": "eslint ./src",
     "mocha": "mocha ./app/test/add.test.ts",
     "test:webpack": "jest-webpack",
     "jest": " babel-node ./scripts/test.js",

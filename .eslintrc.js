@@ -2,7 +2,7 @@
  * @Date: 2022-05-09 11:13:39
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-09 12:20:53
+ * @LastEditTime: 2022-05-12 11:41:31
  * @FilePath: /webpack-cli/.eslintrc.js
  * @Description:
  */
@@ -19,22 +19,22 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  plugins: [
-      
-    "react", "jsx-a11y", "import"
-
-],
-  extends: [
-    // 扩展配置
-    // 'plugin:vue/essential', // vue里必须的规则
-    // '@vue/standard', // 使eslint继承@vue/cli脚手架里的 - standard标准
-    // 'standard',
-  ],
+  plugins: ["react", "jsx-a11y", "import"],
+  parser: "@babel/eslint-parser",
   parserOptions: {
-    // 对新语法使用eslint
-    parser: "babel-eslint", // 使用babel-eslint 来解析新语法ES6
+    // parser: "@babel/eslint-parser",
+    ecmaVersion: 6,
     sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+      modules: true,
+      experimentalObjectRestSpread: true,
+    },
   },
+  extends: ["eslint:recommended", "plugin:react/recommended"],
+  
+  settings: { react: { pragma: "React", version: "15.6.1" } },
+
   // 这里可以进行自定义规则配置
   // key：规则代号
   // value：具体的限定方式
@@ -42,6 +42,13 @@ module.exports = {
   //   "warn" or 1 - 将规则视为一个警告（不会影响退出码）,只警告，不会退出程序
   //   "error" or 2 - 将规则视为一个错误 (退出码为1)，报错并退出程序
   rules: {
+    "no-prototype-builtins":0,
+    "comma-dangle": 0,
+    "react/jsx-uses-vars": 1,
+    "react/display-name": 1,
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "no-unexpected-multiline": "warn",
     // // 自定义规则 - 其实上面集成后有很多内置的规则, 这里可以进行规则的一些修改
     // 'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // 上线环境用打印就报警告, 开发环境关闭此规则
     // 'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // debugger可以终止代码执行

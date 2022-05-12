@@ -1,9 +1,17 @@
+/*
+ * @Date: 2022-04-24 12:01:52
+ * @Author: Yao guan shou
+ * @LastEditors: Yao guan shou
+ * @LastEditTime: 2022-05-12 11:38:46
+ * @FilePath: /webpack-cli/src/utils/transformRoutePaths.js
+ * @Description: 
+ */
 const removeRepeatLine = (str) => str.replace(/\/\//g, '/')
 export const getRoutePaths = (route, routePaths = {}, prefix = '', filePath = null) => {
   route.forEach((target) => {
     if (target['path'] && target['name']) {
       if (target['name'] in routePaths && routePaths.hasOwnProperty(target['name'])) {
-        throw (target['filePath'] || filePath) == routePaths[target['name']].filePath
+        throw (target['filePath'] || filePath) === routePaths[target['name']].filePath
           ? `在${routePaths[target['name']].filePath}路由文件中,路由name为:${target['name']}命名有相同，发生路由name冲突！`
           : `在${target['filePath'] || filePath}路由文件与${routePaths[target['name']].filePath}路由文件中,路由name为:${
               target['name']

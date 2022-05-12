@@ -25,7 +25,7 @@ const getDispatchToProps = (reducersStore, dispatch, modelsNames) => {
       (CheckDataType.isArray(modelsNames) === true &&
         !modelsNames.includes(reducersStoreKey)) ||
       (CheckDataType.isString(modelsNames) === true &&
-        modelsNames != reducersStoreKey)
+        modelsNames !== reducersStoreKey)
     ) {
       continue;
     }
@@ -75,7 +75,7 @@ const getStateToProps = (reducersStore, state, modelsNames) => {
       (CheckDataType.isArray(modelsNames) === true &&
         !modelsNames.includes(reducersStoreKey)) ||
       (CheckDataType.isString(modelsNames) === true &&
-        modelsNames != reducersStoreKey)
+        modelsNames !== reducersStoreKey)
     ) {
       continue;
     }
@@ -100,7 +100,7 @@ const getActionsToProps = (reducersStore, allActions, modelsNames) => {
       (CheckDataType.isArray(modelsNames) === true &&
         !modelsNames.includes(reducersStoreKey)) ||
       (CheckDataType.isString(modelsNames) === true &&
-        !modelsNames == reducersStoreKey)
+        !modelsNames === reducersStoreKey)
     ) {
       continue;
     }

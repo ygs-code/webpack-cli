@@ -36,12 +36,14 @@ class App {
   }
 
   async init() {
+    await this.environment();
     // 获取配置
     this.config =
       target == "web"
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
 
+        console.log('this.isEnvDevelopment=========',this.isEnvDevelopment)
     if (this.isEnvDevelopment) {
       let { devServer: { port = undefined } = {} } = this.config;
       // 设置静态服务器
@@ -63,7 +65,7 @@ class App {
       this.config.devServer.port = this.port || {};
     }
 
-    await this.environment();
+
     await this.middleware();
     // 启动服务器
     await this.listen();
