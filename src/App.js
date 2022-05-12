@@ -21,22 +21,6 @@ var server_api_key = APP_CONFIG.api_key;
 console.log( "APP_CONFIG=", APP_CONFIG);
 console.log("process =", process); 
 
-var ws = new WebSocket("ws://localhost:8089");
- 
-ws.onopen = function(evt) {
-	console.log("Connection open ...");
-	ws.send("Hello WebSockets!");
-};
- 
-ws.onmessage = function(evt) {
-	console.log("Received Message:  " + evt.data);
-	ws.close();
-};
- 
-ws.onclose = function(evt) {
-	console.log(" Connection      closed.");
-};
-
 //  asdf 
     // 阿斯顿发  
 const App = () => {

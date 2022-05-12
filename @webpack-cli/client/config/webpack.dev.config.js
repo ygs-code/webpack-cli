@@ -7,7 +7,7 @@ import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
 // import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
 import { ESBuildPlugin, ESBuildMinifyPlugin } from "esbuild-loader";
 // import BrowserReloadPlugin from "browser-reload-plugin";
-import ErrorOverlayWebpack from "../definePlugin/error-overlay-webpack";
+import BrowserReloadErrorOverlayWepbackPlugin from "../definePlugin/browser-reload-error-overlay-wepback-plugin";
 
 // const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
@@ -137,9 +137,10 @@ export default {
     //缓存包 热启动
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(), //NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
-    // // // 热刷新
+    //   热刷新
     // new BrowserReloadPlugin(),
-    new ErrorOverlayWebpack(),
+    // 热刷新和错误日志
+    new BrowserReloadErrorOverlayWepbackPlugin(),
     new webpack.ProvidePlugin({
       process: "process",
     }),

@@ -1,25 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import WebSocket from 'ws';
-// import { ConcatSource } from "webpack-sources";
-// import ModuleFilenameHelpers from "webpack/lib/ModuleFilenameHelpers";
-// import getPort from "get-port";
+import portfinder from 'portfinder';
 import ora from 'ora';
 import chalk from 'chalk';
 
-console.log('browser-reload-plugin==');
 const clientSrc = fs.readFileSync(path.join(__dirname, 'client.js')).toString();
 
 // console.log('clientSrc=',clientSrc)
 
 const createClient = (data) => {
     let src = clientSrc;
-
     // eslint-disable-next-line guard-for-in
     for (const key in data) {
         src = src.replace('/*' + key + '*/', data[key]);
     }
-
     return src;
 };
 
@@ -36,12 +31,24 @@ class ErrorOverlayWebpack {
 
     async start() {
         const { options } = this;
-        // const port = await getPort(options);
-        const port = 9090;
+        let port = options.port;
+        // 设置静态服务器
+        portfinder.basePort = port;
+        port = await new Promise((resolve, reject) => {
+            //查找端口号
+            portfinder.getPort((err, port) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                // 新端口
+                resolve(port);
+            });
+        });
 
         this.wss = new WebSocket.Server({ port });
 
-        wss.on('connection', function (ws) {
+        this.wss.on('connection', function (ws) {
             // 远程socket
             // this.broadcast(
             //   JSON.stringify({
@@ -113,15 +120,15 @@ class ErrorOverlayWebpack {
                             message: err.stack || err || err.details,
                         })
                     );
-                    console.log('Errors:' + chalk.red(err.stack || err));
-                    if (err.details) {
-                        console.log('Errors:' + chalk.red(err.details));
-                    }
+                    // console.log('Errors:' + chalk.red(err.stack || err));
+                    // if (err.details) {
+                    //     console.log('Errors:' + chalk.red(err.details));
+                    // }
                     return;
                 }
 
                 if (stats.hasErrors()) {
-                    console.log('hasErrors============================');
+                    // console.log('hasErrors============================');
                     this.broadcast(
                         JSON.stringify({
                             cmd: 'cmd:buildError',
@@ -131,14 +138,14 @@ class ErrorOverlayWebpack {
                                 }) + '\n\n',
                         })
                     );
-                    console.log(
-                        'Errors:' +
-                            chalk.red(
-                                stats.toString({
-                                    colors: true,
-                                }) + '\n\n'
-                            )
-                    );
+                    // console.log(
+                    //     'Errors:' +
+                    //         chalk.red(
+                    //             stats.toString({
+                    //                 colors: true,
+                    //             }) + '\n\n'
+                    //         )
+                    // );
                     return;
                 } else if (stats.hasWarnings()) {
                     // console.log(
