@@ -17,7 +17,7 @@ import "./App.css";
 console.log("process=", process); // 'test'
 /*global APP_CONFIG*/
 var server_api_key = APP_CONFIG.api_key;
-// 56789ghjk asdf
+ 
 console.log( "APP_CONFIG=", APP_CONFIG);
 console.log("process =", process); 
 

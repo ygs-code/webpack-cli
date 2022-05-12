@@ -55,12 +55,13 @@
 					log('Build completed. Reloading...');
 					window.location.reload();
 				} else {
-					// log('Build completed.');
+					//   log('Build completed.');
 				}
 			}
 
 			if(cmd ==="cmd:buildError"){
 				log('buildError...');
+			//    console.log('message===',message.split('\n'))	
                console.error(message)
 			}
 

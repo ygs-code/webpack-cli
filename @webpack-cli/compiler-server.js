@@ -33,20 +33,9 @@ checkVersions();
 class App {
   constructor() {
     this.app = new express();
-    this.server = http.createServer(this.app);
+    // this.server = http.createServer(this.app);
 
-    var wss = new WebSocket.Server({ server: this.server });
-    wss.on("connection", function (ws) {
-      console.log("connection==========");
-      // 远程socket
-      //   var stream = new WebSocketJSONStream(ws);
-      //   // stream.write({
-      //   //   name:'abc'
-      //   // })
-      // //  console.log('backend.listen1')
-      //   backend.listen(stream);
-    });
-
+ 
     this.init();
   }
 
@@ -405,7 +394,7 @@ class App {
 
   async listen() {
     let { devServer: { port } = {} } = this.config;
-    this.server.listen(port, () => {
+    this.app.listen(port, () => {
       console.log(`\n编译代码服务器端口:${port}\n`);
     });
   }
