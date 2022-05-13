@@ -41,7 +41,7 @@ class App {
       target == "web"
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
-   console.log(' this.config =',   this.config )
+    console.log(" this.config =", this.config);
     let { devServer: { port } = {} } = this.config;
     // 设置静态服务器
     // 默认端口设置
@@ -91,46 +91,50 @@ class App {
       });
     });
 
-    const compiler = webpack(this.config, (err, stats) => {
-      spinner.stop();
+    const compiler = webpack(
+      this.config
+      //   (err, stats) => {
+      //   spinner.stop();
 
-      // stabilization(500).then(() => {
-      if (err) {
-        console.log("Errors:" + chalk.red(err.stack || err));
-        if (err.details) {
-          console.log("Errors:" + chalk.red(err.details));
-        }
-        return;
-      }
+      //   // stabilization(500).then(() => {
+      //   if (err) {
+      //     console.log("Errors:" + chalk.red(err.stack || err));
+      //     if (err.details) {
+      //       console.log("Errors:" + chalk.red(err.details));
+      //     }
+      //     return;
+      //   }
 
-      if (stats.hasErrors()) {
-        console.log(
-          "Errors:" +
-            chalk.red(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
-      } else if (stats.hasWarnings()) {
-        console.log(
-          "Warnings:" +
-            chalk.yellow(
-              stats.toString({
-                colors: true,
-              }) + "\n\n"
-            )
-        );
-      }
-
-      // else {
-      //     process.stdout.write(
-      //         stats.toString({
+      //   if (stats.hasErrors()) {
+      //     console.log(
+      //       "Errors:" +
+      //         chalk.red(
+      //           stats.toString({
       //             colors: true,
-      //         }) + '\n\n'
+      //           }) + "\n\n"
+      //         )
       //     );
+      //   } else if (stats.hasWarnings()) {
+      //     console.log(
+      //       "Warnings:" +
+      //         chalk.yellow(
+      //           stats.toString({
+      //             colors: true,
+      //           }) + "\n\n"
+      //         )
+      //     );
+      //   }
+
+      //   // else {
+      //   //     process.stdout.write(
+      //   //         stats.toString({
+      //   //             colors: true,
+      //   //         }) + '\n\n'
+      //   //     );
+      //   // }
+
       // }
-    });
+    );
     // console.log(chalk.rgb(13, 188, 121)("Build complete .\n"));
     // });
 

@@ -2,8 +2,8 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-13 15:21:39
- * @FilePath: 
+ * @LastEditTime: 2022-05-13 19:06:16
+ * @FilePath: /browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js
  * @Description: 
  */
 import fs from "fs";
@@ -13,9 +13,9 @@ import portfinder from "portfinder";
 import ora from "ora";
 import chalk from "chalk";
 
-const clientSrc = fs.readFileSync(path.join(__dirname, "client.js")).toString();
+const clientSrc = fs.readFileSync(path.join(__dirname, "../client.js")).toString();
 const ansiToHtml = fs
-  .readFileSync(path.join(__dirname, "ansiToHtml.js"))
+  .readFileSync(path.join(__dirname, "../ansiToHtml.js"))
   .toString();
 
 const createClient = (data) => {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-04-29 19:36:12
+ * @LastEditTime: 2022-05-13 19:28:59
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
@@ -100,7 +100,7 @@ module.exports = async () => {
         //在所有js中 添加WebPACK热中间件  https://www.npmjs.com/package/webpack-hot-middleware
         config.entry[name] = [
           // 把中间件打包进去每个js中
-          path.join(__dirname, "../dev-client-reload.js"),
+          // path.join(__dirname, "../dev-client-reload.js"),
         ].concat(config.entry[name]);
       });
     }

@@ -22,7 +22,7 @@ const WebpackBuildDllPlugin = require("webpack-build-dll-plugin");
 const DllReferencePlugin = require("webpack/lib/DllReferencePlugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const ExtendedDefinePlugin = require("extended-define-webpack-plugin");
-const eslintFriendlyFormatter = require("eslint-friendly-formatter");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
@@ -351,6 +351,8 @@ module.exports = {
 
   //防止将某些 import 的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
   externals: [],
+
+ 
   module: {
     rules: [
       // {
@@ -363,12 +365,12 @@ module.exports = {
       //   //入口文件
       //   include: [path.join(process.cwd(), "/src")],
       //   options: {
-      //     // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
-      //     // formatter: eslintFriendlyFormatter, // 指定错误报告的格式规范
-      //     formatter: require("eslint-friendly-formatter"), // 指定错误报告的格式规范
+      //     loader: "jsx",
+      //     target: "es2015",
+      //     jsxFactory: "React.createElement",
+      //     jsxFragment: "React.Fragment",
       //   },
       // },
-
       {
         test: /(\.tsx?$)|(\.ts?$)/,
         use: ["awesome-typescript-loader"].concat(
@@ -458,6 +460,14 @@ module.exports = {
   },
 
   plugins: [
+    new ESLintPlugin({
+      emitError: true, //发现的错误将始终被触发，将禁用设置为false。
+      emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
+      failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
+      failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
+      quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
+      fix: true, //自动修复
+    }),
     // html静态页面
     new HtmlWebpackPlugin({
       title: "Custom template using Handlebars",
@@ -673,4 +683,5 @@ module.exports = {
     // }),
   ],
 };
+
 

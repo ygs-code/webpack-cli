@@ -3,6 +3,9 @@ const webpack = require("webpack");
 const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 const LiveReloadPlugin = require("webpack-livereload-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const { ESBuildPlugin, ESBuildMinifyPlugin } = require("esbuild-loader");
+const BrowserReloadErrorOverlayWepbackPlugin = require("../definePlugin/browser-reload-error-overlay-wepback-plugin");
 
 const getIPAdress = () => {
   let interfaces = require("os").networkInterfaces();
@@ -85,6 +88,9 @@ module.exports = {
     cachePredicate: () => {
       return true;
     },
+    fallback: {
+      process: false,
+    },
     //启用，会主动缓存模块，但并不安全。传递 true 将缓存一切
     // unsafeCache: true,
   },
@@ -103,21 +109,46 @@ module.exports = {
     // },
   },
   devtool: "cheap-module-source-map", // 生产环境和开发环境判断
+
+  module: {
+    rules: [
+      {
+        test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
+        loader: "esbuild-loader",
+        options: {
+          loader: "jsx",
+          target: "es2015",
+          jsxFactory: "React.createElement",
+          jsxFragment: "React.Fragment",
+        },
+      },
+    ],
+  },
   plugins: [
+    new ESBuildPlugin(),
     //这个Webpack插件将强制所有必需模块的整个路径与磁盘上实际路径的确切情况相匹配。
     // 使用此插件有助于缓解OSX上的开发人员不遵循严格的路径区分大小写的情况，
     // 这些情况将导致与其他开发人员或运行其他操作系统（需要正确使用大小写正确的路径）的构建箱发生冲突。
-    // new CaseSensitivePathsPlugin()
+    new CaseSensitivePathsPlugin(),
     //缓存包 热启动
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(), //NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
+    //   热刷新
+    // new BrowserReloadPlugin(),
+    // 热刷新和错误日志
+    new BrowserReloadErrorOverlayWepbackPlugin(),
+    new webpack.ProvidePlugin({
+      process: "process",
+    }),
     // 有跨域问题
     // new ErrorOverlayPlugin(),
     // 刷新
     new LiveReloadPlugin({
-      delay:200
-    })
+      delay: 200,
+    }),
   ],
   devServer: {
+    // disableHostCheck: true,
     overlay: {
       warnings: true,
       errors: true,
@@ -138,7 +169,9 @@ module.exports = {
     contentBase: path.join(process.cwd(), "/dist"), //访问主页的界面 目录
     port: 8089, // 开启服务器的端口
     open: true, // 是否开启在浏览器中打开
+    // public: 'http://localhost:8089',//添加配置
     host: getIPAdress(), //获取本机地址
+
     // // quiet:false,  //不要把任何东西输出到控制台。
     // // contentBase: "./public",//本地服务器所加载的页面所在的目录就是index.html 和moduel 不在同一个页面
     // // noInfo:true, //压制无聊信息。 //控制台不输出无聊信息
