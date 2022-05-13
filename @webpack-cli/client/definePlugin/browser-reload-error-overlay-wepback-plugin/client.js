@@ -2,14 +2,14 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-12 20:39:19
- * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/error-overlay-webpack/client.js
+ * @LastEditTime: 2022-05-13 12:04:10
+ * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/client.js
  * @Description: 
  */
 /*
  * BrowserReloadPlugin
  *
- * https://www.npmjs.com/package/browser-reload-plugin
+ * https://www.npmjs.com/package/browser-reload-error-overlay-wepback-plugin
  */
 (function () {
 	if (window.__browserReloadPlugin) {
@@ -23,7 +23,7 @@
 	};
 
 	function log(message) {
-		console.info('%c browser-reload-plugin ' + (config.enabled ? '' : '(Disabled) '), 'background:#CB5C0D; padding:2px; border-radius:3px; color:#fff', message);
+		console.info('%c browser-reload-error-overlay-wepback-plugin ' + (config.enabled ? '' : '(Disabled) '), 'background:#CB5C0D; padding:2px; border-radius:3px; color:#fff', message);
 	}
 
 	(function connect() {

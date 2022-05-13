@@ -188,7 +188,7 @@ export default {
     },
   },
   //在第一个错误出现时抛出失败结果，而不是容忍它
-  bail: false,
+  bail: true,
   // 打包优化配置
   optimization: {
     //告知 webpack 去决定每个模块使用的导出内容。这取决于 optimization.providedExports 选项。
