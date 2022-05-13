@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-13 15:16:45
+ * @LastEditTime: 2022-05-13 15:55:10
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/client.js
  * @Description: 
  */
@@ -84,22 +84,30 @@
                 let html = message.split('\n').reduce((acc, item) => {
                     return (acc += `<div >${filter.toHtml(item)}<div>`);
                 }, "");
-                iframe.srcdoc = `
-				<style>
-				* {
-				  margin: 0;
-				  padding: 0;
-				}
-				.ansi-html-box {
-				  background: rgba(0, 0, 0, 0.5);
-				  width: 100%;
-				  min-height: calc(100vh + 20px);
-				  padding: 60px;
-				  box-sizing: border-box;
-				}
-			  </style>
-                <div  class="ansi-html-box">${html}<div>;
-                `;
+				iframe.srcdoc = `
+							<style>
+								* {
+									margin: 0;
+									padding: 0;
+								}
+								.ansi-html-box {
+									background: rgba(0, 0, 0, 0.55);
+									width: 100%;
+									min-height: calc(100vh + 20px);
+									padding: 60px;
+									box-sizing: border-box;
+									transition: 0.5s;
+								}
+								.failed-to-compile{
+									color:rgb(200, 15, 47);
+								    font-size: 20px;
+								}
+							</style>
+							<div  class="ansi-html-box">
+								<div  class="failed-to-compile">Failed to compile :</div>
+								${html}
+							<div>;
+			             	`;
 
                 if(!hasIframe){
                     document.body.appendChild(iframe);
