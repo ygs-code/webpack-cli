@@ -7,6 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin/issues"
+  },
+  "homepage": "https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin#readme",
   "keywords": [
     "webpack",
     "reload",
