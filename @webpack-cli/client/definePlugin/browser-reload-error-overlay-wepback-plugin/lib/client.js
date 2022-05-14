@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-14 12:29:15
+ * @LastEditTime: 2022-05-14 13:19:11
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/client.js
  * @Description: 
  */
@@ -158,7 +158,7 @@
                 let html = message.split('\n').reduce((acc, item) => {
                     return (acc += `<div >${filter.toHtml(item)}<div>`);
                 }, "");
-				
+				html=html.replace(/color\:\#FFF/ig,'')
 				iframe.srcdoc = `
 							<style>
 									* {
@@ -166,7 +166,7 @@
 											padding: 0;
 									}
 									.ansi-html-box {
-											background: rgba(0, 0, 0, 0.55);
+											background: #fff;
 											width:calc(100%);
 											height:auto;
 											min-height: calc(100vh);
