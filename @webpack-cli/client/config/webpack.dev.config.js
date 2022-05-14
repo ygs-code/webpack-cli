@@ -2,12 +2,11 @@ import path from "path";
 import webpack from "webpack";
 import ErrorOverlayPlugin from "error-overlay-webpack-plugin";
 import nodeExternals from "webpack-node-externals";
-import LiveReloadPlugin from "webpack-livereload-plugin";
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
 // import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
 import { ESBuildPlugin, ESBuildMinifyPlugin } from "esbuild-loader";
 // import BrowserReloadPlugin from "browser-reload-plugin";
-import BrowserReloadErrorOverlayWepbackPlugin from "../definePlugin/browser-reload-error-overlay-wepback-plugin";
+import BrowserReloadErrorOverlayWepbackPlugin from "../definePlugin/browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js";
 
 // const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
@@ -146,10 +145,6 @@ export default {
     }),
     // 有跨域问题
     // new ErrorOverlayPlugin(),
-    // 刷新
-    new LiveReloadPlugin({
-      delay: 200,
-    }),
   ],
   devServer: {
     // disableHostCheck: true,

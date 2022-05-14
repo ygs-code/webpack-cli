@@ -2,14 +2,79 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-13 15:55:10
- * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/client.js
+ * @LastEditTime: 2022-05-14 12:10:31
+ * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/client.js
  * @Description: 
  */
 (function () {
 	if (window.__browserReloadPlugin) {
 		return;
 	}
+
+	const getStyle = (ele, attr) => {
+        var style = null;
+        if (window.getComputedStyle) {
+          style = window.getComputedStyle(ele, null);
+        } else {
+          style = ele.currentStyle;
+        }
+        return attr ? style[attr] : style;
+      };
+
+      function getParentNode(el, callback = () => {}) {
+        while (el && el.tagName !== "HTML") {
+          callback(el);
+          el = el.parentNode;
+        }
+      }
+
+      function getElOffset(el) {
+        var left = 0;
+        var top = 0;
+        var marginTop = 0;
+        var marginLeft = 0;
+        var paddingLeft = 0;
+        var paddingTop = 0;
+        getParentNode(el, ($el) => {
+          left +=
+            getStyle($el, "left") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "left"));
+
+          top +=
+            getStyle($el, "top") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "top"));
+          marginTop +=
+            getStyle($el, "marginTop") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "marginTop"));
+          marginLeft +=
+            getStyle($el, "marginLeft") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "marginLeft"));
+          paddingLeft +=
+            getStyle($el, "paddingLeft") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "paddingLeft"));
+          paddingTop +=
+            getStyle($el, "paddingTop") === "auto"
+              ? 0
+              : parseInt(getStyle($el, "paddingTop"));
+        });
+
+        return {
+          left,
+          top,
+          marginTop,
+          marginLeft,
+          paddingLeft,
+          paddingTop,
+        };
+      }
+      
+      
+      
 
 	function guid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -24,7 +89,9 @@
 		enabled: true,
 		retryWait: /*retryWait*/,
 		wsServer: 'ws://localhost:/*port*/',
+		delay: /*delay*/
 	};
+
 
 	function log(message) {
 		console.info('%c browser-reload-error-overlay-wepback-plugin ' + (config.enabled ? '' : '(Disabled) '), 'background:#CB5C0D; padding:2px; border-radius:3px; color:#fff', message);
@@ -55,7 +122,10 @@
 			if (cmd === 'cmd:reload') {
 				if (config.enabled) {
 					log('Build completed. Reloading...');
-					window.location.reload();
+					setTimeout(()=>{
+						window.location.reload();
+					},config.delay)
+				
 				} else {
 					//   log('Build completed.');
 				}
@@ -64,23 +134,28 @@
 			if(cmd ==="cmd:buildError"){
 				log('buildError...');
 			//    console.log('message===',message.split('\n'))
-               console.error(message)
+                console.error(message)
+				let bodyOffset = getElOffset(document.querySelector("body"));
+				let $left =bodyOffset.left+bodyOffset.marginLeft+ bodyOffset.paddingLeft
+				let $top =bodyOffset.top+bodyOffset.marginTop+ bodyOffset.paddingTop
                 let hasIframe =  document.getElementById(id)
                 let filter = new ansiToHtml();
                 let iframe=hasIframe?hasIframe: document.createElement("iframe");
                 iframe.id = id;
                 title = "buildError...";
-				iframe.style.cssText=`
-						width:calc(100% + 20px);
-						height:calc(100% + 20px);
+			    iframe.style.cssText = `
+						width:calc(100% + ${$top}px);
+						height:calc(100% + ${$left}px);
 						z-Index : 999999999;
 						position:fixed;
 						border:medium none;
 						padding:0px;
 						margin :0px;
-						top :-20px;
-						left :-20px;
-				`
+						top :-${$top}px;
+						left :-${$left}px;
+				`;
+
+
                 let html = message.split('\n').reduce((acc, item) => {
                     return (acc += `<div >${filter.toHtml(item)}<div>`);
                 }, "");

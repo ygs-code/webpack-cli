@@ -2,9 +2,9 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-13 19:06:16
- * @FilePath: /browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js
- * @Description: 
+ * @LastEditTime: 2022-05-14 11:46:54
+ * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js
+ * @Description:
  */
 import fs from "fs";
 import path from "path";
@@ -13,7 +13,9 @@ import portfinder from "portfinder";
 import ora from "ora";
 import chalk from "chalk";
 
-const clientSrc = fs.readFileSync(path.join(__dirname, "../client.js")).toString();
+const clientSrc = fs
+  .readFileSync(path.join(__dirname, "../client.js"))
+  .toString();
 const ansiToHtml = fs
   .readFileSync(path.join(__dirname, "../ansiToHtml.js"))
   .toString();
@@ -34,6 +36,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
     this.options = {
       port: 8080,
       retryWait: 5000,
+      delay: 0,
       ...options,
     };
   }
@@ -70,6 +73,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
     this.clientSrc = createClient({
       port,
       retryWait: options.retryWait,
+      delay: options.delay,
     });
   }
 
@@ -90,7 +94,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
   }
   apply(compiler) {
     const { options, clientSrc } = this;
-
+    const { compilerWatch = () => {} } = options;
     // // // 开始编译 只会调用一次
     this.hook(compiler, "afterPlugins", async (compilation) => {
       if (!this.wss) {
@@ -113,6 +117,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
         poll: undefined,
       },
       async (err, stats) => {
+        compilerWatch(err, stats);
         spinner.stop();
         this.broadcast(
           JSON.stringify({

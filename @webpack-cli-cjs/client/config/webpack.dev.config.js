@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
-const LiveReloadPlugin = require("webpack-livereload-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require("esbuild-loader");
 const BrowserReloadErrorOverlayWepbackPlugin = require("../definePlugin/browser-reload-error-overlay-wepback-plugin");
@@ -142,10 +141,6 @@ module.exports = {
     }),
     // 有跨域问题
     // new ErrorOverlayPlugin(),
-    // 刷新
-    new LiveReloadPlugin({
-      delay: 200,
-    }),
   ],
   devServer: {
     // disableHostCheck: true,
