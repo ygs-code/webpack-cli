@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-14 13:19:11
+ * @LastEditTime: 2022-05-14 14:33:22
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/client.js
  * @Description: 
  */
@@ -172,6 +172,8 @@
 											min-height: calc(100vh);
 											padding-top:${$top+40}px;
 											padding-left:${$left+40}px;
+											padding-bottom: 40px;
+											padding-right: 40px;
 											box-sizing: border-box;
 											overflow-y: auto;
 									}
