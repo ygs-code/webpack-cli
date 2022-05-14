@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-14 12:10:31
+ * @LastEditTime: 2022-05-14 12:29:15
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/client.js
  * @Description: 
  */
@@ -143,40 +143,42 @@
                 let iframe=hasIframe?hasIframe: document.createElement("iframe");
                 iframe.id = id;
                 title = "buildError...";
-			    iframe.style.cssText = `
-						width:calc(100% + ${$top}px);
-						height:calc(100% + ${$left}px);
+				iframe.style.cssText = `
+						width:calc(100vw + ${$left}px);
+						height:calc(100vh + ${$top}px);
 						z-Index : 999999999;
 						position:fixed;
 						border:medium none;
 						padding:0px;
 						margin :0px;
 						top :-${$top}px;
-						left :-${$left}px;
-				`;
-
+						left :-${$left}px; 
+	         	`;
 
                 let html = message.split('\n').reduce((acc, item) => {
                     return (acc += `<div >${filter.toHtml(item)}<div>`);
                 }, "");
+				
 				iframe.srcdoc = `
 							<style>
-								* {
-									margin: 0;
-									padding: 0;
-								}
-								.ansi-html-box {
-									background: rgba(0, 0, 0, 0.55);
-									width: 100%;
-									min-height: calc(100vh + 20px);
-									padding: 60px;
-									box-sizing: border-box;
-									transition: 0.5s;
-								}
-								.failed-to-compile{
-									color:rgb(200, 15, 47);
-								    font-size: 20px;
-								}
+									* {
+											margin: 0;
+											padding: 0;
+									}
+									.ansi-html-box {
+											background: rgba(0, 0, 0, 0.55);
+											width:calc(100%);
+											height:auto;
+											min-height: calc(100vh);
+											padding-top:${$top+40}px;
+											padding-left:${$left+40}px;
+											box-sizing: border-box;
+											overflow-y: auto;
+									}
+									.failed-to-compile{
+											color:rgb(200, 15, 47);
+											font-size: 20px;
+									}
 							</style>
 							<div  class="ansi-html-box">
 								<div  class="failed-to-compile">Failed to compile :</div>
