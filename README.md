@@ -53,8 +53,6 @@ const BrowserReloadErrorOverlayWepbackPlugin = require("browser-reload-error-ove
 
 <img src="./2.jpg" />
 
-<img src="./4.jpg" />
-
 <img src="./3.jpg" />
 
 
