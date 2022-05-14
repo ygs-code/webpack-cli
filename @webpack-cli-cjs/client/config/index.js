@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-05-13 19:28:59
+ * @LastEditTime: 2022-05-14 13:13:26
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
@@ -28,11 +28,11 @@ const isEnvDevelopment = NODE_ENV === "development";
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === "production";
 
-console.log('webpackEnv=',webpackEnv)
-console.log('isEnvDevelopment=',isEnvDevelopment)
-console.log('target=',target)
-console.log('isEnvProduction=',isEnvProduction)
-console.log('isEnvProduction=',isEnvProduction)
+// console.log('webpackEnv=',webpackEnv)
+// console.log('isEnvDevelopment=',isEnvDevelopment)
+// console.log('target=',target)
+// console.log('isEnvProduction=',isEnvProduction)
+// console.log('isEnvProduction=',isEnvProduction)
 
 // let isWeb = target == "web";
 

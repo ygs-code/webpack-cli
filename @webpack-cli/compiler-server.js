@@ -47,7 +47,7 @@ class App {
         ? await clientWebpackConfig()
         : await serverWebpackConfig();
 
-    console.log("this.isEnvDevelopment=========", this.isEnvDevelopment);
+    // console.log("this.isEnvDevelopment=========", this.isEnvDevelopment);
     if (this.isEnvDevelopment) {
       let { devServer: { port = undefined } = {} } = this.config;
       // 设置静态服务器
