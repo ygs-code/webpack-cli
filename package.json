@@ -1,6 +1,6 @@
 {
   "name": "browser-reload-error-overlay-wepback-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "yao guan shou",
   "description": "this is Webpack compiles the refresh plug-in and compile error logging plug-in",
   "main": "./lib/cjs/index.js",
