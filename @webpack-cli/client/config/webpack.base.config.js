@@ -55,12 +55,13 @@ const cacheLoader = (happypackId) => {
 export default {
   // 入口
   entry: {
+
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
     vendor: ["react"],
     index: [
-      // "@babel/polyfill",
+      "@babel/polyfill",
       //添加编译缓存
-      // "webpack/hot/poll?1000",
+      "webpack/hot/poll?1000",
       //  path.join(process.cwd(), "/src/index.js")
       //入口主文件
       path.join(process.cwd(), "/src/index.js"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
@@ -99,7 +100,7 @@ export default {
     },
     // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
     // 并且重启webpack的时候也会删除cache缓存
-    strictModuleExceptionHandling: true,
+    // strictModuleExceptionHandling: true,
   },
 
   // 是否监听文件

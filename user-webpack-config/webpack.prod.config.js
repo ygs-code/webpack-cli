@@ -35,20 +35,20 @@ const cacheLoader = (happypackId) => {
 module.exports = {
   plugins: [
     // 注入全局常量
-    new ExtendedDefinePlugin({
-      APP_CONFIG: {
-        api_key: "1234567890ABCDEFG",
-        fb_conf: {
-          use_social: true,
-          api_key: "123456790",
-        },
-      },
-    }),
-    // 自定义插件
-    new MyExampleWebpackPlugin({
-      // 出口
-      outputPath: path.join(process.cwd(), "/app"),
-    }),
+    // new ExtendedDefinePlugin({
+    //   APP_CONFIG: {
+    //     api_key: "1234567890ABCDEFG",
+    //     fb_conf: {
+    //       use_social: true,
+    //       api_key: "123456790",
+    //     },
+    //   },
+    // }),
+    // // 自定义插件
+    // new MyExampleWebpackPlugin({
+    //   // 出口
+    //   outputPath: path.join(process.cwd(), "/app"),
+    // }),
     // new HappyPack({
     //   id: "graphql",
     //   use: [

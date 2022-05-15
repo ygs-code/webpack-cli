@@ -113,7 +113,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
     compiler.watch(
       {
         // [watchOptions](/configuration/watch/#watchoptions) 示例
-        aggregateTimeout: 300,
+        // aggregateTimeout: 300,
         poll: undefined,
       },
       async (err, stats) => {

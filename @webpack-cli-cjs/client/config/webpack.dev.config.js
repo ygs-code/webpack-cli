@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
+// const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require("esbuild-loader");
