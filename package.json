@@ -39,7 +39,7 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/preset-typescript": "^7.17.12",
     "@babel/runtime": "^7.1.2",
     "@rollup/plugin-eslint": "^8.0.2",
     "@types/lodash": "^4.14.166",
@@ -64,8 +64,9 @@
     "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
-    "css-minimizer-webpack-plugin": "^3.4.1",
+    "css-minimizer-webpack-plugin": "^4.0.0",
     "directory-named-webpack-plugin": "^4.0.1",
+    "esbuild-loader": "^2.19.0",
     "eslint": "^8.15.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -149,7 +150,6 @@
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
-  "devDependencies": {},
   "bin": {
     "lingzhi-webpack-cli": "./@webpack-cli/index.js"
   },
@@ -158,6 +158,7 @@
     "copy": "node  copy",
     "//注释1:": "web端dev环境运行",
     "web:c:dev": "cross-env NODE_ENV=development   node  @webpack-cli-cjs/index.js  webpackEnv=dev  target=web  ",
+    "web:c1:dev": "cross-env NODE_ENV=development   node  @webpack-cli-cjs1/index.js  webpackEnv=dev  target=web  ",
     "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack-cli/index.js  webpackEnv=dev  target=web  ",
     "//注释2:": "web端生产环境运行",
     "web:build": "cross-env NODE_ENV=production   babel-node  @webpack-cli/index.js  webpackEnv=prod  target=web  ",

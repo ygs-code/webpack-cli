@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-14 14:30:44
+ * @LastEditTime: 2022-05-23 20:54:58
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -14,15 +14,15 @@ import Home from "@/pages/home";
 import "./App.css";
 // import "./index.css";
 // asdfdsf
-console.log("process=", process); // 'test'
+console.log("process=", process); // 'test' 
 /*global APP_CONFIG*/ 
 var server_api_key = APP_CONFIG.api_key;
  
-console.log( "APP_CONFIG=", APP_CONFIG);
+console.log( " APP_CONFIG=", APP_CONFIG);
 console.log("process=", process); 
 
-//  asdf   
-//  哈哈 
+//    
+//  
 //  pppp 
     // 阿斯顿发  
 const App = () => {

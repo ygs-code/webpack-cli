@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-05-14 13:13:26
+ * @LastEditTime: 2022-05-23 20:02:08
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
@@ -42,6 +42,14 @@ const isEnvProduction = NODE_ENV === "production";
 //添加smp.wrap会有bug 编译缓存出问题
 const smp = new SpeedMeasurePlugin();
 module.exports = async () => {
+  let userDevConfig = {}
+  try {
+    userDevConfig = require(process.cwd() +
+      '/user-webpack-config/webpack.dev.config.js')
+  } catch (error) {
+    console.error('userDevConfig error:', error)
+  }
+
   // let userDevConfig = await new Promise(async (resolve, reject) => {
   //   import(
   //     path.join(process.cwd(), "/user-webpack-config/webpack.dev.config.js")
@@ -55,44 +63,52 @@ module.exports = async () => {
   //     });
   // });
 
+  let userProdConfig = {}
+  try {
+    userProdConfig = require(process.cwd() +
+      '/user-webpack-config/webpack.prod.config.js')
+  } catch (error) {
+    console.error('userProdConfig error:', error)
+  }
+
   // let userProdConfig = await new Promise(async (resolve, reject) => {
   //   import(
-  //     path.join(process.cwd(), "/user-webpack-config/webpack.prod.config.js")
+  //     path.join(process.cwd(), '/user-webpack-config/webpack.prod.config.js')
   //   )
   //     .then((module) => {
-  //       resolve(module.default || {});
+  //       resolve(module.default || {})
   //     })
   //     .catch((error) => {
-  //       console.error("userProdConfig error:", error);
-  //       resolve({});
-  //     });
-  // });
+  //       console.error('userProdConfig error:', error)
+  //       resolve({})
+  //     })
+  // })
 
-  let config = {};
-  if (webpackEnv == "test") {
+  let config = {}
+  if (webpackEnv == 'test') {
     //   测试代码打包
     config = merge(
       // baseConfig,
       clientBaseConfig,
       testConfig,
       isEnvDevelopment ? devConfig : prodConfig,
-      isEnvDevelopment ? userDevConfig : userProdConfig
+      isEnvDevelopment ? userDevConfig : userProdConfig,
       // prdConfig,
-    );
+    )
   } else {
     // 源码打包
     config = merge(
       // baseConfig,
       clientBaseConfig,
       isEnvDevelopment ? devConfig : prodConfig,
-      isEnvDevelopment ? userDevConfig : userProdConfig
-    );
+      isEnvDevelopment ? userDevConfig : userProdConfig,
+    )
     const {
       devServer: {
         open: autoOpenBrowser, // 是否自动开启浏览器
         liveReload, // 是否自动刷新
       } = {},
-    } = config;
+    } = config
 
     // 开启浏览器重新刷新功能
     if (isEnvDevelopment && liveReload) {
@@ -101,11 +117,10 @@ module.exports = async () => {
         config.entry[name] = [
           // 把中间件打包进去每个js中
           // path.join(__dirname, "../dev-client-reload.js"),
-        ].concat(config.entry[name]);
-      });
+        ].concat(config.entry[name])
+      })
     }
   }
-
-  return config;
-};
-// export default smp.wrap(config);
+  //  console.log('config=',config.entry)
+  return config
+}
