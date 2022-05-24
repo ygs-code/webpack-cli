@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 14:20:52
+ * @LastEditTime: 2022-05-24 15:07:10
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -14,13 +14,9 @@ import Home from '@/pages/home'
 import json from './data.json'
 import './App.css'
 import './App1.less'
-// import "./App2.sass";
 import './App3.scss'
-// import "./index.css";
-// asdfdsf
 console.log('process=', process) // 'test'
 /*global APP_CONFIG*/
-
 var server_api_key = APP_CONFIG.api_key
 
 console.log(' APP_CONFIG=', APP_CONFIG)
