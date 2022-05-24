@@ -1,0 +1,32 @@
+{
+  "name": "browser-reload-error-overlay-wepback-plugin",
+  "version": "0.0.8",
+  "author": "yao guan shou",
+  "description": "this is Webpack compiles the refresh plug-in and compile error logging plug-in",
+  "main": "./lib/cjs/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin/issues"
+  },
+  "homepage": "https://github.com/qq281113270/browser-reload-error-overlay-wepback-plugin#readme",
+  "keywords": [
+    "webpack",
+    "reload",
+    "browser-reload",
+    "wepback-plugin",
+    "error-overlay-wepback-plugin",
+    "plugin",
+    "error-overlay"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "portfinder": "^1.0.28",
+    "ws": "^8.6.0"
+  }
+}
