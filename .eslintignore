@@ -1,3 +1,4 @@
 **/dist/**
 **/node_modules/**
-@webpack-cli-cjs/client/definePlugin/browser-reload-error-overlay-wepback-plugin
+@webpack-cli-cjs/client/definePlugin/browser-reload-error-overlay-wepback-plugin/
+@webpack-cli-cjs/client/definePlugin/browser-reload-error-overlay-wepback-plugin/**
