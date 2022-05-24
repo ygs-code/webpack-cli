@@ -25,7 +25,6 @@ import ExtendedDefinePlugin from 'extended-define-webpack-plugin'
 // import eslintFriendlyFormatter from "eslint-friendly-formatter";
 import ESLintPlugin from 'eslint-webpack-plugin'
 import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader'
-import fileLoader from 'file-loader'
 
 // const eslintrc = require(process.cwd() + "/.eslintrc.js");
 // console.log('eslintrc========',eslintrc)

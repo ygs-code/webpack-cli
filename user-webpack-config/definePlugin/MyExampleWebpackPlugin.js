@@ -2,7 +2,7 @@
  * @Date: 2022-04-28 10:55:26
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-12 15:57:42
+ * @LastEditTime: 2022-05-24 19:15:43
  * @FilePath: /webpack-cli/user-webpack-config/definePlugin/MyExampleWebpackPlugin.js
  * @Description:
  */
@@ -37,7 +37,7 @@ class MyExampleWebpackPlugin {
                 extends() {}
          } 
     `;
-    console.log('apply1==============')
+    // console.log('apply1==============')
     // this.write.call(this, data);
 
     // this.hook(compiler, "entryOption", () => {

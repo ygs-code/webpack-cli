@@ -1,49 +1,49 @@
-require("@babel/polyfill");
-const webpack = require("webpack");
-const fs = require("fs");
-const path = require("path");
-const nodeExternals = require("webpack-node-externals");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const WebpackBar = require("webpackbar");
-const HappyPack = require("happypack");
-const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
-const { CheckerPlugin } = require("awesome-typescript-loader");
-const os = require("os");
+require('@babel/polyfill')
+const webpack = require('webpack')
+const fs = require('fs')
+const path = require('path')
+const nodeExternals = require('webpack-node-externals')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const WebpackBar = require('webpackbar')
+const HappyPack = require('happypack')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
+const { CheckerPlugin } = require('awesome-typescript-loader')
+const os = require('os')
 // const      bannerPlugin = require( "./bannerPlugin";
 // const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin";
-const { getArgv } = require("../../utils");
-const NpmInstallPlugin = require("npm-install-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const WebpackBuildDllPlugin = require("webpack-build-dll-plugin");
-const DllReferencePlugin = require("webpack/lib/DllReferencePlugin");
-const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
-const ExtendedDefinePlugin = require("extended-define-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
+const { getArgv } = require('../../utils')
+const NpmInstallPlugin = require('npm-install-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const WebpackBuildDllPlugin = require('webpack-build-dll-plugin')
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
+const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
+const webpackEnv = getArgv('webpackEnv') // 环境参数
 
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
-const webpackEnv = getArgv("webpackEnv"); // 环境参数
+const { resolve } = path
 
-const { resolve } = path;
-
-const NODE_ENV = process.env.NODE_ENV; // 环境参数
+const NODE_ENV = process.env.NODE_ENV // 环境参数
 //    是否是生产环境
-const isEnvProduction = NODE_ENV === "production";
+const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境
-const isEnvDevelopment = NODE_ENV === "development";
+const isEnvDevelopment = NODE_ENV === 'development'
 
 const cacheLoader = (happypackId) => {
   return isEnvDevelopment
     ? [
         `happypack/loader?id=${happypackId}&cacheDirectory=true`,
-        "thread-loader",
-        "cache-loader",
+        'thread-loader',
+        'cache-loader',
       ]
-    : [`happypack/loader?id=${happypackId}`];
-};
+    : [`happypack/loader?id=${happypackId}`]
+}
 // console.log("__dirname : " + __dirname);
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
@@ -51,28 +51,28 @@ module.exports = {
   // 入口
   entry: {
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
-    vendor: ["react"],
+    vendor: ['react'],
     index: [
-      // "@babel/polyfill",
+      '@babel/polyfill',
       //添加编译缓存
       // "webpack/hot/poll?1000",
       //  path.join(process.cwd(), "/src/index.js")
       //入口主文件
-      path.join(process.cwd(), "/src/index.js"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
+      path.join(process.cwd(), '/src/index.js'), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
     ],
   },
 
   // 出口
   output: {
     // 输出目录
-    path: path.join(process.cwd(), "/dist"),
+    path: path.join(process.cwd(), '/dist'),
     // filename: '[name].[hash].js',
     // chunkFilename: '[name].[hash].js',
     // Chunk 配置
-    filename: "static/js/[name].js",
-    chunkFilename: "static/js/[name][contenthash].js",
+    filename: 'static/js/[name].js',
+    chunkFilename: 'static/js/[name][contenthash].js',
     // 访问静态资源目录 比如 css img
-    publicPath: "/", // dev 服务器需要是绝对，而编译出来需要是相对
+    publicPath: '/', // dev 服务器需要是绝对，而编译出来需要是相对
     // // 导出库(exported library)的名称
     // library: "server",
     // //   导出库(exported library)的类型
@@ -86,15 +86,15 @@ module.exports = {
     // 你的文件在chrome开发者工具中显示为webpack:///foo.js?a93h, 。如果我们希望文件名显示得更清晰呢，比如说 webpack:///path/to/foo.js
     devtoolModuleFilenameTemplate: (info) => {
       // "webpack://[namespace]/[resource-path]?[loaders]"
-      return `webpack:///${info.resourcePath}?${info.loaders}`;
+      return `webpack:///${info.resourcePath}?${info.loaders}`
     },
     // 如果多个模块产生相同的名称，使用
     devtoolFallbackModuleFilenameTemplate: (info) => {
-      return `webpack:///${info.resourcePath}?${info.loaders}`;
+      return `webpack:///${info.resourcePath}?${info.loaders}`
     },
     // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
     // 并且重启webpack的时候也会删除cache缓存
-    strictModuleExceptionHandling: true,
+    // strictModuleExceptionHandling: true,
   },
 
   // 是否监听文件
@@ -114,7 +114,7 @@ module.exports = {
         // 排除
         exclude: /node_modules/,
         //入口文件
-        include: [path.join(process.cwd(), "/src")],
+        include: [path.join(process.cwd(), '/src')],
       }),
     ],
     // //启用，会主动缓存模块，但并不安全。传递 true 将缓存一切
@@ -125,11 +125,11 @@ module.exports = {
     // 相对路径是相对于webpack.config.js文件所在的路劲
     // 详细教程: https://blog.csdn.net/u012987546/article/details/97389078
     modules: [
-      path.join(process.cwd(), "/node_modules"),
-      path.join(process.cwd(), "/src"),
+      path.join(process.cwd(), '/node_modules'),
+      path.join(process.cwd(), '/src'),
     ],
     // 可以省略引用后缀
-    extensions: [".tsx", ".ts", ".js", ".graphql", ".json", ".node"],
+    extensions: ['.tsx', '.ts', '.js', '.graphql', '.json', '.node'],
     // 1.不需要node polyfilss webpack 去掉了node polyfilss 需要自己手动添加
     //dllPlugin 插件需要的包
     alias: {
@@ -138,7 +138,7 @@ module.exports = {
       // vm: "vm-browserify",
       // crypto: false,
       // stream: "stream-browserify",
-      "@": path.join(process.cwd(), "/src"),
+      '@': path.join(process.cwd(), '/src'),
     },
     // 2.手动添加polyfills
     fallback: {
@@ -154,18 +154,18 @@ module.exports = {
   performance: {
     maxEntrypointSize: 1024 * 512, // 设置最大输入512kb的文件，如果大于他则发出警告
     maxAssetSize: 1024 * 256, // 设置最大输出256kb的文件，如果大于他则发出警告
-    hints: "warning",
+    hints: 'warning',
     // 过滤文件
     assetFilter: function (assetFilename) {
       // console.log('assetFilename==========', assetFilename,assetFilename.endsWith('.js'))
       // 只要监听js文件，过滤其他文件判断
-      return assetFilename.endsWith(".js");
+      return assetFilename.endsWith('.js')
     },
   },
 
   //选项决定文件系统快照的创建和失效方式。
   snapshot: {
-    managedPaths: [path.join(process.cwd(), "/node_modules")],
+    managedPaths: [path.join(process.cwd(), '/node_modules')],
     immutablePaths: [],
     buildDependencies: {
       hash: true,
@@ -188,7 +188,7 @@ module.exports = {
   optimization: {
     //告知 webpack 去决定每个模块使用的导出内容。这取决于 optimization.providedExports 选项。
     //由 optimization.usedExports 收集的信息会被其它优化手段或者代码生成使用，比如未使用的导出内容不会被生成， 当所有的使用都适配，导出名称会被处理做单个标记字符
-    usedExports: "global",
+    usedExports: 'global',
     //告知 webpack 去辨识 package.json 中的 副作用 标记或规则，以跳过那些当导出不被使用且被标记不包含副作用的模块。
     sideEffects: true,
     //使用 optimization.emitOnErrors 在编译时每当有错误时，就会 emit asset。这样可以确保出错的 asset 被 emit 出来。关键错误会被 emit 到生成的代码中，并会在运行时报错
@@ -215,14 +215,14 @@ module.exports = {
     //
     splitChunks: {
       name: false,
-      chunks: "all",
+      chunks: 'all',
       // minSize: 20000,
       minRemainingSize: 0,
       // maxSize: 0,
       minChunks: 1,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
-      automaticNameDelimiter: "~",
+      automaticNameDelimiter: '~',
       enforceSizeThreshold: 50000,
       cacheGroups: {
         // vendor: {
@@ -269,7 +269,7 @@ module.exports = {
     assets: true,
     // 对资源按指定的字段进行排序
     // 你可以使用 `!field` 来反转排序。
-    assetsSort: "field",
+    assetsSort: 'field',
     // 添加构建日期和构建时间信息
     builtAt: true,
     // 添加缓存（但未构建）模块的信息
@@ -286,7 +286,7 @@ module.exports = {
     chunkOrigins: true,
     // 按指定的字段，对 chunk 进行排序
     // 你可以使用 `!field` 来反转排序。默认是按照 `id` 排序。
-    chunksSort: "field",
+    chunksSort: 'field',
     // 用于缩短 request 的上下文目录
     // context: "../src/",
     // `webpack --colors` 等同于 显示日志不同的颜色
@@ -322,7 +322,7 @@ module.exports = {
     modules: true,
     // 按指定的字段，对模块进行排序
     // 你可以使用 `!field` 来反转排序。默认是按照 `id` 排序。
-    modulesSort: "field",
+    modulesSort: 'field',
     // 显示警告/错误的依赖和来源（从 webpack 2.5.0 开始）
     moduleTrace: true,
     // 当文件大小超过 `performance.maxAssetSize` 时显示性能提示
@@ -352,33 +352,76 @@ module.exports = {
   //防止将某些 import 的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
   externals: [],
 
- 
   module: {
     rules: [
+      // json
+      {
+        test: /\.json$/,
+        use: 'json-loader',
+      },
+
+      //处理图片
+      //！默认处理不了html中的图片 <img src="./img/BM.jpg" alt=""> 打包后路径不会改变！
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        //只用一个loader  但要下载url-loader 和 file-loader
+        loader: 'url-loader', // 处理样式中的url
+        options: {
+          //当图片小于8k 会被base64处理
+          //图片体积会变大，文件请求更慢 如果使用http 2.0 则这里配置是不好的
+          limit: 8 * 1024,
+          //默认使用的是es6模块化，而html-loader使用的是commonjs模块化
+          //解析时就会报错
+          // 解决，关闭es6模块化，使用commonjs
+          esModule: false,
+          //图片名字重命名
+          // [name] 文件名
+          //[contenthash:10]  hash 10
+          //[ext]  原拓展名
+          name: 'static/image/[name].[contenthash:10].[ext]',
+        },
+      },
+
+      {
+        //使用的是commonjs模块化
+        test: /\.html$/,
+        //处理html中img的图片 （引入img图片，就能被url-loader进行处理）
+        loader: 'html-loader',
+      },
+
       // {
-      //   test: /(\.tsx?$)|(\.ts?$)|(\.js?$)|(\.m?js$)/,
-      //   enforce: "pre", //编译前检查
-      //   loader: "eslint-loader",
-      //   // use: [{ loader: "eslint-loader" }],
-      //   // 排除
-      //   exclude: /node_modules/,
-      //   //入口文件
-      //   include: [path.join(process.cwd(), "/src")],
+      //   test: /\.(json)$/,
+      //   loader: 'url-loader',
+      //   // Exclude `js` files to keep "css" loader working as it injects
+      //   // its runtime that would otherwise be processed through "file" loader.
+      //   // Also exclude `html` and `json` extensions so they get processed
+      //   // by webpacks internal loaders.
+      //   // exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/, /\.css$/],
       //   options: {
-      //     loader: "jsx",
-      //     target: "es2015",
-      //     jsxFactory: "React.createElement",
-      //     jsxFragment: "React.Fragment",
+      //     name: 'static/json/[name].[contenthash:10].[ext]',
       //   },
       // },
+
+      // ts
       {
-        test: /(\.tsx?$)|(\.ts?$)/,
-        use: ["awesome-typescript-loader"].concat(
-          isEnvDevelopment ? ["thread-loader", "cache-loader"] : []
-        ),
+        test: /\.ts?$/,
+        enforce: 'pre',
+        // 排除文件,因为这些包已经编译过，无需再次编译
+        exclude: /(node_modules|bower_components)/,
+        use: cacheLoader('ts'),
       },
+
+      //tsx
       {
-        include: path.join(process.cwd(), "/src"),
+        test: /(\.tsx?$)/,
+        enforce: 'pre',
+        // 排除文件,因为这些包已经编译过，无需再次编译
+        exclude: /(node_modules|bower_components)/,
+        use: cacheLoader('tsx'),
+      },
+
+      {
+        include: path.join(process.cwd(), '/src'),
         sideEffects: true,
       },
       {
@@ -413,7 +456,7 @@ module.exports = {
           //     name: "my-pool"
           //   }
           // },
-        ].concat(cacheLoader("node")),
+        ].concat(cacheLoader('node')),
         // 排除文件,因为这些包已经编译过，无需再次编译
         exclude: /(node_modules|bower_components)/,
         // use: {
@@ -423,20 +466,7 @@ module.exports = {
         //   },
         // },
       },
-      {
-        test: /\.m?js$/,
-        enforce: "pre",
-        // 排除文件,因为这些包已经编译过，无需再次编译
-        exclude: /(node_modules|bower_components)/,
-        use: ["source-map-loader"].concat(cacheLoader("babel")),
-        // use: {
-        //  loader: "babel-loader",
-        //   options: {
-        //     presets: ["@babel/preset-env"],
-        //     plugins: ["@babel/plugin-transform-runtime"],
-        //   },
-        // },
-      },
+
       {
         test: /\.(graphql|gql)$/,
         // 排除文件,因为这些包已经编译过，无需再次编译
@@ -451,7 +481,7 @@ module.exports = {
           //     name: "graphql",
           //   },
           // },
-        ].concat(cacheLoader("graphql")),
+        ].concat(cacheLoader('graphql')),
         // use: {
         //   loader: "raw-loader",
         // },
@@ -460,6 +490,7 @@ module.exports = {
   },
 
   plugins: [
+    new ESBuildPlugin(),
     new ESLintPlugin({
       emitError: true, //发现的错误将始终被触发，将禁用设置为false。
       emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
@@ -470,19 +501,19 @@ module.exports = {
     }),
     // html静态页面
     new HtmlWebpackPlugin({
-      title: "Custom template using Handlebars",
+      title: 'Custom template using Handlebars',
       // 生成出来的html文件名
-      filename: "index.html",
+      filename: 'index.html',
       // 每个html的模版，这里多个页面使用同一个模版
-      template: path.join(process.cwd(), "/public/index.html"),
+      template: path.join(process.cwd(), '/public/index.html'),
       // 自动将引用插入html
       inject: true,
       hash: true,
       // 每个html引用的js模块，也可以在这里加上vendor等公用模块
       chunks: [
-        "vendor",
-        "manifest",
-        "index",
+        'vendor',
+        'manifest',
+        'index',
         // "static/vendor.dll",
         // "static/vendor.manifest",
       ],
@@ -549,58 +580,25 @@ module.exports = {
     // 这些情况将导致与其他开发人员或运行其他操作系统（需要正确使用大小写正确的路径）的构建箱发生冲突。
     new CaseSensitivePathsPlugin(),
     // 开启多进程
-    // awesome-typescript-loader 不支持
-    // new HappyPack({
-    //     id: 'typescript',
-    //     use: [
-    //         //添加loader
-    //         {
-    //             loader: 'awesome-typescript-loader',
-    //             options: {
-    //                 name: 'graphql',
-    //             },
-    //         },
-    //         // "awesome-typescript-loader"
-    //     ],
-    //     // 输出执行日志
-    //     verbose: true,
-    //     // 使用共享线程池
-    //     threadPool: happyThreadPool,
-    // }),
+    // node
     new HappyPack({
-      id: "node",
-      use: ["node-loader"],
+      id: 'node',
+      use: ['node-loader'],
       // 输出执行日志
       // verbose: true,
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),
+    // ts
     new HappyPack({
-      id: "babel",
+      id: 'ts',
       //添加loader
-      use: ["babel-loader"],
-      // use: ["babel-loader", "unicode-loader"],
-      // 输出执行日志
-      // verbose: true,
-      // 使用共享线程池
-      threadPool: happyThreadPool,
-    }),
-    new HappyPack({
-      id: "graphql",
       use: [
-        //添加loader
-        // {
-        //   loader: path.join(
-        //     __dirname,
-        //     "./defineLoader/MyExampleWebpackLoader.js"
-        //   ),
-        //   options: {
-        //     name: "graphql",
-        //   },
-        // },
         {
-          loader: "raw-loader",
-          options: {},
+          loader: 'ts-loader',
+          options: {
+            // cacheDirectory: true,
+          },
         },
       ],
       // 输出执行日志
@@ -608,6 +606,48 @@ module.exports = {
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),
+
+    // tsx
+    new HappyPack({
+      id: 'tsx',
+      //添加loader
+      use: [
+        {
+          loader: 'awesome-typescript-loader',
+          options: {
+            // cacheDirectory: true,
+          },
+        },
+      ],
+      // 输出执行日志
+      // verbose: true,
+      // 使用共享线程池
+      threadPool: happyThreadPool,
+    }),
+
+    // new HappyPack({
+    //     id: 'graphql',
+    //     use: [
+    //         //添加loader
+    //         // {
+    //         //   loader: path.join(
+    //         //     __dirname,
+    //         //     "./defineLoader/MyExampleWebpackLoader.js"
+    //         //   ),
+    //         //   options: {
+    //         //     name: "graphql",
+    //         //   },
+    //         // },
+    //         {
+    //             loader: 'raw-loader',
+    //             options: {},
+    //         },
+    //     ],
+    //     // 输出执行日志
+    //     // verbose: true,
+    //     // 使用共享线程池
+    //     threadPool: happyThreadPool,
+    // }),
 
     // new HappyPack({
     //   id: "MyExampleWebpackLoader",
@@ -636,7 +676,7 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       //配置清理文件 如果不清理则加 ！
-      cleanOnceBeforeBuildPatterns: ["*", "!dll*"],
+      cleanOnceBeforeBuildPatterns: ['*', '!dll*'],
       // cleanOnceBeforeBuildPatterns: [
       //   "index.html",
       //   "**/index*.js",
@@ -682,6 +722,4 @@ module.exports = {
     //   });
     // }),
   ],
-};
-
-
+}
