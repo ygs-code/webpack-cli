@@ -232,7 +232,7 @@ class App {
                         'DELETE,PUT,POST,GET,OPTIONS',
                 };
             },
-            writeToDisk: true, //是否写入硬盘
+            writeToDisk: false, //是否写入硬盘
             publicPath: this.config.output.publicPath,
             serverSideRender: true, // 是否是服务器渲染
             // quiet: true,
