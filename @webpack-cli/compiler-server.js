@@ -13,7 +13,6 @@ import isObject from 'is-object';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 // import webpackHotServerMiddleware from "webpack-hot-server-middleware";
 import connectHistoryApiFallback from 'connect-history-api-fallback';
-import ora from 'ora';
 import rm from 'rimraf';
 // chalk插件，用来在命令行中输入不同颜色的文字
 import chalk from 'chalk';
@@ -84,9 +83,8 @@ class App {
     // 编译
     async setCompiler() {
         // 建立一个socket
-        // 开启转圈圈动画
-        // const spinner = ora("building.....");
-        // spinner.start();
+  
+ 
         await new Promise((resolve, reject) => {
             rm(path.join(process.cwd(), '/dist'), (err) => {
                 if (err) {
@@ -100,7 +98,7 @@ class App {
             this.config,
 
             (err, stats) => {
-                // spinner.stop();
+           
                 // stabilization(500).then(() => {
                 // if (err) {
                 //   console.log("err============================");

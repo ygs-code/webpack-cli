@@ -78,8 +78,7 @@ class App {
   // 编译
   async setCompiler() {
     // 开启转圈圈动画
-    const spinner = ora("building.....");
-    spinner.start();
+ 
 
     await new Promise((resolve, reject) => {
       rm(path.join(process.cwd(), "/dist"), (err) => {
@@ -94,7 +93,7 @@ class App {
     const compiler = webpack(
       this.config
       //   (err, stats) => {
-      //   spinner.stop();
+     
 
       //   // stabilization(500).then(() => {
       //   if (err) {

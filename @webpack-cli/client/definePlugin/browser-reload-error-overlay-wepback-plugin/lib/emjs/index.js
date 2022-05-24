@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-14 11:46:54
+ * @LastEditTime: 2022-05-24 19:57:26
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js
  * @Description:
  */
@@ -107,9 +107,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
     //   exclude: options.exclude,
     // });
 
-    const spinner = ora("building.....");
-    spinner.start();
-
+ 
     compiler.watch(
       {
         // [watchOptions](/configuration/watch/#watchoptions) 示例
@@ -118,7 +116,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
       },
       async (err, stats) => {
         compilerWatch(err, stats);
-        spinner.stop();
+        
         this.broadcast(
           JSON.stringify({
             cmd: "cmd:rebuilding",
