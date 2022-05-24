@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 15:07:10
+ * @LastEditTime: 2022-05-24 15:52:54
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -18,12 +18,12 @@ import './App3.scss'
 console.log('process=', process) // 'test'
 /*global APP_CONFIG*/
 var server_api_key = APP_CONFIG.api_key
-
+ 
 console.log(' APP_CONFIG=', APP_CONFIG)
 console.log('process=', process)
 console.log('json=', json)
+  
 
-//
 //
 //  pppp
 // 阿斯顿发

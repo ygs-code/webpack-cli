@@ -165,6 +165,7 @@
     "lingzhi-webpack-cli": "./@webpack-cli/index.js"
   },
   "scripts": {
+    "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
     "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
     "copy": "node  copy",
     "//注释1:": "web端dev环境运行",
