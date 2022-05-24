@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 15:50:04
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-12 18:14:28
+ * @LastEditTime: 2022-05-24 19:45:52
  * @FilePath: /webpack-cli/user-webpack-config/definePlugin/HelloWorldCheckerPlugin.js
  * @Description:
  */
@@ -10,8 +10,9 @@ const fs = require("fs");
 const path = require("path");
 const ora = require("ora");
 const rm = require("rimraf");
+const chalk = require("chalk");
 // chalk插件，用来在命令行中输入不同颜色的文字
-import chalk from "chalk";
+ 
 class HelloWorldCheckerPlugin {
   constructor(options) {
     this.options = options;
