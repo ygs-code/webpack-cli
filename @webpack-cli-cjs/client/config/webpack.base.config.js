@@ -491,14 +491,14 @@ module.exports = {
 
   plugins: [
     new ESBuildPlugin(),
-    new ESLintPlugin({
-      emitError: true, //发现的错误将始终被触发，将禁用设置为false。
-      emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
-      failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
-      failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
-      quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
-      fix: true, //自动修复
-    }),
+    // new ESLintPlugin({
+    //   emitError: true, //发现的错误将始终被触发，将禁用设置为false。
+    //   emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
+    //   failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
+    //   failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
+    //   quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
+    //   fix: true, //自动修复
+    // }),
     // html静态页面
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',
