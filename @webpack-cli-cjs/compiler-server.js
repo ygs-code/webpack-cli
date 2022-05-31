@@ -12,10 +12,9 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 // const      webpackHotServerMiddleware = require( "webpack-hot-server-middleware";
 const connectHistoryApiFallback = require("connect-history-api-fallback");
 
-const ora = require("ora");
 const rm = require("rimraf");
 // chalk插件，用来在命令行中输入不同颜色的文字
-const chalk = require("chalk");
+// const chalk = require("chalk");
 // opn插件是用来打开特定终端的，此文件用来在默认浏览器中打开链接 opn(url)
 const opn = require("opn");
 // 引入http-proxy-middleware插件，此插件是用来代理请求的只能用于开发环境，目的主要是解决跨域请求后台api
