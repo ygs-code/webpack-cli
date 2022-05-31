@@ -1,11 +1,11 @@
 {
-  "name": "@lingzhi/webpack-cli",
+  "name": "@webpack-cli",
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "",
-  "main": "@webpack-cli/index.js",
+  "main": "./@webpack-cli-cjs/index.js",
   "dependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.10",
@@ -54,6 +54,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-es2015": "^6.24.1",
+    "browser-reload-error-overlay-wepback-plugin": "0.0.9",
     "browser-reload-plugin": "^1.1.0",
     "cache-loader": "^4.1.0",
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
@@ -161,7 +162,7 @@
     "react-app-polyfill/jsdom"
   ],
   "bin": {
-    "lingzhi-webpack-cli": "./@webpack-cli/index.js"
+    "webpack-cli": "./@webpack-cli-cjs/index.js"
   },
   "scripts": {
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
