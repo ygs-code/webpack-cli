@@ -9,7 +9,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const portfinder = require('portfinder')
 const isObject = require('is-object')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const BrowserReloadErrorOverlayWepbackPlugin = require('./client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/cjs')
+// const BrowserReloadErrorOverlayWepbackPlugin = require('./client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/cjs')
 const connectHistoryApiFallback = require('connect-history-api-fallback')
 
 const rm = require('rimraf')
@@ -77,7 +77,7 @@ class App {
   // 编译
   async setCompiler() {
     // 开启转圈圈动画
-    let $BrowserReloadErrorOverlayWepbackPlugin = {}
+    // let $BrowserReloadErrorOverlayWepbackPlugin = {}
     await new Promise((resolve, reject) => {
       rm(path.join(process.cwd(), '/dist'), (err) => {
         if (err) {
@@ -88,13 +88,13 @@ class App {
       })
     })
 
-    if (this.isEnvDevelopment) {
-      $BrowserReloadErrorOverlayWepbackPlugin = new BrowserReloadErrorOverlayWepbackPlugin()
-    }
+    // if (this.isEnvDevelopment) {
+    //   $BrowserReloadErrorOverlayWepbackPlugin = new BrowserReloadErrorOverlayWepbackPlugin()
+    // }
 
     const compiler = webpack(this.config, (err, stats) => {
-      this.isEnvDevelopment &&
-        $BrowserReloadErrorOverlayWepbackPlugin.watch(err, stats)
+      // this.isEnvDevelopment &&
+      //   $BrowserReloadErrorOverlayWepbackPlugin.watch(err, stats)
       if (err) {
         console.log('Errors:' + chalk.red(err.stack || err))
         if (err.details) {
@@ -132,8 +132,8 @@ class App {
       // }
     })
 
-    this.isEnvDevelopment &&
-      $BrowserReloadErrorOverlayWepbackPlugin.injection(compiler)
+    // this.isEnvDevelopment &&
+    //   $BrowserReloadErrorOverlayWepbackPlugin.injection(compiler)
 
     // console.log(chalk.rgb(13, 188, 121)("Build complete .\n"));
     // });
