@@ -3,7 +3,7 @@
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "./@webpack-cli-cjs/index.js",
   "dependencies": {
@@ -155,7 +155,8 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^5.0.0-3",
-    "ws": "^8.6.0"
+    "ws": "^8.6.0",
+    "core-js": "^2.6.10"
   },
   "setupFiles": [
     "react-app-polyfill/jsdom"
