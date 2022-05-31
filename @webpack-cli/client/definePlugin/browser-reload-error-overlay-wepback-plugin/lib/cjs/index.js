@@ -2,7 +2,7 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 19:57:20
+ * @LastEditTime: 2022-05-31 17:02:31
  * @FilePath: /webpack-cli/@webpack-cli/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/cjs/index.js
  * @Description:
  */
@@ -10,8 +10,8 @@ const fs = require("fs");
 const path = require("path");
 const WebSocket = require("ws");
 const portfinder = require("portfinder");
-const ora = require("ora");
-const chalk = require("chalk");
+// const ora = require("ora");
+// const chalk = require("chalk");
 
 const clientSrc = fs
   .readFileSync(path.join(__dirname, "../client.js"))

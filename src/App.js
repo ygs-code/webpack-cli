@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 19:54:12
+ * @LastEditTime: 2022-05-31 17:26:11
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 // import Router from "./router/index";
 import store from './redux/store'
 import Home from '@/pages/home'
-import json from './data.json'
+// import json from './data.json'
 import './App.css'
 import './App1.less'
 import './App3.scss'
@@ -21,7 +21,7 @@ var server_api_key = APP_CONFIG.api_key
  
 console.log(' APP_CONFIG=', APP_CONFIG)
 console.log('process=', process)
-console.log('json=', json)
+// console.log('json=', json)
   
 
 

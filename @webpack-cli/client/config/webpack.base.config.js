@@ -358,11 +358,12 @@ export default {
 
   module: {
     rules: [
-      // json
-      {
-        test: /\.json$/,
-        use: 'json-loader',
-      },
+      // // json
+      // {
+      //   test: /\.json$/,
+      //   use: 'json-loader',
+      //   enforce: 'pre',
+      // },
 
       //处理图片
       //！默认处理不了html中的图片 <img src="./img/BM.jpg" alt=""> 打包后路径不会改变！
@@ -409,7 +410,7 @@ export default {
       // ts
       {
         test: /\.ts?$/,
-        enforce: 'pre',
+        // enforce: 'pre',
         // 排除文件,因为这些包已经编译过，无需再次编译
         exclude: /(node_modules|bower_components)/,
         use: cacheLoader('ts'),
@@ -418,7 +419,7 @@ export default {
       //tsx
       {
         test: /(\.tsx?$)/,
-        enforce: 'pre',
+        // enforce: 'pre',
         // 排除文件,因为这些包已经编译过，无需再次编译
         exclude: /(node_modules|bower_components)/,
         use: cacheLoader('tsx'),
