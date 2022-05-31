@@ -14,7 +14,7 @@ const connectHistoryApiFallback = require('connect-history-api-fallback')
 
 const rm = require('rimraf')
 // chalk插件，用来在命令行中输入不同颜色的文字
-// const chalk = require("chalk");
+const chalk = require("chalk");
 // opn插件是用来打开特定终端的，此文件用来在默认浏览器中打开链接 opn(url)
 const opn = require('opn')
 // 引入http-proxy-middleware插件，此插件是用来代理请求的只能用于开发环境，目的主要是解决跨域请求后台api
@@ -90,39 +90,41 @@ class App {
 
     const compiler = webpack(this.config, (err, stats) => {
       //   // stabilization(500).then(() => {
-      //   if (err) {
-      //     console.log("Errors:" + chalk.red(err.stack || err));
-      //     if (err.details) {
-      //       console.log("Errors:" + chalk.red(err.details));
-      //     }
-      //     return;
-      //   }
-      //   if (stats.hasErrors()) {
-      //     console.log(
-      //       "Errors:" +
-      //         chalk.red(
-      //           stats.toString({
-      //             colors: true,
-      //           }) + "\n\n"
-      //         )
-      //     );
-      //   } else if (stats.hasWarnings()) {
-      //     console.log(
-      //       "Warnings:" +
-      //         chalk.yellow(
-      //           stats.toString({
-      //             colors: true,
-      //           }) + "\n\n"
-      //         )
-      //     );
-      //   }
-      //   // else {
-      //   //     process.stdout.write(
-      //   //         stats.toString({
-      //   //             colors: true,
-      //   //         }) + '\n\n'
-      //   //     );
-      //   // }
+        if (err) {
+          console.log("Errors:" + chalk.red(err.stack || err));
+          if (err.details) {
+            console.log("Errors:" + chalk.red(err.details));
+          }
+          return;
+        }
+        if (stats.hasErrors()) {
+          console.log(
+            "Errors:" +
+              chalk.red(
+                stats.toString({
+                  colors: true,
+                }) + "\n\n"
+              )
+          );
+        } 
+        
+        // else if (stats.hasWarnings()) {
+        //   console.log(
+        //     "Warnings:" +
+        //       chalk.yellow(
+        //         stats.toString({
+        //           colors: true,
+        //         }) + "\n\n"
+        //       )
+        //   );
+        // }
+        // else {
+        //     process.stdout.write(
+        //         stats.toString({
+        //             colors: true,
+        //         }) + '\n\n'
+        //     );
+        // }
     })
     // console.log(chalk.rgb(13, 188, 121)("Build complete .\n"));
     // });
