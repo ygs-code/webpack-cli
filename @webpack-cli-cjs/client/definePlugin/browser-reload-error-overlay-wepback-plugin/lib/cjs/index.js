@@ -2,33 +2,33 @@
  * @Date: 2022-05-12 17:59:30
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 20:02:43
+ * @LastEditTime: 2022-05-31 21:26:37
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/definePlugin/browser-reload-error-overlay-wepback-plugin/lib/cjs/index.js
  * @Description:
  */
-const fs = require("fs");
-const path = require("path");
-const WebSocket = require("ws");
-const portfinder = require("portfinder");
+const fs = require('fs')
+const path = require('path')
+const WebSocket = require('ws')
+const portfinder = require('portfinder')
 // const chalk = require("chalk");
 
 const clientSrc = fs
-  .readFileSync(path.join(__dirname, "../client.js"))
-  .toString();
+  .readFileSync(path.join(__dirname, '../client.js'))
+  .toString()
 const ansiToHtml = fs
-  .readFileSync(path.join(__dirname, "../ansiToHtml.js"))
-  .toString();
+  .readFileSync(path.join(__dirname, '../ansiToHtml.js'))
+  .toString()
 
 const createClient = (data) => {
-  let src = clientSrc;
+  let src = clientSrc
   // eslint-disable-next-line guard-for-in
   for (const key in data) {
-    src = src.replace("/*" + key + "*/", data[key]);
+    src = src.replace('/*' + key + '*/', data[key])
   }
-  return src;
-};
+  return src
+}
 
-const name = "BrowserReloadErrorOverlayWepbackPlugin";
+const name = 'BrowserReloadErrorOverlayWepbackPlugin'
 
 class BrowserReloadErrorOverlayWepbackPlugin {
   constructor(options) {
@@ -37,29 +37,29 @@ class BrowserReloadErrorOverlayWepbackPlugin {
       retryWait: 5000,
       delay: 0,
       ...options,
-    };
+    }
   }
 
   async start() {
-    const { options } = this;
-    let port = options.port;
+    const { options } = this
+    let port = options.port
     // 设置静态服务器
-    portfinder.basePort = port;
+    portfinder.basePort = port
     port = await new Promise((resolve, reject) => {
       //查找端口号
       portfinder.getPort((err, port) => {
         if (err) {
-          reject(err);
-          return;
+          reject(err)
+          return
         }
         // 新端口
-        resolve(port);
-      });
-    });
+        resolve(port)
+      })
+    })
 
-    this.wss = new WebSocket.Server({ port });
+    this.wss = new WebSocket.Server({ port })
 
-    this.wss.on("connection", function (ws) {
+    this.wss.on('connection', function (ws) {
       // 远程socket
       // this.broadcast(
       //   JSON.stringify({
@@ -67,47 +67,45 @@ class BrowserReloadErrorOverlayWepbackPlugin {
       //     message: "",
       //   })
       // );
-    });
+    })
 
     this.clientSrc = createClient({
       port,
       retryWait: options.retryWait,
       delay: options.delay,
-     
-    });
+    })
   }
 
   broadcast(message) {
-    this.wss.clients.forEach((client) => client.send(message));
+    this.wss.clients.forEach((client) => client.send(message))
   }
   // // 做兼容
   hook(compiler, hookName, pluginName, fn) {
     if (arguments.length === 3) {
-      fn = pluginName;
-      pluginName = hookName;
+      fn = pluginName
+      pluginName = hookName
     }
     if (compiler.hooks) {
-      compiler.hooks[hookName].tap(pluginName, fn);
+      compiler.hooks[hookName].tap(pluginName, fn)
     } else {
-      compiler.plugin(pluginName, fn);
+      compiler.plugin(pluginName, fn)
     }
   }
   apply(compiler) {
-    const { options={}, clientSrc } = this;
-    const { compilerWatch = () => {} } = options;
+    const { options = {}, clientSrc } = this
+    const { compilerWatch = () => {} } = options
     // // // 开始编译 只会调用一次
-    this.hook(compiler, "afterPlugins", async (compilation) => {
+    this.hook(compiler, 'afterPlugins', async (compilation) => {
       if (!this.wss) {
-        await this.start();
+        await this.start()
       }
-    });
+    })
 
     // const matchObject = ModuleFilenameHelpers.matchObject.bind(undefined, {
     //   include: options.include || /\.js$/,
     //   exclude: options.exclude,
     // });
 
-    
     compiler.watch(
       {
         // [watchOptions](/configuration/watch/#watchoptions) 示例
@@ -115,38 +113,38 @@ class BrowserReloadErrorOverlayWepbackPlugin {
         poll: undefined,
       },
       async (err, stats) => {
-        compilerWatch(err, stats);
+        compilerWatch(err, stats)
         this.broadcast(
           JSON.stringify({
-            cmd: "cmd:rebuilding",
-            message: "",
-          })
-        );
+            cmd: 'cmd:rebuilding',
+            message: '',
+          }),
+        )
         // stabilization(500).then(() => {
         if (err) {
           this.broadcast(
             JSON.stringify({
-              cmd: "cmd:buildError",
+              cmd: 'cmd:buildError',
               message: err.stack || err || err.details,
-            })
-          );
+            }),
+          )
           // console.log('Errors:' + chalk.red(err.stack || err));
           // if (err.details) {
           //     console.log('Errors:' + chalk.red(err.details));
           // }
-          return;
+          return
         }
 
         if (stats.hasErrors()) {
           this.broadcast(
             JSON.stringify({
-              cmd: "cmd:buildError",
+              cmd: 'cmd:buildError',
               message:
                 stats.toString({
                   colors: true,
-                }) + "\n\n",
-            })
-          );
+                }) + '\n\n',
+            }),
+          )
           // console.log(
           //     'Errors:' +
           //         chalk.red(
@@ -155,7 +153,7 @@ class BrowserReloadErrorOverlayWepbackPlugin {
           //             }) + '\n\n'
           //         )
           // );
-          return;
+          return
         } else if (stats.hasWarnings()) {
           // console.log(
           //   "Warnings:" +
@@ -170,10 +168,10 @@ class BrowserReloadErrorOverlayWepbackPlugin {
 
         this.broadcast(
           JSON.stringify({
-            cmd: "cmd:reload",
-            message: "",
-          })
-        );
+            cmd: 'cmd:reload',
+            message: '',
+          }),
+        )
         // else {
         //     process.stdout.write(
         //         stats.toString({
@@ -181,24 +179,120 @@ class BrowserReloadErrorOverlayWepbackPlugin {
         //         }) + '\n\n'
         //     );
         // }
-      }
-    );
+      },
+    )
 
-    compiler.hooks.emit.tap("ErrorOverlayWebpack", (compilation) => {
-      const { clientSrc } = this;
+    compiler.hooks.emit.tap('ErrorOverlayWebpack', (compilation) => {
+      const { clientSrc } = this
       for (const name in compilation.assets) {
-        if (compilation.assets.hasOwnProperty(name) && name.endsWith(".js")) {
-          const contents = compilation.assets[name].source();
+        if (compilation.assets.hasOwnProperty(name) && name.endsWith('.js')) {
+          const contents = compilation.assets[name].source()
           const withoutComments =
-            ansiToHtml + "\n" + clientSrc + "\n" + contents;
+            ansiToHtml + '\n' + clientSrc + '\n' + contents
           compilation.assets[name] = {
             source: () => withoutComments,
             size: () => withoutComments.length,
-          };
+          }
         }
       }
-    });
+    })
+  }
+
+  watch(err, stats) {
+    this.broadcast(
+      JSON.stringify({
+        cmd: 'cmd:rebuilding',
+        message: '',
+      }),
+    )
+    // stabilization(500).then(() => {
+    if (err) {
+      this.broadcast(
+        JSON.stringify({
+          cmd: 'cmd:buildError',
+          message: err.stack || err || err.details,
+        }),
+      )
+      // console.log('Errors:' + chalk.red(err.stack || err));
+      // if (err.details) {
+      //     console.log('Errors:' + chalk.red(err.details));
+      // }
+      return
+    }
+
+    if (stats.hasErrors()) {
+      this.broadcast(
+        JSON.stringify({
+          cmd: 'cmd:buildError',
+          message:
+            stats.toString({
+              colors: true,
+            }) + '\n\n',
+        }),
+      )
+      // console.log(
+      //     'Errors:' +
+      //         chalk.red(
+      //             stats.toString({
+      //                 colors: true,
+      //             }) + '\n\n'
+      //         )
+      // );
+      return
+    } else if (stats.hasWarnings()) {
+      // console.log(
+      //   "Warnings:" +
+      //     chalk.yellow(
+      //       stats.toString({
+      //         colors: true,
+      //       }) + "\n\n"
+      //     )
+      // );
+      // return;
+    }
+
+    this.broadcast(
+      JSON.stringify({
+        cmd: 'cmd:reload',
+        message: '',
+      }),
+    )
+    // else {
+    //     process.stdout.write(
+    //         stats.toString({
+    //             colors: true,
+    //         }) + '\n\n'
+    //     );
+    // }
+  }
+  async injection(compiler) {
+    // const { options = {}, clientSrc } = this
+    // const { compilerWatch = () => {} } = options
+
+    // this.hook(compiler, 'afterPlugins', async (compilation) => {
+    //   if (!this.wss) {
+    //     await this.start()
+    //   }
+    // })
+
+    await this.start()
+
+    compiler.hooks.emit.tap('ErrorOverlayWebpack', (compilation) => {
+      const { clientSrc } = this
+      for (const name in compilation.assets) {
+        if (compilation.assets.hasOwnProperty(name) && name.endsWith('.js')) {
+          const contents = compilation.assets[name].source()
+          const withoutComments =
+            ansiToHtml + '\n' + clientSrc + '\n' + contents
+
+          compilation.assets[name] = {
+            source: () => withoutComments,
+            size: () => withoutComments.length,
+          }
+        }
+      }
+    })
   }
 }
 
-module.exports = BrowserReloadErrorOverlayWepbackPlugin;
+module.exports = BrowserReloadErrorOverlayWepbackPlugin
