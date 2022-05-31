@@ -257,10 +257,10 @@ module.exports = {
       inline: true,
     },
     watchFiles: [
-      path.resolve(process.cwd(), '/src/**/*'),
-      path.resolve(process.cwd(), '/src/*'),
-      path.resolve(process.cwd(), '/public/**/*'),
-      path.resolve(process.cwd(), '/public/*'),
+      path.join(process.cwd(), '/src/**/*'),
+      path.join(process.cwd(), '/src/*'),
+      path.join(process.cwd(), '/public/**/*'),
+      path.join(process.cwd(), '/public/*'),
     ],
     liveReload: true, // 编译之后是否自动刷新浏览器
     static: {
