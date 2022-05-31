@@ -229,6 +229,7 @@ class App {
       },
       publicPath: this.config.output.publicPath,
       serverSideRender: true, // 是否是服务器渲染
+      writeToDisk: true, //是否写入硬盘
       // quiet: true,
     })
     // 下面是加载动画

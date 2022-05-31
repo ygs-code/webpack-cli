@@ -375,7 +375,7 @@ export default {
           //当图片小于8k 会被base64处理
           //图片体积会变大，文件请求更慢 如果使用http 2.0 则这里配置是不好的
           limit: 8 * 1024,
-          //默认使用的是es6模块化，而html-loader使用的是commonjs模块化
+          //默认使用的是es6模块化， 
           //解析时就会报错
           // 解决，关闭es6模块化，使用commonjs
           esModule: false,
@@ -387,12 +387,7 @@ export default {
         },
       },
 
-      {
-        //使用的是commonjs模块化
-        test: /\.html$/,
-        //处理html中img的图片 （引入img图片，就能被url-loader进行处理）
-        loader: 'html-loader',
-      },
+ 
 
       // {
       //   test: /\.(json)$/,
