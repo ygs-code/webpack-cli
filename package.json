@@ -1,5 +1,5 @@
 {
-  "name": "@webpack-cli",
+  "name": "webpack-cli-utils",
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
