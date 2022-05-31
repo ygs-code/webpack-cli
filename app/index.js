@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-04-28 11:30:32
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
- * @FilePath: /webpack-config/app/index.js
+ * @FilePath: /webpack-config/app/index
  */
 import "@babel/polyfill";
 import koa from "koa";

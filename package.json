@@ -1,9 +1,9 @@
 {
-  "name": "webpack-clis",
+  "name": "webpack-clis-utils",
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
   "main": "./@webpack-cli-cjs/index.js",
   "dependencies": {

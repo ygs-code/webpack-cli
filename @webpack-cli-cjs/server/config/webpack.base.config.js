@@ -54,9 +54,9 @@ module.exports ={
       "@babel/polyfill",
       //添加编译缓存
       "webpack/hot/poll?1000",
-      //  path.join(process.cwd(), "/app/index.js")
+      //  path.join(process.cwd(), "/app/index")
       //入口主文件
-      path.join(process.cwd(), "/app/index.js"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../app/index.js")
+      path.join(process.cwd(), "/app/index"), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../app/index")
     ],
   },
   // 出口

@@ -58,7 +58,7 @@ module.exports = {
       // "webpack/hot/poll?1000",
       //  path.join(process.cwd(), "/src/index.js")
       //入口主文件
-      path.join(process.cwd(), '/src/index.js'), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
+      path.join(process.cwd(), '/src/index'), // 如果没有配置 context 则需要这样引入  path.join(__dirname, "../../src/index.js")
     ],
   },
 
