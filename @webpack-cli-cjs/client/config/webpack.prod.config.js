@@ -2,7 +2,7 @@
  * @Date: 2022-04-29 18:16:58
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-06-01 10:14:37
+ * @LastEditTime: 2022-06-01 18:29:06
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/webpack.prod.config.js
  * @Description:
  */
@@ -17,8 +17,7 @@ const HappyPack = require('happypack')
 const CopyPlugin = require('copy-webpack-plugin')
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const os = require('os')
-// const NODE_ENV = process.env.NODE_ENV // 环境参数
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const {
   NODE_ENV, // 环境参数
   webpackEnv, // 环境参数
@@ -152,6 +151,18 @@ module.exports = {
         },
       ],
     }),
+        //清理编译目录
+        new CleanWebpackPlugin({
+          cleanStaleWebpackAssets: false,
+          //配置清理文件 如果不清理则加 ！
+          cleanOnceBeforeBuildPatterns: ['*', '!dll*'],
+          // cleanOnceBeforeBuildPatterns: [
+          //   "index.html",
+          //   "**/index*.js",
+          //   "**/index*.css",
+          // !./image/*
+          // ],
+        }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

@@ -3,7 +3,6 @@ const webpack = require('webpack')
 const fs = require('fs')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackBar = require('webpackbar')
 const HappyPack = require('happypack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -675,18 +674,7 @@ module.exports = {
     new CheckerPlugin(),
     // 编译进度条
     new WebpackBar(),
-    //清理编译目录
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
-      //配置清理文件 如果不清理则加 ！
-      cleanOnceBeforeBuildPatterns: ['*', '!dll*'],
-      // cleanOnceBeforeBuildPatterns: [
-      //   "index.html",
-      //   "**/index*.js",
-      //   "**/index*.css",
-      // !./image/*
-      // ],
-    }),
+
     // //缓存包 热启动
     // new webpack.HotModuleReplacementPlugin(),
     //使用 NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
