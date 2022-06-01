@@ -26,9 +26,7 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
 // const webpackEnv = getArgv('webpackEnv') // 环境参数
-
 const { resolve } = path
-
 const NODE_ENV = process.env.NODE_ENV // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
@@ -370,7 +368,7 @@ module.exports = {
           //当图片小于8k 会被base64处理
           //图片体积会变大，文件请求更慢 如果使用http 2.0 则这里配置是不好的
           limit: 8 * 1024,
-          //默认使用的是es6模块化， 
+          //默认使用的是es6模块化，
           //解析时就会报错
           // 解决，关闭es6模块化，使用commonjs
           esModule: false,
@@ -382,7 +380,6 @@ module.exports = {
         },
       },
 
-   
       // {
       //   test: /\.(json)$/,
       //   loader: 'url-loader',
