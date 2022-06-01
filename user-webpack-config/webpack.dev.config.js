@@ -16,7 +16,12 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 // const { getArgv } = require("../@webpack/utils");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
 // const webpackEnv = getArgv("webpackEnv"); // 环境参数
-const NODE_ENV = process.env.NODE_ENV // 环境参数
+let {
+    NODE_ENV, // 环境参数
+    webpackEnv, // 环境参数
+    target, // 环境参数
+    htmlWebpackPluginOptions = '',
+  } = process.env // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境

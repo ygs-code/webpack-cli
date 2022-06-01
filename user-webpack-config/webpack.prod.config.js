@@ -2,7 +2,7 @@
  * @Date: 2022-04-27 20:24:09
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-09 13:17:44
+ * @LastEditTime: 2022-06-01 17:58:28
  * @FilePath: /webpack-cli/user-webpack-config/webpack.prod.config.js
  * @Description:
  */
@@ -14,9 +14,13 @@ const HappyPack = require("happypack");
 // const { getArgv } = require("../@webpack/utils");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const ExtendedDefinePlugin = require("extended-define-webpack-plugin");
-// const webpackEnv = getArgv("webpackEnv"); // 环境参数
-
-const NODE_ENV = process.env.NODE_ENV; // 环境参数
+const ESLintPlugin = require('eslint-webpack-plugin')
+let {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+  htmlWebpackPluginOptions = '',
+} = process.env // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === "production";
 //   是否是测试开发环境
@@ -121,6 +125,15 @@ module.exports = {
   // },
  
   // plugins: [
+   // new ESLintPlugin({
+    //     emitError: true, //发现的错误将始终被触发，将禁用设置为false。
+    //     emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
+    //     failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
+    //     failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
+    //     quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
+    //     fix: true, //自动修复
+    // }),
+
   //   // new HappyPack({
   //   //   id: "graphql",
   //   //   use: [
