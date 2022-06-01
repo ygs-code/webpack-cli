@@ -62,6 +62,7 @@
     "cli-spinners": "^2.5.0",
     "connect-history-api-fallback": "^1.6.0",
     "copy-webpack-plugin": "^10.2.4",
+    "core-js": "^2.6.10",
     "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.7.1",
@@ -92,6 +93,8 @@
     "html-webpack-plugin": "^5.5.0",
     "http-errors": "^1.8.0",
     "http-proxy-middleware": "^1.0.6",
+    "import-from": "^4.0.0",
+    "inquirer": "^8.2.4",
     "install": "^0.13.0",
     "is-object": "^1.0.2",
     "jest": "^26.6.3",
@@ -101,6 +104,7 @@
     "less-loader": "^11.0.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.6.0",
+    "minimist": "^1.2.6",
     "mocha": "^8.2.1",
     "mocha-webpack": "^1.1.0",
     "mochawesome": "^6.2.1",
@@ -110,6 +114,7 @@
     "npm-install-webpack-plugin": "^4.0.5",
     "opn": "^6.0.0",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "osenv": "^0.1.5",
     "parallel-webpack": "^2.6.0",
     "path-browserify": "^1.0.1",
     "portfinder": "^1.0.28",
@@ -154,14 +159,13 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^5.0.0-3",
-    "ws": "^8.6.0",
-    "core-js": "^2.6.10"
+    "ws": "^8.6.0"
   },
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
   "bin": {
-    "webpack-cli": "./@webpack-cli-cjs/index.js"
+    "webpack-cli-util": "./index.js"
   },
   "scripts": {
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
