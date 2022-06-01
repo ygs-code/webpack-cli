@@ -69,8 +69,6 @@ class App {
   }
 
   async environment() {
- 
-
     //    是否是测试开发环境
     this.isEnvDevelopment = NODE_ENV === 'development'
     //   是否是生产环境
@@ -231,7 +229,7 @@ class App {
       },
       publicPath: this.config.output.publicPath,
       serverSideRender: true, // 是否是服务器渲染
-      writeToDisk: true, //是否写入硬盘
+      writeToDisk: target !== 'web', //是否写入硬盘
       // quiet: true,
     })
     // 下面是加载动画
