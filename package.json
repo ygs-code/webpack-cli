@@ -3,9 +3,9 @@
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
-  "main": "./@webpack-cli-cjs/index.js",
+  "main": "/@webpack-cli-cjs/index.js",
   "dependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.10",
@@ -164,7 +164,7 @@
     "react-app-polyfill/jsdom"
   ],
   "bin": {
-    "webpack-cli-util": "./index.js"
+    "webpack-cli-util": "/index.js"
   },
   "scripts": {
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
