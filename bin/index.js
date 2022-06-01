@@ -1,4 +1,5 @@
 
+#!/usr/bin/env node
 const minimist = require('minimist'), // 解析控制台参数
   fs = require('fs'),
   chalk = require('chalk'), // 控制台颜色
