@@ -174,7 +174,7 @@
     "web:c:dev": "cross-env NODE_ENV=development   webpackEnv=dev  target=web   htmlWebpackPluginOptions='{title:'网页标题',webpackName:'webpack-cli-util'}'   node  @webpack-cli-cjs/index.js",
     "web:dev": "cross-env NODE_ENV=development     webpackEnv=dev  target=web   babel-node  @webpack-cli/index.js",
     "//注释2:": "web端生产环境运行",
-    "web:build": "cross-env NODE_ENV=production    webpackEnv=dev  target=web   babel-node  @webpack-cli/index.js",
+    "web:build": "cross-env NODE_ENV=production    webpackEnv=dev  target=web  htmlWebpackPluginOptions='{title:'网页标题',webpackName:'webpack-cli-util'}'  babel-node  @webpack-cli/index.js",
     "//注释3:": "node服务端dev环境运行",
     "node:dev": "cross-env NODE_ENV=development    webpackEnv=dev  target=web   babel-node  @webpack-cli/index.js",
     "//注释4:": "node服务端d生产环境运行",
