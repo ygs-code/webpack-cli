@@ -12,6 +12,7 @@ const {
   NODE_ENV, // 环境参数
   webpackEnv, // 环境参数
   target, // 环境参数
+  htmlWebpackPluginOptions={}
 } = process.env // 环境参数
 
 //    是否是生产环境

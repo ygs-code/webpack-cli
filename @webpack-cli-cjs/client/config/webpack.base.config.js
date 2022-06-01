@@ -27,7 +27,13 @@ const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
 // const webpackEnv = getArgv('webpackEnv') // 环境参数
 const { resolve } = path
-const NODE_ENV = process.env.NODE_ENV // 环境参数
+let {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+  htmlWebpackPluginOptions = '',
+} = process.env // 环境参数
+
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境
@@ -492,7 +498,23 @@ module.exports = {
     // }),
     // html静态页面
     new HtmlWebpackPlugin({
-      title: 'Custom template using Handlebars',
+      ...(() => {
+        const regex = /(?<=\{)(.+?)(?=\})/g // {} 花括号，大括号
+        htmlWebpackPluginOptions = htmlWebpackPluginOptions.match(regex)
+        if (htmlWebpackPluginOptions) {
+          htmlWebpackPluginOptions = htmlWebpackPluginOptions[0]
+          let htmlWebpackPluginOptionsArr = htmlWebpackPluginOptions.split(',')
+          htmlWebpackPluginOptions = {}
+          for (let item of htmlWebpackPluginOptionsArr) {
+            let [key, value] = item.split(':')
+            htmlWebpackPluginOptions[`${key}`] = `${value}`
+          }
+        } else {
+          htmlWebpackPluginOptions = {}
+        }
+        return htmlWebpackPluginOptions
+      })(),
+      // title: 'Custom template using Handlebars',
       // 生成出来的html文件名
       filename: 'index.html',
       // 每个html的模版，这里多个页面使用同一个模版
