@@ -1,12 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-06-01 10:14:17
+ * @LastEditTime: 2022-06-01 10:28:35
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
  */
 const path = require('path')
+const fs = require('fs')
 const { merge } = require('webpack-merge')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 // const           { createVariants } = require( "parallel-webpack";
@@ -15,8 +16,8 @@ const devConfig = require('./webpack.dev.config')
 const prodConfig = require('./webpack.prod.config')
 const testConfig = require('../../webpack.test.config')
 
-const userDevConfig = require('../../user-webpack-config/webpack.dev.config')
-const userProdConfig = require('../../user-webpack-config/webpack.prod.config')
+// const userDevConfig = require('../../user-webpack-config/webpack.dev.config')
+// const userProdConfig = require('../../user-webpack-config/webpack.prod.config')
 // const { getArgv } = require("../../utils");
 // const webpackEnv = getArgv("webpackEnv"); // 环境参数
 // const target = getArgv("target"); // 环境参数
@@ -47,12 +48,20 @@ const isEnvProduction = NODE_ENV === 'production'
 const smp = new SpeedMeasurePlugin()
 module.exports = async () => {
   let userDevConfig = {}
-  try {
+  if (
+    fs.existsSync(process.cwd() + '/user-webpack-config/webpack.dev.config.js')
+  ) {
     userDevConfig = require(process.cwd() +
       '/user-webpack-config/webpack.dev.config.js')
-  } catch (error) {
-    console.error('userDevConfig error:', error)
   }
+
+  // let userDevConfig = {}
+  // try {
+  //   userDevConfig = require(process.cwd() +
+  //     '/user-webpack-config/webpack.dev.config.js')
+  // } catch (error) {
+  //   console.error('userDevConfig error:', error)
+  // }
 
   // let userDevConfig = await new Promise(async (resolve, reject) => {
   //   import(
@@ -66,15 +75,19 @@ module.exports = async () => {
   //       resolve({});
   //     });
   // });
-
   let userProdConfig = {}
-  try {
+  if (
+    fs.existsSync(process.cwd() + '/user-webpack-config/webpack.prod.config.js')
+  ) {
     userProdConfig = require(process.cwd() +
       '/user-webpack-config/webpack.prod.config.js')
-  } catch (error) {
-    console.error('userProdConfig error:', error)
   }
-
+  // try {
+  //   userProdConfig = require(process.cwd() +
+  //     '/user-webpack-config/webpack.prod.config.js')
+  // } catch (error) {
+  //   console.error('userProdConfig error:', error)
+  // }
   // let userProdConfig = await new Promise(async (resolve, reject) => {
   //   import(
   //     path.join(process.cwd(), '/user-webpack-config/webpack.prod.config.js')
