@@ -1,7 +1,15 @@
-import path from "path";
-import webpack from "webpack";
-import nodeExternals from "webpack-node-externals";
-export default {
+/*
+ * @Date: 2022-04-29 18:16:58
+ * @Author: Yao guan shou
+ * @LastEditors: Yao guan shou
+ * @LastEditTime: 2022-04-29 18:29:17
+ * @FilePath: /webpack-cli/@webpack-cli/server/config/webpack.dev.config.js
+ * @Description: 
+ */
+const      path = require( "path")
+const      webpack = require( "webpack")
+const      nodeExternals = require( "webpack-node-externals")
+module.exports ={
   mode:'development',
   entry: {},
   output: {
@@ -57,7 +65,6 @@ export default {
     chunkIds: "named",
   },
   devtool: "source-map", // 生产环境和开发环境判断
-  mode: "development",
   plugins: [
     //这个Webpack插件将强制所有必需模块的整个路径与磁盘上实际路径的确切情况相匹配。
     // 使用此插件有助于缓解OSX上的开发人员不遵循严格的路径区分大小写的情况，

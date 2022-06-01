@@ -2,15 +2,15 @@
  * @Date: 2022-04-28 10:50:57
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-28 13:44:28
- * @FilePath: /webpack-config/@webpack/server/config/webpack.test.config.js
- * @Description: 
+ * @LastEditTime: 2022-04-29 18:30:31
+ * @FilePath: /webpack-cli/@webpack-cli/server/config/webpack.test.config.js
+ * @Description:
  */
-import path from "path";
-import fs from "fs";
+const path = require("path");
+const fs = require("fs");
 //glob 获取目录下面所有文件
-import glob from "glob";
-export default {
+const glob = require("glob");
+module.exports = {
   entry: {
     ...((globalPath) => {
       let testJsFiles = {},

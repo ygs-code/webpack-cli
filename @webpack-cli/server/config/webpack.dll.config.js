@@ -24,7 +24,6 @@ module.exports = smp.wrap({
 
     //编译react dll文件
     // react: [path.join(__dirname, "../../node_modules/react")],
-  
     // koa: [path.join(__dirname, "../../node_modules/koa/dist/koa.mjs")],
     // mysql: [path.join(__dirname, "../../node_modules/_mysql@2.18.1@mysql")],
   },

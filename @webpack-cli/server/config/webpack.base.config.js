@@ -1,27 +1,28 @@
-import "@babel/polyfill";
-import webpack from "webpack";
-import fs from "fs";
-import path, { resolve } from "path";
-import nodeExternals from "webpack-node-externals";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import WebpackBar from "webpackbar";
-import HappyPack from "happypack";
-import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin";
-import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
-import DirectoryNamedWebpackPlugin from "directory-named-webpack-plugin";
-import { CheckerPlugin } from "awesome-typescript-loader";
-import os from "os";
-// import bannerPlugin from "./bannerPlugin";
-// import MyExampleWebpackPlugin from "./definePlugin/MyExampleWebpackPlugin";
-import { getArgv } from "../../utils";
-import NpmInstallPlugin from "npm-install-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import WebpackBuildDllPlugin from "webpack-build-dll-plugin";
-import DllReferencePlugin from "webpack/lib/DllReferencePlugin";
-import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
+require("@babel/polyfill");
+const webpack = require("webpack");
+const fs = require("fs");
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const WebpackBar = require("webpackbar");
+const HappyPack = require("happypack");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
+const { CheckerPlugin } = require("awesome-typescript-loader");
+const os = require("os");
+// const      bannerPlugin = require( "./bannerPlugin";
+// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin";
+const { getArgv } = require("../../utils");
+const NpmInstallPlugin = require("npm-install-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const WebpackBuildDllPlugin = require("webpack-build-dll-plugin");
+const DllReferencePlugin = require("webpack/lib/DllReferencePlugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
+const { resolve } = path;
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const webpackEnv = getArgv("webpackEnv"); // 环境参数
 
@@ -43,7 +44,7 @@ const cacheLoader = (happypackId) => {
 // console.log("__dirname : " + __dirname);
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
-export default {
+module.exports ={
   // 基目录，绝对路径，用于解析配置中的入口点和加载器。
   // context: path.join(process.cwd(), "/app"),
   // 入口
@@ -197,7 +198,7 @@ export default {
     mergeDuplicateChunks: true,
     //告知 webpack 确定和标记出作为其他 chunk 子集的那些 chunk，其方式是在已经加载过较大的 chunk 之后，就不再去加载这些 chunk 子集。
     flagIncludedChunks: true,
-    //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。
+    //告知 webpack 去确定那些由模块提供的导出内容，为 export * = require( ... 生成更多高效的代码。
     providedExports: true,
     //告知 webpack 是否对未使用的导出内容，实施内部图形分析(graph analysis)。
     innerGraph: true,
@@ -351,7 +352,7 @@ export default {
     // warningsFilter: "filter" | /filter/ | ["filter", /filter/] | (warning) => ... return true|false
   },
 
-  //防止将某些 import 的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
+  //防止将某些 const      的包(package)打包到 bundle 中,而是在运行时(runtime)再去从外部获取这些扩展依赖
   externals: [
     //引入缓存
     nodeExternals({
@@ -628,7 +629,6 @@ export default {
     //DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用
     // 如果是配置前端就很好注入插件
     new webpack.DefinePlugin({
-      //也可以注入插件 能 注入vue 
       // vue,
       //注入一个环境变量
       "process.env": { BUILD_TARGET: "BUILD_TARGET" },

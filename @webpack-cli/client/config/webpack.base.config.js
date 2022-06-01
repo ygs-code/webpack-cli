@@ -1,41 +1,36 @@
-import '@babel/polyfill'
-import webpack from 'webpack'
-import fs from 'fs'
-import path, { resolve } from 'path'
-import nodeExternals from 'webpack-node-externals'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-import WebpackBar from 'webpackbar'
-import HappyPack from 'happypack'
-import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
-import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
-import DirectoryNamedWebpackPlugin from 'directory-named-webpack-plugin'
-import { CheckerPlugin } from 'awesome-typescript-loader'
-import os from 'os'
-// import bannerPlugin from "./bannerPlugin";
-// import MyExampleWebpackPlugin from "./definePlugin/MyExampleWebpackPlugin";
-import { getArgv } from '../../utils'
-import NpmInstallPlugin from 'npm-install-webpack-plugin'
-import TerserPlugin from 'terser-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import WebpackBuildDllPlugin from 'webpack-build-dll-plugin'
-import DllReferencePlugin from 'webpack/lib/DllReferencePlugin'
-import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
-import ExtendedDefinePlugin from 'extended-define-webpack-plugin'
-// import eslintFriendlyFormatter from "eslint-friendly-formatter";
-import ESLintPlugin from 'eslint-webpack-plugin'
-import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader'
-
-// const eslintrc = require(process.cwd() + "/.eslintrc.js");
-// console.log('eslintrc========',eslintrc)
+require('@babel/polyfill')
+const webpack = require('webpack')
+const fs = require('fs')
+const path = require('path')
+const nodeExternals = require('webpack-node-externals')
+const WebpackBar = require('webpackbar')
+const HappyPack = require('happypack')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
+const { CheckerPlugin } = require('awesome-typescript-loader')
+const os = require('os')
+// const      bannerPlugin = require( "./bannerPlugin");
+// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin");
+// const { getArgv } = require('../../utils')
+const NpmInstallPlugin = require('npm-install-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const WebpackBuildDllPlugin = require('webpack-build-dll-plugin')
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
+const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
 // const webpackEnv = getArgv('webpackEnv') // 环境参数
-// const NODE_ENV = process.env.NODE_ENV // 环境参数
-
-const {
+const { resolve } = path
+let {
   NODE_ENV, // 环境参数
   webpackEnv, // 环境参数
   target, // 环境参数
+  htmlWebpackPluginOptions = '',
 } = process.env // 环境参数
 
 //    是否是生产环境
@@ -46,18 +41,16 @@ const isEnvDevelopment = NODE_ENV === 'development'
 const cacheLoader = (happypackId) => {
   return isEnvDevelopment
     ? [
-        // `happypack/loader?id=${happypackId}`,
         `happypack/loader?id=${happypackId}&cacheDirectory=true`,
         'thread-loader',
         'cache-loader',
       ]
     : [`happypack/loader?id=${happypackId}`]
 }
-
 // console.log("__dirname : " + __dirname);
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
-export default {
+module.exports = {
   // 入口
   entry: {
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取
@@ -364,12 +357,11 @@ export default {
 
   module: {
     rules: [
-      // // json
-      // {
-      //   test: /\.json$/,
-      //   use: 'json-loader',
-      //   enforce: 'pre',
-      // },
+      // json
+      {
+        test: /\.json$/,
+        use: 'json-loader',
+      },
 
       //处理图片
       //！默认处理不了html中的图片 <img src="./img/BM.jpg" alt=""> 打包后路径不会改变！
@@ -409,7 +401,7 @@ export default {
       // ts
       {
         test: /\.ts?$/,
-        // enforce: 'pre',
+        enforce: 'pre',
         // 排除文件,因为这些包已经编译过，无需再次编译
         exclude: /(node_modules|bower_components)/,
         use: cacheLoader('ts'),
@@ -418,7 +410,7 @@ export default {
       //tsx
       {
         test: /(\.tsx?$)/,
-        // enforce: 'pre',
+        enforce: 'pre',
         // 排除文件,因为这些包已经编译过，无需再次编译
         exclude: /(node_modules|bower_components)/,
         use: cacheLoader('tsx'),
@@ -495,17 +487,33 @@ export default {
 
   plugins: [
     new ESBuildPlugin(),
-    new ESLintPlugin({
-      emitError: true, //发现的错误将始终被触发，将禁用设置为false。
-      emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
-      failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
-      failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
-      quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
-      fix: true, //自动修复
-    }),
+    // new ESLintPlugin({
+    //   emitError: true, //发现的错误将始终被触发，将禁用设置为false。
+    //   emitWarning: true, //如果将disable设置为false，则发现的警告将始终被发出。
+    //   failOnError: true, //如果有任何错误，将导致模块构建失败，禁用设置为false。
+    //   failOnWarning: false, //如果有任何警告，如果设置为true，将导致模块构建失败。
+    //   quiet: false, //如果设置为true，将只处理和报告错误，而忽略警告。
+    //   fix: true, //自动修复
+    // }),
     // html静态页面
     new HtmlWebpackPlugin({
-      title: 'Custom template using Handlebars',
+      ...(() => {
+        const regex = /(?<=\{)(.+?)(?=\})/g // {} 花括号，大括号
+        htmlWebpackPluginOptions = htmlWebpackPluginOptions.match(regex)
+        if (htmlWebpackPluginOptions) {
+          htmlWebpackPluginOptions = htmlWebpackPluginOptions[0]
+          let htmlWebpackPluginOptionsArr = htmlWebpackPluginOptions.split(',')
+          htmlWebpackPluginOptions = {}
+          for (let item of htmlWebpackPluginOptionsArr) {
+            let [key, value] = item.split(':')
+            htmlWebpackPluginOptions[`${key}`] = `${value}`
+          }
+        } else {
+          htmlWebpackPluginOptions = {}
+        }
+        return htmlWebpackPluginOptions
+      })(),
+      // title: 'Custom template using Handlebars',
       // 生成出来的html文件名
       filename: 'index.html',
       // 每个html的模版，这里多个页面使用同一个模版
@@ -629,29 +637,19 @@ export default {
       threadPool: happyThreadPool,
     }),
 
-    // new HappyPack({
-    //     id: 'graphql',
-    //     use: [
-    //         //添加loader
-    //         // {
-    //         //   loader: path.join(
-    //         //     __dirname,
-    //         //     "./defineLoader/MyExampleWebpackLoader.js"
-    //         //   ),
-    //         //   options: {
-    //         //     name: "graphql",
-    //         //   },
-    //         // },
-    //         {
-    //             loader: 'raw-loader',
-    //             options: {},
-    //         },
-    //     ],
-    //     // 输出执行日志
-    //     // verbose: true,
-    //     // 使用共享线程池
-    //     threadPool: happyThreadPool,
-    // }),
+    new HappyPack({
+        id: 'graphql',
+        use: [
+            {
+                loader: 'raw-loader',
+                options: {},
+            },
+        ],
+        // 输出执行日志
+        // verbose: true,
+        // 使用共享线程池
+        threadPool: happyThreadPool,
+    }),
 
     // new HappyPack({
     //   id: "MyExampleWebpackLoader",
@@ -676,18 +674,7 @@ export default {
     new CheckerPlugin(),
     // 编译进度条
     new WebpackBar(),
-    //清理编译目录
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
-      //配置清理文件 如果不清理则加 ！
-      cleanOnceBeforeBuildPatterns: ['*', '!dll*'],
-      // cleanOnceBeforeBuildPatterns: [
-      //   "index.html",
-      //   "**/index*.js",
-      //   "**/index*.css",
-      // !./image/*
-      // ],
-    }),
+
     // //缓存包 热启动
     // new webpack.HotModuleReplacementPlugin(),
     //使用 NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
@@ -696,7 +683,7 @@ export default {
     new ExtendedDefinePlugin({
       process: {
         env: {
-          NODE_ENV: process.env.NODE_ENV, // 将属性转化为全局变量，让代码中可以正常访问
+          NODE_ENV, // 将属性转化为全局变量，让代码中可以正常访问
         },
       },
     }),

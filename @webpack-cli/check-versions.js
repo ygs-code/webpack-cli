@@ -2,22 +2,22 @@
  * @Date: 2022-04-28 16:24:45
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-28 16:35:15
- * @FilePath: /webpack-config/@webpack/check-versions.js
+ * @LastEditTime: 2022-04-29 18:42:28
+ * @FilePath: /webpack-cli/@webpack-cli/check-versions.js
  * @Description:
  */
 //整个文件是检测 node 和npm 版本是多少，是不是该升级
 // 下面的插件是chalk插件，他的作用是在控制台中输出不同的颜色的字，大致这样用chalk.blue('Hello world')，这款插件只能改变命令行中的字体颜色
-import chalk from "chalk"; //控制台输出信息
+const chalk = require("chalk"); //控制台输出信息
 // 下面这个是semver插件，是用来对特定的版本号做判断的，比如
 // semver.gt('1.2.3','9.8.7') false 1.2.3版本比9.8.7版本低
 // semver.satisfies('1.2.3','1.x || >=2.5.0 || 5.0.0 - 7.2.3') true 1.2.3的版本符合后面的规则
-import semver from "semver";
+const semver = require("semver");
 // 下面是导入package.json文件,要使用里面的engines选项，要注意require是直接可以导入json文件的，并且requrie返回的就是json对象
-import packageConfig from "../package.json";
+const packageConfig = require("../package.json");
 // 下面这个插件是shelljs，作用是用来执行Unix系统命令
-import shell from "shelljs";
-import childProcess from "child_process";
+const shell = require("shelljs");
+const childProcess = require("child_process");
 
 // 下面涉及了很多Unix命令，这里可能解释的不够详细，第一时间精力有限，第二能力有限。。。
 const exec = (cmd) => {
@@ -29,7 +29,6 @@ const exec = (cmd) => {
 var versionRequirements = [
   {
     name: "node", // node版本的信息
-    currentVersion: semver.clean(process.version),
     currentVersion: semver.clean(process.version), // 使用semver插件吧版本信息转化成规定格式，也就是 '  =v1.2.3  ' -> '1.2.3' 这种功能
     versionRequirement: packageConfig.engines.node, // 这是规定的pakage.json中engines选项的node版本信息 "node":">= 4.0.0"
   },
@@ -43,7 +42,7 @@ if (shell.which("npm")) {
   });
 }
 
-export default () => {
+module.exports = () => {
   var warnings = [];
   for (var i = 0; i < versionRequirements.length; i++) {
     var mod = versionRequirements[i];

@@ -44,7 +44,7 @@ var checkDirectory = function (src, dst, callback) {
 const SOURCES_DIRECTORY = path.join(process.cwd(), "/user-webpack-config"); //源目录
 const copyDirectory = path.join( // 需要拷贝的路劲
     __dirname,
-    "/@webpack-cli-cjs/user-webpack-config"
+    "/@webpack-cli/user-webpack-config"
   ); //目标
 checkDirectory(
   SOURCES_DIRECTORY,

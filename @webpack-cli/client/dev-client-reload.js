@@ -2,14 +2,14 @@
  * @Date: 2022-04-27 18:44:12
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-04-27 18:46:25
- * @FilePath: /webpackClient1/@webpack/client/config/dev-client.js
- * @Description: 
+ * @LastEditTime: 2022-04-29 18:25:29
+ * @FilePath: /webpack-cli/@webpack-cli/client/dev-client-reload.js
+ * @Description:
  */
 /* eslint-disable */
 //热启动重新刷新浏览器
-import "eventsource-polyfill";
-import hotClient from "webpack-hot-middleware/client?noInfo=true&reload=true";
+require("eventsource-polyfill");
+const hotClient = require("webpack-hot-middleware/client?noInfo=true&reload=true");
 
 hotClient.subscribe((event) => {
   if (event.action === "reload") {

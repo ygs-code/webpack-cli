@@ -1,33 +1,43 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-06-01 10:14:10
+ * @LastEditTime: 2022-06-01 10:28:35
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli/client/config/index.js
  */
-import path from 'path'
-import { merge } from 'webpack-merge'
-import SpeedMeasurePlugin from 'speed-measure-webpack-plugin'
-// import { createVariants } from "parallel-webpack";
-import { default as clientBaseConfig } from './webpack.base.config'
-import devConfig from './webpack.dev.config'
-import prodConfig from './webpack.prod.config'
-import testConfig from '../../webpack.test.config'
-// import { getArgv } from "../../utils";
+const path = require('path')
+const fs = require('fs')
+const { merge } = require('webpack-merge')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+// const           { createVariants } = require( "parallel-webpack";
+const clientBaseConfig = require('./webpack.base.config')
+const devConfig = require('./webpack.dev.config')
+const prodConfig = require('./webpack.prod.config')
+const testConfig = require('../../webpack.test.config')
+
+// const userDevConfig = require('../../user-webpack-config/webpack.dev.config')
+// const userProdConfig = require('../../user-webpack-config/webpack.prod.config')
+// const { getArgv } = require("../../utils");
 // const webpackEnv = getArgv("webpackEnv"); // 环境参数
 // const target = getArgv("target"); // 环境参数
-// const NODE_ENV = process.env.NODE_ENV; // 环境参数
+
 const {
   NODE_ENV, // 环境参数
   webpackEnv, // 环境参数
   target, // 环境参数
 } = process.env // 环境参数
- 
+
 //   是否是测试开发环境
 const isEnvDevelopment = NODE_ENV === 'development'
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
+
+// console.log('webpackEnv=',webpackEnv)
+// console.log('isEnvDevelopment=',isEnvDevelopment)
+// console.log('target=',target)
+// console.log('isEnvProduction=',isEnvProduction)
+// console.log('isEnvProduction=',isEnvProduction)
 
 // let isWeb = target == "web";
 
@@ -36,36 +46,63 @@ const isEnvProduction = NODE_ENV === 'production'
 
 //添加smp.wrap会有bug 编译缓存出问题
 const smp = new SpeedMeasurePlugin()
+module.exports = async () => {
+  let userDevConfig = {}
+  if (
+    fs.existsSync(process.cwd() + '/user-webpack-config/webpack.dev.config.js')
+  ) {
+    userDevConfig = require(process.cwd() +
+      '/user-webpack-config/webpack.dev.config.js')
+  }
 
-export default async () => {
-  let userDevConfig = await new Promise(async (resolve, reject) => {
-    import(
-      path.join(process.cwd(), '/user-webpack-config/webpack.dev.config.js')
-    )
-      .then((module) => {
-        resolve(module.default || {})
-      })
-      .catch((error) => {
-        console.error('userDevConfig error:', error)
-        resolve({})
-      })
-  })
+  // let userDevConfig = {}
+  // try {
+  //   userDevConfig = require(process.cwd() +
+  //     '/user-webpack-config/webpack.dev.config.js')
+  // } catch (error) {
+  //   console.error('userDevConfig error:', error)
+  // }
 
-  let userProdConfig = await new Promise(async (resolve, reject) => {
-    import(
-      path.join(process.cwd(), '/user-webpack-config/webpack.prod.config.js')
-    )
-      .then((module) => {
-        resolve(module.default || {})
-      })
-      .catch((error) => {
-        console.error('userProdConfig error:', error)
-        resolve({})
-      })
-  })
+  // let userDevConfig = await new Promise(async (resolve, reject) => {
+  //   import(
+  //     path.join(process.cwd(), "/user-webpack-config/webpack.dev.config.js")
+  //   )
+  //     .then((module) => {
+  //       resolve(module.default || {});
+  //     })
+  //     .catch((error) => {
+  //       console.error("userDevConfig error:", error);
+  //       resolve({});
+  //     });
+  // });
+  let userProdConfig = {}
+  if (
+    fs.existsSync(process.cwd() + '/user-webpack-config/webpack.prod.config.js')
+  ) {
+    userProdConfig = require(process.cwd() +
+      '/user-webpack-config/webpack.prod.config.js')
+  }
+  // try {
+  //   userProdConfig = require(process.cwd() +
+  //     '/user-webpack-config/webpack.prod.config.js')
+  // } catch (error) {
+  //   console.error('userProdConfig error:', error)
+  // }
+  // let userProdConfig = await new Promise(async (resolve, reject) => {
+  //   import(
+  //     path.join(process.cwd(), '/user-webpack-config/webpack.prod.config.js')
+  //   )
+  //     .then((module) => {
+  //       resolve(module.default || {})
+  //     })
+  //     .catch((error) => {
+  //       console.error('userProdConfig error:', error)
+  //       resolve({})
+  //     })
+  // })
 
   let config = {}
-  if (webpackEnv == 'test') {
+  if (webpackEnv === 'test') {
     //   测试代码打包
     config = merge(
       // baseConfig,
@@ -104,4 +141,3 @@ export default async () => {
   //  console.log('config=',config.entry)
   return config
 }
-// export default smp.wrap(config);

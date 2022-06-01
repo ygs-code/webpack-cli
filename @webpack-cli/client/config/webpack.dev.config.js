@@ -1,17 +1,20 @@
-import path from 'path'
-import webpack from 'webpack'
-// import ErrorOverlayPlugin from 'error-overlay-webpack-plugin';
-import nodeExternals from 'webpack-node-externals'
-import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
-// import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
-// import BrowserReloadPlugin from "browser-reload-plugin";
-import BrowserReloadErrorOverlayWepbackPlugin from '../definePlugin/browser-reload-error-overlay-wepback-plugin/lib/emjs/index.js'
-import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader'
-import HappyPack from 'happypack'
-import os from 'os'
+const path = require('path')
+const webpack = require('webpack')
+// const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
+const nodeExternals = require('webpack-node-externals')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
+const BrowserReloadErrorOverlayWepbackPlugin = require('browser-reload-error-overlay-wepback-plugin')
+const HappyPack = require('happypack')
+const os = require('os')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
+const {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+  htmlWebpackPluginOptions={}
+} = process.env // 环境参数
 
-const NODE_ENV = process.env.NODE_ENV // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境
@@ -45,41 +48,41 @@ const getIPAdress = () => {
   }
 }
 
-export default {
+module.exports = {
   mode: 'development',
   output: {
-    // 输出目录
-    path: path.join(process.cwd(), '/dist'),
-    // filename: '[name].[hash].js',
-    // chunkFilename: '[name].[hash].js',
-    // Chunk 配置
-    filename: 'static/js/[name].js',
-    chunkFilename: 'static/js/[name].js',
-    //静态子目录
-    // assetsSubDirectory: 'static',
-    // 访问静态资源目录 比如 css img
-    publicPath: '/', // dev 服务器需要是绝对，而编译出来需要是相对
-    // 导出库(exported library)的名称
-    // library: "server",
-    //   导出库(exported library)的类型
-    // libraryTarget: "umd",
-    // 在 UMD 库中使用命名的 AMD 模块
-    // umdNamedDefine: true,
-    // globalObject: "this",
-    // chunk 请求到期之前的毫秒数，默认为 120000
-    // chunkLoadTimeout: 120000,
-    // // // 「devtool 中模块」的文件名模板 调试webpack的配置问题
-    // // // 你的文件在chrome开发者工具中显示为webpack:///foo.js?a93h, 。如果我们希望文件名显示得更清晰呢，比如说 webpack:///path/to/foo.js
-    // devtoolModuleFilenameTemplate: (info) => {
-    //     // "webpack://[namespace]/[resource-path]?[loaders]"
-    //     return `webpack:///${info.resourcePath}?${info.loaders}`;
-    // },
-    // // // 如果多个模块产生相同的名称，使用
-    // devtoolFallbackModuleFilenameTemplate: (info) => {
-    //     return `webpack:///${info.resourcePath}?${info.loaders}`;
-    // },
-    // // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
-    // // 并且重启webpack的时候也会删除cache缓存
+    // // 输出目录
+    // path: path.join(process.cwd(), '/dist'),
+    // // filename: '[name].[hash].js',
+    // // chunkFilename: '[name].[hash].js',
+    // // Chunk 配置
+    // filename: 'static/js/[name].js',
+    // chunkFilename: 'static/js/[name].js',
+    // //静态子目录
+    // // assetsSubDirectory: 'static',
+    // // 访问静态资源目录 比如 css img
+    // publicPath: '/', // dev 服务器需要是绝对，而编译出来需要是相对
+    // // 导出库(exported library)的名称
+    // // library: "server",
+    // //   导出库(exported library)的类型
+    // // libraryTarget: "umd",
+    // // 在 UMD 库中使用命名的 AMD 模块
+    // // umdNamedDefine: true,
+    // // globalObject: "this",
+    // // chunk 请求到期之前的毫秒数，默认为 120000
+    // // chunkLoadTimeout: 120000,
+    // // // // 「devtool 中模块」的文件名模板 调试webpack的配置问题
+    // // // // 你的文件在chrome开发者工具中显示为webpack:///foo.js?a93h, 。如果我们希望文件名显示得更清晰呢，比如说 webpack:///path/to/foo.js
+    // // devtoolModuleFilenameTemplate: (info) => {
+    // //     // "webpack://[namespace]/[resource-path]?[loaders]"
+    // //     return `webpack:///${info.resourcePath}?${info.loaders}`;
+    // // },
+    // // // // 如果多个模块产生相同的名称，使用
+    // // devtoolFallbackModuleFilenameTemplate: (info) => {
+    // //     return `webpack:///${info.resourcePath}?${info.loaders}`;
+    // // },
+    // // // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
+    // // // 并且重启webpack的时候也会删除cache缓存
     strictModuleExceptionHandling: false,
   },
   watch: true,
@@ -233,21 +236,12 @@ export default {
       // 使用共享线程池
       threadPool: happyThreadPool,
     }),
-
-    //这个Webpack插件将强制所有必需模块的整个路径与磁盘上实际路径的确切情况相匹配。
-    // 使用此插件有助于缓解OSX上的开发人员不遵循严格的路径区分大小写的情况，
-    // 这些情况将导致与其他开发人员或运行其他操作系统（需要正确使用大小写正确的路径）的构建箱发生冲突。
-    new CaseSensitivePathsPlugin(),
     //缓存包 热启动
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(), //NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误
     //   热刷新
     // new BrowserReloadPlugin(),
     // 热刷新和错误日志
     new BrowserReloadErrorOverlayWepbackPlugin(),
-    new webpack.ProvidePlugin({
-      process: 'process',
-    }),
     // 有跨域问题
     // new ErrorOverlayPlugin(),
   ],
@@ -259,10 +253,10 @@ export default {
       inline: true,
     },
     watchFiles: [
-      path.resolve(process.cwd(), '/src/**/*'),
-      path.resolve(process.cwd(), '/src/*'),
-      path.resolve(process.cwd(), '/public/**/*'),
-      path.resolve(process.cwd(), '/public/*'),
+      path.join(process.cwd(), '/src/**/*'),
+      path.join(process.cwd(), '/src/*'),
+      path.join(process.cwd(), '/public/**/*'),
+      path.join(process.cwd(), '/public/*'),
     ],
     liveReload: true, // 编译之后是否自动刷新浏览器
     static: {

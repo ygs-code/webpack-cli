@@ -10,5 +10,5 @@ const minimist = require('minimist'), // 解析控制台参数
   execSync = require('child_process').execSync,
   args = minimist(process.argv)
 
-const Server = require('../@webpack-cli-cjs')
+const Server = require('../@webpack-cli')
 module.exports = Server
