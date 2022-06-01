@@ -11,9 +11,9 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
 const { CheckerPlugin } = require('awesome-typescript-loader')
 const os = require('os')
-// const      bannerPlugin = require( "./bannerPlugin";
-// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin";
-const { getArgv } = require('../../utils')
+// const      bannerPlugin = require( "./bannerPlugin");
+// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin");
+// const { getArgv } = require('../../utils')
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -25,7 +25,7 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
-const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const webpackEnv = getArgv('webpackEnv') // 环境参数
 
 const { resolve } = path
 

@@ -1,32 +1,36 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 10:56:55
- * @LastEditTime: 2022-05-23 20:02:08
+ * @LastEditTime: 2022-06-01 10:14:17
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli-cjs/client/config/index.js
  */
-const path = require("path");
-const { merge } = require("webpack-merge");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const path = require('path')
+const { merge } = require('webpack-merge')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 // const           { createVariants } = require( "parallel-webpack";
-const clientBaseConfig = require("./webpack.base.config");
-const devConfig = require("./webpack.dev.config");
-const prodConfig = require("./webpack.prod.config");
-const testConfig = require("../../webpack.test.config");
+const clientBaseConfig = require('./webpack.base.config')
+const devConfig = require('./webpack.dev.config')
+const prodConfig = require('./webpack.prod.config')
+const testConfig = require('../../webpack.test.config')
 
-const userDevConfig = require("../../user-webpack-config/webpack.dev.config");
-const userProdConfig = require("../../user-webpack-config/webpack.prod.config");
+const userDevConfig = require('../../user-webpack-config/webpack.dev.config')
+const userProdConfig = require('../../user-webpack-config/webpack.prod.config')
+// const { getArgv } = require("../../utils");
+// const webpackEnv = getArgv("webpackEnv"); // 环境参数
+// const target = getArgv("target"); // 环境参数
 
-const { getArgv } = require("../../utils");
+const {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+} = process.env // 环境参数
 
-const webpackEnv = getArgv("webpackEnv"); // 环境参数
-const target = getArgv("target"); // 环境参数
-const NODE_ENV = process.env.NODE_ENV; // 环境参数
 //   是否是测试开发环境
-const isEnvDevelopment = NODE_ENV === "development";
+const isEnvDevelopment = NODE_ENV === 'development'
 //    是否是生产环境
-const isEnvProduction = NODE_ENV === "production";
+const isEnvProduction = NODE_ENV === 'production'
 
 // console.log('webpackEnv=',webpackEnv)
 // console.log('isEnvDevelopment=',isEnvDevelopment)
@@ -40,7 +44,7 @@ const isEnvProduction = NODE_ENV === "production";
 // let targetConfig = isWeb ? webConfig : nodeConfig;
 
 //添加smp.wrap会有bug 编译缓存出问题
-const smp = new SpeedMeasurePlugin();
+const smp = new SpeedMeasurePlugin()
 module.exports = async () => {
   let userDevConfig = {}
   try {

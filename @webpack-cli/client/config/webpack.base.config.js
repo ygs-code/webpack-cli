@@ -29,9 +29,15 @@ import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader'
 // const eslintrc = require(process.cwd() + "/.eslintrc.js");
 // console.log('eslintrc========',eslintrc)
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
-const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const NODE_ENV = process.env.NODE_ENV // 环境参数
 
-const NODE_ENV = process.env.NODE_ENV // 环境参数
+const {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+} = process.env // 环境参数
+
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境
@@ -375,7 +381,7 @@ export default {
           //当图片小于8k 会被base64处理
           //图片体积会变大，文件请求更慢 如果使用http 2.0 则这里配置是不好的
           limit: 8 * 1024,
-          //默认使用的是es6模块化， 
+          //默认使用的是es6模块化，
           //解析时就会报错
           // 解决，关闭es6模块化，使用commonjs
           esModule: false,
@@ -386,8 +392,6 @@ export default {
           name: 'static/image/[name].[contenthash:10].[ext]',
         },
       },
-
- 
 
       // {
       //   test: /\.(json)$/,

@@ -4,12 +4,16 @@ const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
-const BrowserReloadErrorOverlayWepbackPlugin = require('browser-reload-error-overlay-wepback-plugin')
+// const BrowserReloadErrorOverlayWepbackPlugin = require('browser-reload-error-overlay-wepback-plugin')
 const HappyPack = require('happypack')
 const os = require('os')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
+const {
+  NODE_ENV, // 环境参数
+  webpackEnv, // 环境参数
+  target, // 环境参数
+} = process.env // 环境参数
 
-const NODE_ENV = process.env.NODE_ENV // 环境参数
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 //   是否是测试开发环境
@@ -242,7 +246,7 @@ module.exports = {
     //   热刷新
     // new BrowserReloadPlugin(),
     // 热刷新和错误日志
-    new BrowserReloadErrorOverlayWepbackPlugin(),
+    // new BrowserReloadErrorOverlayWepbackPlugin(),
     new webpack.ProvidePlugin({
       process: 'process',
     }),
