@@ -1,11 +1,4 @@
-/*
- * @Date: 2022-06-01 10:38:03
- * @Author: Yao guan shou
- * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-06-01 16:06:38
- * @FilePath: /webpack-cli/bin/index.js
- * @Description:
- */
+#!/usr/bin/env node
 const minimist = require('minimist'), // 解析控制台参数
   fs = require('fs'),
   chalk = require('chalk'), // 控制台颜色
@@ -16,5 +9,5 @@ const minimist = require('minimist'), // 解析控制台参数
   execSync = require('child_process').execSync,
   args = minimist(process.argv)
 
-const Server = require('./@webpack-cli-cjs')
+const Server = require('../@webpack-cli-cjs')
 module.exports = Server

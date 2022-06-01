@@ -7,7 +7,7 @@
   "description": "",
   "main": "./bin/index.js",
   "bin": {
-    "webpack-cli-util": "bin/index.js"
+    "webpack-cli-util": "./index.js"
   },
   "dependencies": {
     "@babel/cli": "^7.17.6",
