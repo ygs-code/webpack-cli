@@ -3,7 +3,7 @@
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "./@webpack-cli-cjs/index.js",
   "dependencies": {
@@ -172,7 +172,6 @@
     "copy": "node  copy",
     "//注释1:": "web端dev环境运行",
     "web:c:dev": "cross-env NODE_ENV=development   webpackEnv=dev  target=web   node  @webpack-cli-cjs/index.js",
-    "web:c1:dev": "cross-env NODE_ENV=development  webpackEnv=dev  target=web   node  @webpack-cli-cjs1/index.js ",
     "web:dev": "cross-env NODE_ENV=development     webpackEnv=dev  target=web   babel-node  @webpack-cli/index.js",
     "//注释2:": "web端生产环境运行",
     "web:build": "cross-env NODE_ENV=production    webpackEnv=dev  target=web   babel-node  @webpack-cli/index.js",
