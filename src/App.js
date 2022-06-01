@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-06-01 11:25:04
+ * @LastEditTime: 2022-06-01 16:09:03
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -18,7 +18,6 @@ import './App3.scss'
 console.log('process ==', process) // 'test'
 /*global APP_CONFIG*/
 var server_api_key = APP_CONFIG.api_key
-  
 console.log(' APP_CONFIG=', APP_CONFIG)
 console.log('process=', process)
   // console.log('json=', json) 
