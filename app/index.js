@@ -1,18 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2020-12-29 09:32:02
- * @LastEditTime: 2022-04-28 11:30:32
+ * @LastEditTime: 2022-06-01 11:00:49
  * @LastEditors: Yao guan shou
  * @Description: In User Settings Edit
- * @FilePath: /webpack-config/app/index
+ * @FilePath: /webpack-cli/app/index.js
  */
 import "@babel/polyfill";
-import koa from "koa";
 // import kill from "kill-port";
 // class App {
 //   constructor() {
 //     //创建node实例
-//     this.app = new koa();
+//     this.app = new app();
 //     this.init();
 //   }
 //   async init() {}

@@ -1,5 +1,3 @@
-// import "@babel/polyfill";
-// import koa from 'koa';
 import fs from 'fs'
 import http from 'http'
 import WebSocket, { WebSocketServer } from 'ws'

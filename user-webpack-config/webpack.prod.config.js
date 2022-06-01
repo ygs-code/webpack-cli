@@ -75,10 +75,6 @@ module.exports = {
 
     // // 如果是配置前端就很好注入插件
     // new webpack.DefinePlugin({
-    //   //也可以注入插件 能 注入vue 但是不能注入 Koa
-    //   // vue,
-    //   //不能注入 Koa
-    //   // Koa,
     //   //注入一个环境变量
     //   "process.env": { BUILD_TARGET: "BUILD_TARGET" },
     // }),
@@ -151,10 +147,6 @@ module.exports = {
 
   //   // 如果是配置前端就很好注入插件
   //   new webpack.DefinePlugin({
-  //     //也可以注入插件 能 注入vue 但是不能注入 Koa
-  //     // vue,
-  //     //不能注入 Koa
-  //     // Koa,
   //     //注入一个环境变量
   //     "process.env": { BUILD_TARGET: "BUILD_TARGET" },
   //   }),

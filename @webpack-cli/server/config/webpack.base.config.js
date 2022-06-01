@@ -628,10 +628,8 @@ export default {
     //DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用
     // 如果是配置前端就很好注入插件
     new webpack.DefinePlugin({
-      //也可以注入插件 能 注入vue 但是不能注入 Koa
+      //也可以注入插件 能 注入vue 
       // vue,
-      //不能注入 Koa
-      // Koa,
       //注入一个环境变量
       "process.env": { BUILD_TARGET: "BUILD_TARGET" },
     }),

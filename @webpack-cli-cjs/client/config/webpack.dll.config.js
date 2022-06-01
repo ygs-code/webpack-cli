@@ -30,7 +30,7 @@ module.exports = smp.wrap({
     //     // path.join(__dirname, "../../../node_modules/vue")
 
     // ],
-    // 编译不了koa和mysql 会报错。 难道是不能编译后端包？
+
     // koa: [path.join(__dirname, "../../node_modules/koa/dist/koa.mjs")],
     // mysql: [path.join(__dirname, "../../node_modules/_mysql@2.18.1@mysql")],
   },
