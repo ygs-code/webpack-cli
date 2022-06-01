@@ -3,9 +3,9 @@
   "//注释": "tree shaking删除多余未引用代码,但是看了打包文件并没有减少体积",
   "author": "姚观寿 <281113270@qq.com>",
   "sideEffects": false,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "",
-  "main": "/bin/index.js",
+  "main": "./bin/index.js",
   "bin": {
     "webpack-cli-util": "/bin/index.js"
   },
@@ -84,12 +84,9 @@
     "express": "^4.17.3",
     "express-ws": "^5.0.2",
     "extended-define-webpack-plugin": "^0.1.3",
-    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "get-port": "^6.1.2",
-    "graphql": "^15.4.0",
-    "graphql-tools": "^7.0.2",
     "happypack": "^5.0.1",
     "hard-source-webpack-plugin": "^0.13.1",
     "html-webpack-plugin": "^5.5.0",
@@ -184,8 +181,7 @@
     "eslint": "eslint ./src",
     "mocha": "mocha ./app/test/add.test.ts",
     "test:webpack": "jest-webpack",
-    "jest": " babel-node ./scripts/test.js",
-    "graphql:demo": "nodemon  --exec cross-env  NODE_ENV=development  babel-node ./app/graphql/schema/graphql.demo.test.js"
+    "jest": " babel-node ./scripts/test.js"
   },
   "license": "ISC",
   "engines": {

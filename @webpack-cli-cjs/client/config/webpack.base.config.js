@@ -638,29 +638,19 @@ module.exports = {
       threadPool: happyThreadPool,
     }),
 
-    // new HappyPack({
-    //     id: 'graphql',
-    //     use: [
-    //         //添加loader
-    //         // {
-    //         //   loader: path.join(
-    //         //     __dirname,
-    //         //     "./defineLoader/MyExampleWebpackLoader.js"
-    //         //   ),
-    //         //   options: {
-    //         //     name: "graphql",
-    //         //   },
-    //         // },
-    //         {
-    //             loader: 'raw-loader',
-    //             options: {},
-    //         },
-    //     ],
-    //     // 输出执行日志
-    //     // verbose: true,
-    //     // 使用共享线程池
-    //     threadPool: happyThreadPool,
-    // }),
+    new HappyPack({
+        id: 'graphql',
+        use: [
+            {
+                loader: 'raw-loader',
+                options: {},
+            },
+        ],
+        // 输出执行日志
+        // verbose: true,
+        // 使用共享线程池
+        threadPool: happyThreadPool,
+    }),
 
     // new HappyPack({
     //   id: "MyExampleWebpackLoader",
