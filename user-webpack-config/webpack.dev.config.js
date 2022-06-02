@@ -86,7 +86,7 @@ module.exports = {
             publicPath: '/', // 静态资源文件公开目录
         },
         liveReload: false, // 编译之后是否自动刷新浏览器
-        writeToDisk: true, // 写入硬盘
+        writeToDisk: false, // 写入硬盘
         // devMiddleware: { // 一个开发环境的中间件
         //   writeToDisk: true, // 写入硬盘
         // },

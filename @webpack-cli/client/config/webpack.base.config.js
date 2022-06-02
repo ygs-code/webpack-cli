@@ -155,18 +155,18 @@ module.exports = {
       // http: require.resolve("stream-http"),
     },
   },
-  // 打包文件大小监听
-  performance: {
-    maxEntrypointSize: 1024 * 512, // 设置最大输入512kb的文件，如果大于他则发出警告
-    maxAssetSize: 1024 * 256, // 设置最大输出256kb的文件，如果大于他则发出警告
-    hints: 'warning',
-    // 过滤文件
-    assetFilter: function (assetFilename) {
-      // console.log('assetFilename==========', assetFilename,assetFilename.endsWith('.js'))
-      // 只要监听js文件，过滤其他文件判断
-      return assetFilename.endsWith('.js')
-    },
-  },
+  // // 打包文件大小监听
+  // performance: {
+  //   maxEntrypointSize: 1024 * 512, // 设置最大输入512kb的文件，如果大于他则发出警告
+  //   maxAssetSize: 1024 * 256, // 设置最大输出256kb的文件，如果大于他则发出警告
+  //   hints: 'warning',
+  //   // 过滤文件
+  //   assetFilter: function (assetFilename) {
+  //     // console.log('assetFilename==========', assetFilename,assetFilename.endsWith('.js'))
+  //     // 只要监听js文件，过滤其他文件判断
+  //     return assetFilename.endsWith('.js')
+  //   },
+  // },
 
   //选项决定文件系统快照的创建和失效方式。
   snapshot: {
@@ -213,9 +213,8 @@ module.exports = {
     //在处理资产之后添加额外的散列编译通道，以获得正确的资产内容散列。如果realContentHash被设置为false，则使用内部数据来计算散列，当资产相同时，它可以更改。
     realContentHash: true,
     // Chunk start splitChunks [name].chunk  公共包抽取  vendor
-
     // 开启这个编译包更小
-    runtimeChunk: 'single',
+    // runtimeChunk: 'single',
     // 开启这个编译包更小
     // runtimeChunk: {
     //   // name: (entrypoint) => `runtime~${entrypoint.name}`,
@@ -224,9 +223,9 @@ module.exports = {
     // 打包大小拆包
     splitChunks: {
       // 最大超过多少就要拆分
-      maxSize: 204800, //大小超过204800个字节 200kb 就要拆分
-      // 最小多少被匹配拆分
-      minSize: 102400, //大小超过102400个字节  100kb 就要拆分
+      // maxSize: 204800, //大小超过204800个字节 200kb 就要拆分
+      // // 最小多少被匹配拆分
+      // minSize: 102400, //大小超过102400个字节  100kb 就要拆分
       enforceSizeThreshold: 102400,
       name: false,
       chunks: 'all',
@@ -257,7 +256,7 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           reuseExistingChunk: true,
-          minSize: 100, //大小超过1000个字节
+          // minSize: 100, //大小超过1000个字节
           minChunks: 1, //最少引入了1次
         },
         default: {
@@ -516,7 +515,7 @@ module.exports = {
           htmlWebpackPluginOptions = {}
           for (let item of htmlWebpackPluginOptionsArr) {
             let [key, value] = item.split(':')
-            htmlWebpackPluginOptions[`${key}`] = `${value}`
+            htmlWebpackPluginOptions[`${key}`] = value
           }
         } else {
           htmlWebpackPluginOptions = {}

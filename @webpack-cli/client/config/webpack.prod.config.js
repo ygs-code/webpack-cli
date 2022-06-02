@@ -6,7 +6,7 @@
  * @FilePath: /webpack-cli/@webpack-cli/client/config/webpack.prod.config.js
  * @Description:
  */
-require("@babel/polyfill");
+require('@babel/polyfill');
 const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
@@ -50,6 +50,20 @@ module.exports = {
         strictModuleExceptionHandling: true,
     },
     watch: false,
+
+    // 打包文件大小监听
+    performance: {
+        maxEntrypointSize: 1024 * 512, // 设置最大输入512kb的文件，如果大于他则发出警告
+        maxAssetSize: 1024 * 50, // 设置最大打包输出50kb的文件，如果大于他则发出警告
+        hints: 'warning',
+        // 过滤文件
+        assetFilter: function (assetFilename) {
+            // console.log('assetFilename==========', assetFilename,assetFilename.endsWith('.js'))
+            // 只要监听js文件，过滤其他文件判断
+            return assetFilename.endsWith('.js');
+        },
+    },
+
     optimization: {
         // 压缩
         minimize: true,
@@ -70,6 +84,54 @@ module.exports = {
         // runtimeChunk: {
         //   name: (entrypoint) => `runtime~${entrypoint.name}`,
         // },
+        runtimeChunk: 'single',
+        // 打包大小拆包
+        splitChunks: {
+            // 最大超过多少就要拆分
+            maxSize: 50 * 1024, //大小超过150*1024个字节 150kb 就要拆分
+            // // 最小多少被匹配拆分
+            minSize: 20 * 1024, //大小超过 50*1024个字节  50kb 就要拆分
+            enforceSizeThreshold: 102400,
+            name: false,
+            chunks: 'all',
+            minRemainingSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 50,
+            maxInitialRequests: 50,
+            automaticNameDelimiter: '~',
+            cacheGroups: {
+                // vendor: {
+                //     //第三方依赖
+                //     priority: 1, //设置优先级，首先抽离第三方模块
+                //     name: 'vendor',
+                //     test: /node_modules/,
+                //     chunks: 'initial',
+                //     minSize: 0,
+                //     minChunks: 1, //最少引入了1次
+                // },
+                // //缓存组
+                // common: {
+                //     //公共模块
+                //     chunks: 'initial',
+                //     name: 'common',
+                //     minSize: 1000, //大小超过1000个字节
+                //     minChunks: 3, //最少引入了3次
+                // },
+                defaultVendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    reuseExistingChunk: true,
+                    // minSize: 100, //大小超过1000个字节
+                    minChunks: 1, //最少引入了1次
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            },
+        },
+        // Chunk end
     },
     devtool: 'source-map', // 生产环境和开发环境判断
     module: {
