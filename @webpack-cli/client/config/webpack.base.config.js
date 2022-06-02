@@ -213,22 +213,28 @@ module.exports = {
     //在处理资产之后添加额外的散列编译通道，以获得正确的资产内容散列。如果realContentHash被设置为false，则使用内部数据来计算散列，当资产相同时，它可以更改。
     realContentHash: true,
     // Chunk start splitChunks [name].chunk  公共包抽取  vendor
+
+    // 开启这个编译包更小
+    runtimeChunk: 'single',
     // 开启这个编译包更小
     // runtimeChunk: {
-    //   name: (entrypoint) => `runtime~${entrypoint.name}`,
+    //   // name: (entrypoint) => `runtime~${entrypoint.name}`,
     // },
     //
+    // 打包大小拆包
     splitChunks: {
+      // 最大超过多少就要拆分
+      maxSize: 204800, //大小超过204800个字节 200kb 就要拆分
+      // 最小多少被匹配拆分
+      minSize: 102400, //大小超过102400个字节  100kb 就要拆分
+      enforceSizeThreshold: 102400,
       name: false,
       chunks: 'all',
-      // minSize: 20000,
       minRemainingSize: 0,
-      // maxSize: 0,
       minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
+      maxAsyncRequests: 50,
+      maxInitialRequests: 50,
       automaticNameDelimiter: '~',
-      enforceSizeThreshold: 50000,
       cacheGroups: {
         // vendor: {
         //     //第三方依赖
@@ -251,6 +257,8 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           reuseExistingChunk: true,
+          minSize: 100, //大小超过1000个字节
+          minChunks: 1, //最少引入了1次
         },
         default: {
           minChunks: 2,
@@ -521,7 +529,7 @@ module.exports = {
       // 每个html的模版，这里多个页面使用同一个模版
       template: path.join(process.cwd(), '/public/index.html'),
       // 自动将引用插入html
-      inject: true,
+      inject: 'body',
       hash: true,
       // 每个html引用的js模块，也可以在这里加上vendor等公用模块
       chunks: [
@@ -640,17 +648,17 @@ module.exports = {
     }),
 
     new HappyPack({
-        id: 'graphql',
-        use: [
-            {
-                loader: 'raw-loader',
-                options: {},
-            },
-        ],
-        // 输出执行日志
-        // verbose: true,
-        // 使用共享线程池
-        threadPool: happyThreadPool,
+      id: 'graphql',
+      use: [
+        {
+          loader: 'raw-loader',
+          options: {},
+        },
+      ],
+      // 输出执行日志
+      // verbose: true,
+      // 使用共享线程池
+      threadPool: happyThreadPool,
     }),
 
     // new HappyPack({
