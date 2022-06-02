@@ -20,7 +20,7 @@ const os = require('os');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const {
     NODE_ENV, // 环境参数
-    webpackEnv, // 环境参数
+    WEB_ENV, // 环境参数
     target, // 环境参数
 } = process.env; // 环境参数
 

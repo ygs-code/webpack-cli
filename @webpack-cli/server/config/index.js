@@ -15,11 +15,11 @@ const devConfig = require('./webpack.dev.config')
 const prodConfig = require('./webpack.prd.config')
 const testConfig = require('./webpack.test.config')
 // const { getArgv } = require('../../utils')
-// const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const WEB_ENV = getArgv('WEB_ENV') // 环境参数
 // const NODE_ENV = process.env.NODE_ENV // 环境参数
 const {
   NODE_ENV, // 环境参数
-  webpackEnv, // 环境参数
+  WEB_ENV, // 环境参数
   target, // 环境参数
 } = process.env // 环境参数
 
@@ -87,7 +87,7 @@ module.exports = async () => {
   // })
 
   let config = {}
-  if (webpackEnv == 'test') {
+  if (WEB_ENV == 'test') {
     //   测试代码打包
     config = merge(
       // baseConfig,

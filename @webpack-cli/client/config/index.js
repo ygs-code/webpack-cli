@@ -20,12 +20,12 @@ const testConfig = require('../../webpack.test.config')
 // const userDevConfig = require('../../user-webpack-config/webpack.dev.config')
 // const userProdConfig = require('../../user-webpack-config/webpack.prod.config')
 // const { getArgv } = require("../../utils");
-// const webpackEnv = getArgv("webpackEnv"); // 环境参数
+// const WEB_ENV = getArgv("WEB_ENV"); // 环境参数
 // const target = getArgv("target"); // 环境参数
 
 const {
   NODE_ENV, // 环境参数
-  webpackEnv, // 环境参数
+  WEB_ENV, // 环境参数
   target, // 环境参数
 } = process.env // 环境参数
 
@@ -34,7 +34,7 @@ const isEnvDevelopment = NODE_ENV === 'development'
 //    是否是生产环境
 const isEnvProduction = NODE_ENV === 'production'
 
-// console.log('webpackEnv=',webpackEnv)
+// console.log('WEB_ENV=',WEB_ENV)
 // console.log('isEnvDevelopment=',isEnvDevelopment)
 // console.log('target=',target)
 // console.log('isEnvProduction=',isEnvProduction)
@@ -103,7 +103,7 @@ module.exports = async () => {
   // })
 
   let config = {}
-  if (webpackEnv === 'test') {
+  if (WEB_ENV === 'test') {
     //   测试代码打包
     config = merge(
       // baseConfig,

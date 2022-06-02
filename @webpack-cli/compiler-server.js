@@ -19,11 +19,11 @@ const checkVersions = require('./check-versions')
 const { getArgv, stabilization } = require('./utils')
 const clientWebpackConfig = require('./client')
 const serverWebpackConfig = require('./server')
-// const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const WEB_ENV = getArgv('WEB_ENV') // 环境参数
 // const target = getArgv('target') // 环境参数
 const {
   NODE_ENV, // 环境参数
-  webpackEnv, // 环境参数
+  WEB_ENV, // 环境参数
   target, // 环境参数
 } = process.env // 环境参数
 // 检查node和npm版本

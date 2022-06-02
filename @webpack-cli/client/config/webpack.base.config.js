@@ -24,11 +24,11 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 })
-// const webpackEnv = getArgv('webpackEnv') // 环境参数
+// const WEB_ENV = getArgv('WEB_ENV') // 环境参数
 const { resolve } = path
 let {
   NODE_ENV, // 环境参数
-  webpackEnv, // 环境参数
+  WEB_ENV, // 环境参数
   target, // 环境参数
   htmlWebpackPluginOptions = '',
 } = process.env // 环境参数
@@ -435,7 +435,7 @@ module.exports = {
         use: [
           //   "happypack/loader?id=node&cacheDirectory=true",
           //   // 'thread-loader',
-          //   //  webpackEnv == 'test' ? '' : 'thread-loader',
+          //   //  WEB_ENV == 'test' ? '' : 'thread-loader',
           //   ...(isEnvDevelopment ? ["thread-loader"] : []),
           //   "cache-loader",
           // {
@@ -693,6 +693,7 @@ module.exports = {
     new ExtendedDefinePlugin({
       process: {
         env: {
+          WEB_ENV,
           NODE_ENV, // 将属性转化为全局变量，让代码中可以正常访问
         },
       },

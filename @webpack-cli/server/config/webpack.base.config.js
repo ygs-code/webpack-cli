@@ -24,7 +24,7 @@ const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 const { resolve } = path;
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
-const webpackEnv = getArgv("webpackEnv"); // 环境参数
+const WEB_ENV = getArgv("WEB_ENV"); // 环境参数
 
 const NODE_ENV = process.env.NODE_ENV; // 环境参数
 //    是否是生产环境
@@ -391,7 +391,7 @@ module.exports ={
         use: [
           //   "happypack/loader?id=node&cacheDirectory=true",
           //   // 'thread-loader',
-          //   //  webpackEnv == 'test' ? '' : 'thread-loader',
+          //   //  WEB_ENV == 'test' ? '' : 'thread-loader',
           //   ...(isEnvDevelopment ? ["thread-loader"] : []),
           //   "cache-loader",
           // {

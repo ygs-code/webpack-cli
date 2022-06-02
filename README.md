@@ -58,13 +58,13 @@ webpack.prod.config   生产环境配置
 ```
   "scripts": {
     "//注释1:": "web端dev环境运行",
-    "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack/index.js  webpackEnv=dev  target=web  ",
+    "web:dev": "cross-env NODE_ENV=development   babel-node  @webpack/index.js  WEB_ENV=dev  target=web  ",
     "//注释2:": "web端生产环境运行",
-    "web:build": "cross-env NODE_ENV=production   babel-node  @webpack/index.js  webpackEnv=prod  target=web  ",
+    "web:build": "cross-env NODE_ENV=production   babel-node  @webpack/index.js  WEB_ENV=prod  target=web  ",
     "//注释3:": "node服务端dev环境运行",
-    "node:dev": "cross-env NODE_ENV=development   babel-node  @webpack/index.js  webpackEnv=dev  target=node  ",
+    "node:dev": "cross-env NODE_ENV=development   babel-node  @webpack/index.js  WEB_ENV=dev  target=node  ",
     "//注释4:": "node服务端d生产环境运行",
-    "node:build": "cross-env NODE_ENV=production   babel-node  @webpack/index.js  webpackEnv=prod  target=node  ",
+    "node:build": "cross-env NODE_ENV=production   babel-node  @webpack/index.js  WEB_ENV=prod  target=node  ",
     "//注释7": "编译dll文件",
     "dll": "webpack   --progress --config ./scripts/webpack/config/webpack.dll.config.js",
     "//注释8单元测试命令": "运行单元测试",
