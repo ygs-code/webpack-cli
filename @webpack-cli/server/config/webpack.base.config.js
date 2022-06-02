@@ -254,6 +254,7 @@ module.exports ={
     // Chunk end
   },
   //配置node环境
+  name: 'server',
   target: "node",
   node: {
     __filename: true,

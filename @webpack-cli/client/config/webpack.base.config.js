@@ -51,6 +51,8 @@ const cacheLoader = (happypackId) => {
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
 module.exports = {
+  name: 'client',
+  target: 'web',
   // 入口
   entry: {
     // myVue: [path.join(process.cwd(), "/src/myVue.js")], // 公共包抽取

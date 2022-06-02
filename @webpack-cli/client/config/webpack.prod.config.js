@@ -6,7 +6,7 @@
  * @FilePath: /webpack-cli/@webpack-cli/client/config/webpack.prod.config.js
  * @Description:
  */
-
+require("@babel/polyfill");
 const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');

@@ -1,3 +1,4 @@
+require("@babel/polyfill");
 const path = require('path')
 const webpack = require('webpack')
 // const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");

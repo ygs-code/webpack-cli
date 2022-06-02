@@ -6,6 +6,7 @@
  * @FilePath: /webpack-cli/@webpack-cli/check-versions.js
  * @Description:
  */
+require("@babel/polyfill");
 //整个文件是检测 node 和npm 版本是多少，是不是该升级
 // 下面的插件是chalk插件，他的作用是在控制台中输出不同的颜色的字，大致这样用chalk.blue('Hello world')，这款插件只能改变命令行中的字体颜色
 const chalk = require("chalk"); //控制台输出信息

@@ -6,6 +6,7 @@
  * @FilePath: /webpack-cli/@webpack-cli/server/config/webpack.prd.config.js
  * @Description:
  */
+require("@babel/polyfill");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const os = require("os");

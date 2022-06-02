@@ -6,6 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /webpack-cli/@webpack-cli/client/config/index.js
  */
+require("@babel/polyfill");
 const path = require('path')
 const fs = require('fs')
 const { merge } = require('webpack-merge')

@@ -6,6 +6,7 @@
  * @FilePath: /webpack-cli/@webpack-cli/server/config/webpack.test.config.js
  * @Description:
  */
+require("@babel/polyfill");
 const path = require("path");
 const fs = require("fs");
 //glob 获取目录下面所有文件

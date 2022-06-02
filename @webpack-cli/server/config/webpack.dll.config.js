@@ -1,3 +1,5 @@
+
+require("@babel/polyfill");
 const path = require("path");
 const DllPlugin = require("webpack/lib/DllPlugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
