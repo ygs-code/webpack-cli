@@ -18,6 +18,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader');
 const os = require('os');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const {
     NODE_ENV, // 环境参数
     WEB_ENV, // 环境参数
@@ -204,6 +205,15 @@ module.exports = {
         ],
     },
     plugins: [
+        // gzip 压缩
+        new CompressionWebpackPlugin({
+            filename: "[path][base].gz",
+            algorithm: 'gzip',
+            test: /\.(js|css|json|html|svg)(\?.*)?$/i,
+            threshold: 10240, // 大于10kb的才被压缩
+            minRatio: 0.8, //压缩比例
+        }),
+
         // 复制
         new CopyPlugin({
             patterns: [
