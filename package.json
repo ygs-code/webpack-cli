@@ -112,6 +112,7 @@
     "npm-install-webpack-plugin": "^4.0.5",
     "opn": "^6.0.0",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "osenv": "^0.1.5",
     "parallel-webpack": "^2.6.0",
     "path-browserify": "^1.0.1",
     "portfinder": "^1.0.28",
