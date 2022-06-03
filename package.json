@@ -6,7 +6,7 @@
     "@babel/polyfill",
     "*.css"
   ],
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "",
   "main": "./bin/index.js",
   "bin": {
