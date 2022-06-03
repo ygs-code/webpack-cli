@@ -6,14 +6,14 @@
  * @FilePath: /webpack-config/user-webpack-config/defineLoader/MyExampleWebpackLoader.js
  * @Description: 
  */
-const { getOptions } = require("loader-utils");
+ 
 
 module.exports = function (source) {
     const callback = this.async();
-    const options = getOptions(this);
+    const options =this.query;
     const { name } = options;
   // // // 获取参数
-  // console.log('name============', name);
+  // console.log('this.query============', this.query);
   // // // 获取代码
   // console.log('source========', source);
   callback(null, source);

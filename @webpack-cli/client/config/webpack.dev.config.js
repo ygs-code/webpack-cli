@@ -128,7 +128,7 @@ module.exports = {
         minimizer: [],
 
         //  任何字符串：用于设置 process.env.NODE_ENV 的值。
-        // nodeEnv: "development",
+        nodeEnv: "development",
         // moduleIds: "named",
         // chunkIds: "named",
 
