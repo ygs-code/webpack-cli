@@ -70,7 +70,16 @@ module.exports = {
         minimize: true,
         minimizer: [
             // 配置生产环境的压缩方案：js和css
-            new TerserWebpackPlugin(),
+             // 由Terser将未使用的函数, 从我们的代码中删除
+            new TerserWebpackPlugin({
+                extractComments: "all", // 删除注释
+                terserOptions: {
+                    compress: {
+                        drop_console: false, // 默认false，设置为true, 则会删除所有console.* 相关的代码。
+                        pure_funcs: ['console.log'], // 单纯禁用console.log
+                    },
+                },
+            }),
             new CssMinimizerPlugin(),
             new ESBuildMinifyPlugin({
                 target: 'es2015', // Syntax to compile to (see options below for possible values)
@@ -158,11 +167,27 @@ module.exports = {
                 // 排除文件,因为这些包已经编译过，无需再次编译
                 exclude: /(node_modules|bower_components)/,
                 use: [
+                    // 'thread-loader',
                     MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
                         },
                     },
                 ],
@@ -171,6 +196,7 @@ module.exports = {
             {
                 test: /\.less$/i,
                 use: [
+                    // 'thread-loader',
                     // compiles Less to CSS
                     MiniCssExtractPlugin.loader,
                     'css-loader',
@@ -180,6 +206,21 @@ module.exports = {
                             sourceMap: true,
                         },
                     },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    },
                 ],
             },
 
@@ -187,6 +228,7 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [
+                    // 'thread-loader',
                     MiniCssExtractPlugin.loader,
                     // Translates CSS into CommonJS
                     'css-loader',
@@ -200,6 +242,21 @@ module.exports = {
                             sourceMap: true,
                         },
                     },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    },
                 ],
             },
         ],
@@ -207,7 +264,7 @@ module.exports = {
     plugins: [
         // gzip 压缩
         new CompressionWebpackPlugin({
-            filename: "[path][base].gz",
+            filename: '[path][base].gz',
             algorithm: 'gzip',
             test: /\.(js|css|json|html|svg)(\?.*)?$/i,
             threshold: 10240, // 大于10kb的才被压缩

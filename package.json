@@ -6,7 +6,7 @@
     "@babel/polyfill",
     "*.css"
   ],
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "main": "./bin/index.js",
   "bin": {
@@ -53,6 +53,7 @@
     "@types/webpack": "^4.41.25",
     "add-asset-html-webpack-plugin": "^5.0.2",
     "assert": "^2.0.0",
+    "autoprefixer": "^10.4.7",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -121,6 +122,7 @@
     "parallel-webpack": "^2.6.0",
     "path-browserify": "^1.0.1",
     "portfinder": "^1.0.28",
+    "postcss-loader": "^7.0.0",
     "raw-loader": "^4.0.2",
     "react": "^18.0.0",
     "react-app-polyfill": "^1.0.6",

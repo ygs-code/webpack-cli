@@ -29,7 +29,7 @@ const cacheLoader = (happypackId) => {
               'thread-loader',
               'cache-loader',
           ]
-        : [`happypack/loader?id=${happypackId}`];
+        : ['thread-loader', `happypack/loader?id=${happypackId}`];
 };
 
 const getIPAdress = () => {
@@ -128,7 +128,7 @@ module.exports = {
         minimizer: [],
 
         //  任何字符串：用于设置 process.env.NODE_ENV 的值。
-        nodeEnv: "development",
+        nodeEnv: 'development',
         // moduleIds: "named",
         // chunkIds: "named",
 
@@ -172,6 +172,21 @@ module.exports = {
                             sourceMap: true,
                         },
                     },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    },
                 ],
             },
             // less
@@ -188,6 +203,21 @@ module.exports = {
                         loader: 'less-loader',
                         options: {
                             sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
                         },
                     },
                 ],
@@ -211,6 +241,21 @@ module.exports = {
                             // Prefer `dart-sass`
                             implementation: require('sass'),
                             sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'autoprefixer',
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
                         },
                     },
                 ],

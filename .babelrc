@@ -17,7 +17,6 @@
     ],
 
     "plugins": [
-
         "@babel/plugin-proposal-function-sent",
         "@babel/plugin-proposal-optional-chaining",
         ["@babel/plugin-transform-arrow-functions", { "loose": true }],

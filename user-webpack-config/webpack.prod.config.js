@@ -34,7 +34,7 @@ const cacheLoader = (happypackId) => {
               'thread-loader',
               'cache-loader',
           ]
-        : [`happypack/loader?id=${happypackId}`];
+        : ['thread-loader', `happypack/loader?id=${happypackId}`];
 };
 
 // console.log('BrowserReloadPlugin=',BrowserReloadPlugin)

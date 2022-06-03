@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const WebpackBar = require('webpackbar');
-const { ProgressPlugin } = require("webpack")
+const { ProgressPlugin } = require('webpack');
 const HappyPack = require('happypack');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -46,11 +46,14 @@ const cacheLoader = (happypackId) => {
               'thread-loader',
               'cache-loader',
           ]
-        : [`happypack/loader?id=${happypackId}`];
+        : ['thread-loader', `happypack/loader?id=${happypackId}`];
 };
 // console.log("__dirname : " + __dirname);
 // console.log("resolve   : " + resolve("./"));
 // console.log("cwd       : " + process.cwd());
+
+// webpack  loaders  https://webpack.javascriptc.com/loaders/
+
 module.exports = {
     name: 'client',
     target: 'web',
@@ -686,16 +689,16 @@ module.exports = {
         new CheckerPlugin(),
         // 编译进度条
         new WebpackBar(),
-          // 编译进度条
-          new ProgressPlugin({
-            activeModules: true,         // 默认false，显示活动模块计数和一个活动模块正在进行消息。
-            entries: true,  			   // 默认true，显示正在进行的条目计数消息。
-            modules: false,              // 默认true，显示正在进行的模块计数消息。
-            modulesCount: 5000,          // 默认5000，开始时的最小模块数。PS:modules启用属性时生效。
-            profile: false,         	   // 默认false，告诉ProgressPlugin为进度步骤收集配置文件数据。
-            dependencies: false,         // 默认true，显示正在进行的依赖项计数消息。
-            dependenciesCount: 10000,    // 默认10000，开始时的最小依赖项计数。PS:dependencies启用属性时生效。
-          }),
+        // 编译进度条
+        new ProgressPlugin({
+            activeModules: true, // 默认false，显示活动模块计数和一个活动模块正在进行消息。
+            entries: true, // 默认true，显示正在进行的条目计数消息。
+            modules: false, // 默认true，显示正在进行的模块计数消息。
+            modulesCount: 5000, // 默认5000，开始时的最小模块数。PS:modules启用属性时生效。
+            profile: false, // 默认false，告诉ProgressPlugin为进度步骤收集配置文件数据。
+            dependencies: false, // 默认true，显示正在进行的依赖项计数消息。
+            dependenciesCount: 10000, // 默认10000，开始时的最小依赖项计数。PS:dependencies启用属性时生效。
+        }),
         // //缓存包 热启动
         // new webpack.HotModuleReplacementPlugin(),
         //使用 NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误

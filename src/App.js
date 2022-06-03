@@ -6,7 +6,7 @@
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 // import Router from "./router/index";
 import store from './redux/store';
@@ -22,7 +22,7 @@ console.log('APP_CONFIG=', APP_CONFIG);
 console.log('process=', process);
 
 // console.log('json=', json)
-//  pppp  
+//  pppp
 // 阿斯顿发
 const App = () => {
     return (
