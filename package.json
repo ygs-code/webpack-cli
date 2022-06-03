@@ -6,7 +6,7 @@
     "@babel/polyfill",
     "*.css"
   ],
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "",
   "main": "./bin/index.js",
   "bin": {
@@ -103,6 +103,7 @@
     "jest-watch-typeahead": "^0.6.1",
     "json-loader": "^0.5.7",
     "less-loader": "^11.0.0",
+    "less": "^4.1.2",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.6.0",
     "minimist": "^1.2.6",
@@ -191,7 +192,5 @@
     "node": ">= 13.0.0",
     "npm": ">= 6.0.0"
   },
-  "devDependencies": {
-    "less": "^4.1.2"
-  }
+  "devDependencies": {}
 }
