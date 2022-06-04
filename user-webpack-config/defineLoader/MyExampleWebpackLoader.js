@@ -16,4 +16,5 @@ module.exports = function (source) {
     // // // 获取代码
     // console.log('source========', source);
     callback(null, source);
+    return source
 };

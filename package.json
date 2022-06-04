@@ -97,6 +97,7 @@
     "happypack": "^5.0.1",
     "hard-source-webpack-plugin": "^0.13.1",
     "html-webpack-plugin": "^5.5.0",
+    "htmllint-async-loader": "^5.0.3",
     "htmllinter-webpack-plugin": "^0.2.1",
     "http-proxy-middleware": "^1.0.6",
     "import-from": "^4.0.0",
