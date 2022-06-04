@@ -179,18 +179,12 @@
     "react-app-polyfill/jsdom"
   ],
   "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "stylelint --fix",
-      "git add"
-    ],
     "*.{js,jsx,ts,tsx}": [
-      "vue-cli-service lint",
-      "git add"
+      "eslint src/**/*.js"
     ],
     "*.{htm,html,css,sss,less,scss,saas}": [
-      "stylelint --fix",
-      "git add"
+      "stylelint --fix"
+   
     ]
   },
   "scripts": {
