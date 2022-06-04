@@ -178,7 +178,23 @@
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "stylelint --fix",
+      "git add"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.{htm,html,css,sss,less,scss,saas}": [
+      "stylelint --fix",
+      "git add"
+    ]
+  },
   "scripts": {
+    "precommit": "lint-staged",
     "prepare": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
     "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
