@@ -108,6 +108,7 @@ cli.option(
 
 const cliOptions = cli.parse(process.argv).opts();
 console.log('cliOptions.debug=====',cliOptions.debug)
+console.log(' debug.enable=====', debug.enable)
 // if (cliOptions.debug) {
     debug.enable('lint-staged*');
 // }
