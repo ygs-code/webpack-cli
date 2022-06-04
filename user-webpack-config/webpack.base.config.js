@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const fs = require('fs');
-const htmllintLoader = require('htmllint-loader');
+// const htmllintLoader = require('htmllint-loader');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ExtendedDefinePlugin = require('extended-define-webpack-plugin');

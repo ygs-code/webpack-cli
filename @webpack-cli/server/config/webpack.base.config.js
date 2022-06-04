@@ -12,7 +12,6 @@ const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const os = require('os');
 const { getArgv } = require('../../utils');
-const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -504,8 +503,7 @@ module.exports = {
         //   // entryChunkMultiplicator: 1, // 默认：1
         // }),
 
-        // 在开发时自动安装缺少的依赖
-        // new NpmInstallPlugin(),
+     
 
         //  new HtmlWebpackPlugin(),
 
