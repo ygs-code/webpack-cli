@@ -11,7 +11,6 @@ const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 const path = require('path');
 
-
 let htmllinterConfig = {};
 if (fs.existsSync(path.join(process.cwd(), './htmllinter.config.js'))) {
     htmllinterConfig = require(path.join(
@@ -19,8 +18,6 @@ if (fs.existsSync(path.join(process.cwd(), './htmllinter.config.js'))) {
         './htmllinter.config.js'
     ));
 }
-
-console.log('htmllinterConfig=', htmllinterConfig);
 
 const { resolve } = path;
 let {
