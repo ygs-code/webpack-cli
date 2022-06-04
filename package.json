@@ -70,6 +70,7 @@
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "cli-spinners": "^2.5.0",
+    "commitizen": "^4.2.4",
     "compression-webpack-plugin": "^10.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "copy-webpack-plugin": "^10.2.4",
@@ -179,7 +180,14 @@
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "scripts": {
+    "commit": "git-cz",
+    "commitlint": "commitlint -E HUSKY_GIT_PARAMS",
     "precommit": "lint-staged",
     "prepare": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
