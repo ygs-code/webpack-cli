@@ -13,7 +13,7 @@
     "webpack-cli-util": "./bin/index.js"
   },
   "gitHooks": {
-    "pre-commit": "eslint src/**/*.js",
+    "pre-commit": "eslint src/**/*.js"
     
   },
   "dependencies": {
