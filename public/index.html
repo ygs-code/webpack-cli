@@ -1,25 +1,28 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-11-11 11:21:09
+ * @LastEditTime: 2022-06-01 12:10:57
+ * @LastEditors: Yao guan shou
+ * @Description: In User Settings Edit
+ * @FilePath: /webpack-cli/public/index.html
+-->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
-  <title>
-    <%= htmlWebpackPlugin.options.title %>
-  </title>
-</head>
-
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div>webpackName: <%= htmlWebpackPlugin.options.webpackName %>
-  </div>
-  <div id="root"></div>
-  <img src="./static/image/logo512.png" alt="123" />
-
-  <div> </div>
-</body>
-
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div>webpackName: <%= htmlWebpackPlugin.options.webpackName %></div>
+    <div id="root"></div>
+    <img src="./static/image/logo512.png">
+  </body>
 </html>
