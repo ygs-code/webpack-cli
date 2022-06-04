@@ -4,5 +4,5 @@ module.exports = {
         'eslint',
         'git add',
     ],
-    '*.{htm,html,css,sss,less,scss,saas}': ['stylelint', 'git add'],
+    'src/**/*.{htm,html,css,sss,less,scss,saas}': ['stylelint', 'git add'],
 };
