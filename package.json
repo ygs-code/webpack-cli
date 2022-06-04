@@ -12,20 +12,6 @@
   "bin": {
     "webpack-cli-util": "./bin/index.js"
   },
- 
-
-  "gitHooks": {
-    "pre-commit": "eslint src/**/*.js"
-    
-  },
-  
-    "husky": {
-      "hooks": {
-        "pre-commit": "eslint src/**/*.js",
-        "commit-msg": "eslint src/**/*.js",
-      }
-    }
- ,
   "dependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.10",
@@ -193,6 +179,7 @@
     "react-app-polyfill/jsdom"
   ],
   "scripts": {
+    "prepare": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
     "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
     "copy": "node  copy",
