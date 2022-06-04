@@ -12,6 +12,8 @@
   "bin": {
     "webpack-cli-util": "./bin/index.js"
   },
+ 
+
   "gitHooks": {
     "pre-commit": "eslint src/**/*.js"
     
@@ -19,8 +21,8 @@
   
     "husky": {
       "hooks": {
-        "pre-commit": "npm run test",  
-        "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS" 
+        "pre-commit": "eslint src/**/*.js",
+        "commit-msg": "eslint src/**/*.js",
       }
     }
  ,

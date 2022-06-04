@@ -20,8 +20,8 @@ console.log('process ==', process); // 'test'
 var server_api_key = APP_CONFIG.api_key;
 console.log('APP_CONFIG=', APP_CONFIG);
 console.log('process=', process);
-
-// console.log('json=', json)  
+  
+//   console.log('json=', json)  
  pppp     
 // 阿斯顿发  
 const App = () => {
