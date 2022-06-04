@@ -9,14 +9,10 @@
 const path = require('path')
 const { merge } = require('webpack-merge')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
-const { createVariants } = require('parallel-webpack')
 const serverBaseConfig = require('./webpack.base.config')
 const devConfig = require('./webpack.dev.config')
 const prodConfig = require('./webpack.prd.config')
 const testConfig = require('./webpack.test.config')
-// const { getArgv } = require('../../utils')
-// const WEB_ENV = getArgv('WEB_ENV') // 环境参数
-// const NODE_ENV = process.env.NODE_ENV // 环境参数
 const {
   NODE_ENV, // 环境参数
   WEB_ENV, // 环境参数

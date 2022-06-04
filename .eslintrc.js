@@ -6,6 +6,7 @@
  * @FilePath: /webpack-cli/.eslintrc.js
  * @Description:
  */
+//配置： https://eslint.bootcss.com/
 module.exports = {
   root: true, // 当前项目使用这个配置文件, 不会往父级目录找.eslintrc.js文件
 

@@ -11,10 +11,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const os = require('os');
-// const      bannerPlugin = require( "./bannerPlugin");
-// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin");
-// const { getArgv } = require('../../utils')
-const NpmInstallPlugin = require('npm-install-webpack-plugin');
+// const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -25,7 +22,6 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
-// const WEB_ENV = getArgv('WEB_ENV') // 环境参数
 const { resolve } = path;
 let {
     NODE_ENV, // 环境参数
@@ -282,24 +278,24 @@ module.exports = {
         // 未定义选项时，stats 选项的备用值(fallback value)（优先级高于 webpack 本地默认值）
         all: undefined,
         // 添加资源信息
-        assets: true,
+        assets: false,
         // 对资源按指定的字段进行排序
         // 你可以使用 `!field` 来反转排序。
         assetsSort: 'field',
         // 添加构建日期和构建时间信息
         builtAt: true,
         // 添加缓存（但未构建）模块的信息
-        cached: true,
+        cached: false,
         // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
-        cachedAssets: true,
+        cachedAssets: false,
         // 添加 children 信息
-        children: true,
+        children: false,
         // 添加 chunk 信息（设置为 `false` 能允许较少的冗长输出）
-        chunks: true,
+        chunks: false,
         // 将构建模块信息添加到 chunk 信息
-        chunkModules: true,
+        chunkModules: false,
         // 添加 chunk 和 chunk merge 来源的信息
-        chunkOrigins: true,
+        chunkOrigins: false,
         // 按指定的字段，对 chunk 进行排序
         // 你可以使用 `!field` 来反转排序。默认是按照 `id` 排序。
         chunksSort: 'field',
@@ -335,7 +331,7 @@ module.exports = {
         // 设置要显示的模块的最大数量
         // maxModules: 15,
         // 添加构建模块信息
-        modules: true,
+        modules: false,
         // 按指定的字段，对模块进行排序
         // 你可以使用 `!field` 来反转排序。默认是按照 `id` 排序。
         modulesSort: 'field',
@@ -344,17 +340,17 @@ module.exports = {
         // 当文件大小超过 `performance.maxAssetSize` 时显示性能提示
         performance: true,
         // 显示模块的导出
-        providedExports: true,
+        providedExports: false,
         // 添加 public path 的信息
         publicPath: true,
         // 添加模块被引入的原因
         reasons: true,
         // 添加模块的源码
-        source: true,
+        source: false,
         // 添加时间信息
         timings: true,
         // 显示哪个模块导出被用到
-        usedExports: true,
+        usedExports: false,
         // 添加 webpack 版本信息
         version: true,
         // 添加警告
@@ -480,17 +476,7 @@ module.exports = {
                 test: /\.(graphql|gql)$/,
                 // 排除文件,因为这些包已经编译过，无需再次编译
                 exclude: /(node_modules|bower_components)/,
-                use: [
-                    // {
-                    //   loader: path.join(
-                    //     __dirname,
-                    //     "./defineLoader/MyExampleWebpackLoader.js"
-                    //   ),
-                    //   options: {
-                    //     name: "graphql",
-                    //   },
-                    // },
-                ].concat(cacheLoader('graphql')),
+                use: [].concat(cacheLoader('graphql')),
                 // use: {
                 //   loader: "raw-loader",
                 // },
@@ -597,8 +583,6 @@ module.exports = {
         // 在开发时自动安装缺少的依赖
         // new NpmInstallPlugin(),
 
-        //  new HtmlWebpackPlugin(),
-
         //友好的错误WebPACK插件 错误提示插件
         //友好的错误认识webpackerrors WebPACK插件类  这是很容易添加类型的错误，所以如果你想看moreerrors得到处理
         new FriendlyErrorsPlugin(),
@@ -666,25 +650,6 @@ module.exports = {
             threadPool: happyThreadPool,
         }),
 
-        // new HappyPack({
-        //   id: "MyExampleWebpackLoader",
-        //   use: [  //添加loader
-        //     {
-        //       loader: path.join(
-        //         __dirname,
-        //         "./defineLoader/MyExampleWebpackLoader.js"
-        //       ),
-        //       options: {
-        //         name: "graphql",
-        //       },
-        //     },
-        //     // "raw-loader",
-        //   ],
-        //   // 输出执行日志
-        //   verbose: true,
-        //   // 使用共享线程池
-        //   threadPool: happyThreadPool,
-        // }),
         // 编译ts插件
         new CheckerPlugin(),
         // 编译进度条
@@ -719,23 +684,6 @@ module.exports = {
         //   banner: 'require("source-map-support").install();',
         //   raw: true,
         //   entryOnly: false,
-        // }),
-
-        // // 自定义插件
-        // new MyExampleWebpackPlugin({
-        //   // 出口
-        //   outputPath: path.join(process.cwd(), "/src"),
-        // }),
-
-        // // 这样利用原理可以动态加入公共库
-        // ...bannerPlugin.map((item) => {
-        //   return new webpack.BannerPlugin({
-        //     banner: item.variable
-        //       ? `const ${item.variable} = require("${item.packageName}");`
-        //       : `require("${item.packageName}");`,
-        //     raw: true,
-        //     entryOnly: false,
-        //   });
         // }),
     ],
 };

@@ -11,8 +11,6 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const os = require('os');
-// const      bannerPlugin = require( "./bannerPlugin";
-// const      MyExampleWebpackPlugin = require( "./definePlugin/MyExampleWebpackPlugin";
 const { getArgv } = require('../../utils');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -447,15 +445,7 @@ module.exports = {
                 // 排除文件,因为这些包已经编译过，无需再次编译
                 exclude: /(node_modules|bower_components)/,
                 use: [
-                    // {
-                    //   loader: path.join(
-                    //     __dirname,
-                    //     "./defineLoader/MyExampleWebpackLoader.js"
-                    //   ),
-                    //   options: {
-                    //     name: "graphql",
-                    //   },
-                    // },
+                 
                 ].concat(cacheLoader('graphql')),
                 // use: {
                 //   loader: "raw-loader",
@@ -567,15 +557,15 @@ module.exports = {
             id: 'graphql',
             use: [
                 //添加loader
-                {
-                    loader: path.join(
-                        __dirname,
-                        './defineLoader/MyExampleWebpackLoader.js'
-                    ),
-                    options: {
-                        name: 'graphql',
-                    },
-                },
+                // {
+                //     loader: path.join(
+                //         __dirname,
+                //         './defineLoader/MyExampleWebpackLoader.js'
+                //     ),
+                //     options: {
+                //         name: 'graphql',
+                //     },
+                // },
                 {
                     loader: 'raw-loader',
                     options: {},
@@ -642,22 +632,5 @@ module.exports = {
             raw: true,
             entryOnly: false,
         }),
-
-        // // 自定义插件
-        // new MyExampleWebpackPlugin({
-        //   // 出口
-        //   outputPath: path.join(process.cwd(), "/app"),
-        // }),
-
-        // // 这样利用原理可以动态加入公共库
-        // ...bannerPlugin.map((item) => {
-        //   return new webpack.BannerPlugin({
-        //     banner: item.variable
-        //       ? `const ${item.variable} = require("${item.packageName}");`
-        //       : `require("${item.packageName}");`,
-        //     raw: true,
-        //     entryOnly: false,
-        //   });
-        // }),
     ],
 };
