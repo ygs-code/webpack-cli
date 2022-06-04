@@ -15,10 +15,10 @@ import React, {
     Children,
     useEffect,
     memo,
-} from 'react';
+} from "react";
 import "./index.less";
-import img from '../../assets/image/react.jpg';
-import home from '../../assets/image/home.svg';
+import img from "../../assets/image/react.jpg";
+import home from "../../assets/image/home.svg";
 
 // 权限跳转登录页面可以在这控制
 const Index = () => {
@@ -28,14 +28,11 @@ const Index = () => {
             HOME页面
             <img src={img} />
             <img src={home} />
-         
-            <div className='example'>
-              postcss 
-            </div>
+            <div className="example">postcss</div>
         </div>
     );
 };
 
-// hhhrh
+hhhrh;
 
 export default Index;

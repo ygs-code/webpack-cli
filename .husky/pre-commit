@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lint-staged 
-# eslint    src/**/*.js  
-# yarn   stylelint  src/**/*.css  
+#npx lint-staged 
+  eslint    src/**/*.js  
+  yarn   stylelint  src/**/*.css  
