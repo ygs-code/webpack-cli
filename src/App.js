@@ -23,8 +23,7 @@ console.log("APP_CONFIG=", APP_CONFIG);
 console.log("process=", process);
 
 //   console.log('json=', json)
-啊;
-asdfsdf;
+ 
 
 // 阿斯顿发
 const App = () => {

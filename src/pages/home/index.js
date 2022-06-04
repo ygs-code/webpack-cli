@@ -33,6 +33,6 @@ const Index = () => {
     );
 };
 
-hhhrh;
+ 
 
 export default Index;
