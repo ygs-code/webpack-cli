@@ -14,7 +14,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "eslint src/**/*.{js,jsx,ts,tsx}"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
@@ -52,6 +52,8 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.17.12",
     "@babel/runtime": "^7.1.2",
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
     "@htmllinter/basic-config": "^0.5.1",
     "@rollup/plugin-eslint": "^8.0.2",
     "@types/lodash": "^4.14.166",
@@ -115,6 +117,7 @@
     "json-loader": "^0.5.7",
     "less": "^4.1.2",
     "less-loader": "^11.0.0",
+    "lint-staged": "^13.0.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.6.0",
     "minimist": "^1.2.6",
@@ -208,5 +211,7 @@
     "node": ">= 13.0.0",
     "npm": ">= 6.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }
