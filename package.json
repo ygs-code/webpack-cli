@@ -12,6 +12,10 @@
   "bin": {
     "webpack-cli-util": "./bin/index.js"
   },
+  "gitHooks": {
+    "pre-commit": "eslint src/**/*.js",
+    
+  },
   "dependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.10",
