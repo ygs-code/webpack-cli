@@ -1,6 +1,6 @@
 module.exports = {
     'src/**/*.{js,jsx,ts,tsx}': [
-        'prettier --tab-width 4 --write',
+        'prettier --tab-width 3 --write',
         'eslint  --fix',
         'git add',
     ],

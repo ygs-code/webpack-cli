@@ -1,7 +1,7 @@
 //配置 https://stylelint.io/user-guide/configure/
 module.exports={
-    "plugins": ["stylelint-scss"],
-    "extends": ["stylelint-config-standard"],
+    // "plugins": ["stylelint-scss"],
+    // "extends": ["stylelint-config-standard"],
     "rules": {
       "selector-pseudo-class-no-unknown": null,
       "shorthand-property-no-redundant-values": null,
