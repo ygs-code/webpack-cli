@@ -40,7 +40,7 @@ module.exports = {
     module: {
         // loader
         rules: [
-            // https://github.com/robbiedigital/htmllint-loader
+            //配置 https://github.com/robbiedigital/htmllint-loader
             {
                 test: /\.(htm|html|xhtml|hbs|handlebars|php|ejs)$/,
                 // loader: path.join(
