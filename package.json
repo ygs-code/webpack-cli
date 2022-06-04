@@ -179,14 +179,6 @@
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint src/**/*.js"
-    ],
-    "*.{htm,html,css,sss,less,scss,saas}": [
-      "stylelint --fix"
-    ]
-  },
   "scripts": {
     "precommit": "lint-staged",
     "prepare": "husky install",
