@@ -192,7 +192,7 @@
     "git": "node ./bin/git.js",
     "commit": "git-cz",
     "commitlint": "commitlint -E HUSKY_GIT_PARAMS",
-    "precommit": "lint-staged",
+    "lint-staged": "lint-staged",
     "prepare": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
     "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
