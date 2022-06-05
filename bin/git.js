@@ -156,10 +156,14 @@ class Git {
                 spinner.stop();
                 return error;
             });
-            console.log('commitStdout=',commitStdout)
-            console.log('commitCode=',commitCode)
-            console.log('cmd=',cmd)
-            console.log('stderr=',stderr)
+            console.log('commitStdout=')
+            console.log(commitStdout)
+            console.log('commitCode=')
+            console.log(commitCode)
+            console.log('cmd=')
+            console.log(cmd)
+            console.log('stderr=')
+            console.log(stderr)
             spinner.stop();
             if (commitCode === 500) {
                 return;

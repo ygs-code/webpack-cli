@@ -21,7 +21,7 @@ var server_api_key = APP_CONFIG.api_key;
 console.log("APP_CONFIG=", APP_CONFIG);
 
 console.log(
-   "process asdfsadf   asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
+   "process asdfsadf  asdf asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
    process
 );
 // 撒地方
