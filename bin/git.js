@@ -88,6 +88,7 @@ const gitPush = async () => {
         ]);
         spinner = ora('代码在检测lint中.....');
         spinner.start();
+        console.log( `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`)
         const commit = await PromiseExec(
             `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         ).catch((error) => {
