@@ -32,6 +32,7 @@ const gitPush = async () => {
         },
     ]);
     if (!isSubmit) {
+        console.log(chalk.rgb(13, 188, 121)('\n您取消了代码提交'));
         return false;
     }
     const status = execSync('git status').toString();
@@ -81,7 +82,7 @@ const gitPush = async () => {
         ).catch((error) => {
             console.error(
                 chalk.red(
-                    `\n 文件 elint 校验失败：${error}`
+                    `\n 文件  git commit  失败：${error}`
                 )
             );
             throw error;

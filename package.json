@@ -189,8 +189,6 @@
     }
   },
   "scripts": {
- 
-
     "git": "node ./bin/git.js",
     "commit": "git-cz",
     "commitlint": "commitlint -E HUSKY_GIT_PARAMS",
