@@ -18,7 +18,7 @@ import "./App3.scss";
 console.log("process ==", process); // 'test'
 /*global APP_CONFIG*/
 var server_api_key = APP_CONFIG.api_key;
-console.log("APP_CONFIG  =", APP_CONFIG);
+console.log("APP_CONFIG=", APP_CONFIG);
 
 console.log(
    "process=",
