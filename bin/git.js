@@ -55,8 +55,8 @@ const gitPush = async () => {
         ]);
 
        
-        execSync(`git commit -m "${commitMessage}"`);
-        console.log('commitMessage=',commitMessage)
+      const   commit =   execSync(`git commit -m "${commitMessage}"`);
+        console.log('commit=',commit)
     }
 
     if (status.match(pushReg)) {
