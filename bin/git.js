@@ -25,13 +25,19 @@ const PromiseExec = async (cmd, callback = () => {}) => {
 
 const gitPush = async () => {
     let remote = await PromiseExec('git remote -v');
-    console.log('remote=', remote);
+    remote = remote.split('\n')[1];
+    let branch = await PromiseExec('git branch');
+    branch = branch.toString().match(/(?<=\*)\s*\w+/)[0];
 
     let { isSubmit } = await inquirer.prompt([
         {
             name: 'isSubmit',
             type: 'confirm',
-            message: '确定提交代码么？',
+            message: chalk.rgb(
+                17,
+                168,
+                203
+            )(`确定提交代码么? \n git源地址：${remote}\n git分支:${branch}`),
         },
     ]);
     if (!isSubmit) {
