@@ -1,10 +1,31 @@
 const inquirer = require('inquirer'); // 与用户互动
 const ora = require('ora');
 const execSync = require('child_process').execSync;
+const exec = require('child_process').exec;
 const addReg = /git add/gi;
 const pushReg = /git push/gi;
 const committedReg = /committed/gi;
 let spinner;
+
+const PromiseExec = async (cmd) => {
+    return new Promise((reslove, reject) => {
+        var workerProcess = exec(cmd, (err, stdout, stderr) => {
+            if (!err) {
+                //stdout输出结果，stderr输出错误
+                console.log('stdout:', stdout);
+                console.log('stderr:', stderr);
+                reslove(stdout)
+            } else {
+                console.log(err);
+
+                reject(err)
+            }
+        });
+        workerProcess.on('exit', (code) => {
+            console.log('子进程已退出，退出码：' + code);
+        });
+    });
+};
 
 const gitPush = async () => {
     let { isSubmit } = await inquirer.prompt([
@@ -21,8 +42,9 @@ const gitPush = async () => {
     const status = execSync('git status').toString();
 
     if (status.match(addReg)) {
-        const add = execSync('git add .');
-        console.log('文件git add .成功。');
+
+        const add =  await PromiseExec('git add .')  // execSync('git add .');
+        // console.log('文件git add .成功。');
     }
 
     if (status.match(committedReg)) {
@@ -56,10 +78,13 @@ const gitPush = async () => {
 
         spinner = ora('代码在检测lint中.....');
         spinner.start();
-        const commit = execSync(
-            `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
-        ).toString();
-        spinner.stop();
+        const commit =  await PromiseExec( `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`) 
+
+
+        // const commit = execSync(
+        //     `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
+        // ).toString();
+        // spinner.stop();
         console.log('检测lint成功，git commit成功：', commit);
     }
 
