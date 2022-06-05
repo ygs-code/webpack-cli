@@ -163,7 +163,10 @@ class Git {
             }
 
             console.log(
-                chalk.rgb(13, 188, 121)('\n git commit成功：', commitStderr)
+                chalk.rgb(13, 188, 121)('\n git commit成功：')
+            );
+            console.log(
+                chalk.rgb(13, 188, 121)(commitStderr)
             );
         }
         callback();
