@@ -7,7 +7,7 @@ const pushReg = /git push/gi;
 const committedReg = /committed/gi;
 let spinner;
 
-const PromiseExec = async (cmd, callback=()=>{}) => {
+const PromiseExec = async (cmd, callback = () => {}) => {
     return new Promise((reslove, reject) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
             if (!err) {
@@ -45,9 +45,11 @@ const gitPush = async () => {
     if (status.match(addReg)) {
         spinner = ora('代码 git add . 中.....');
         spinner.start();
-        const add = await PromiseExec('git add .'); // execSync('git add .');
+        const add = await PromiseExec('git add .').catch((error) => {
+            console.error(`文件git add . 失败：${error}`);
+        });
         spinner.stop();
-        console.log('文件git add .成功。');
+        console.log('文件git add . 成功。');
     }
 
     if (status.match(committedReg)) {
@@ -83,7 +85,13 @@ const gitPush = async () => {
         spinner.start();
         const commit = await PromiseExec(
             `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
-        );
+        ).catch((error) => {
+            console.error(
+                `文件 git commit -m "${
+                    commitType.split(':')[0]
+                }: ${commitMessage}" 失败：${error}`
+            );
+        });
         // const commit = execSync(
         //     `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         // ).toString();
@@ -95,7 +103,9 @@ const gitPush = async () => {
         spinner = ora('代码在push中.....');
         spinner.start();
         // const push = execSync('git push');
-        const push = await PromiseExec('git push');
+        const push = await PromiseExec('git push').catch((error) => {
+            console.error(`文件  git push  失败：${error}`);
+        });
         spinner.stop();
         console.log('git push 成功：', push);
     }
