@@ -249,15 +249,15 @@ class Git {
             spinner = ora('代码lint校验中.....');
             spinner.start();
 
-            const lintStaged = await this.PromiseExec(`npm run lint-staged`).catch(
-                (error) => {
-                    const { err, stderr } = error;
-                    console.error(chalk.red(`\n代码lint校验失败：${stderr}`));
-                    throw error;
-                }
-            );
-            spinner.stop();
-            console.log(chalk.rgb(13, 188, 121)('\n lint校验成功', lintStaged));
+            // const lintStaged = await this.PromiseExec(`npm run lint-staged`).catch(
+            //     (error) => {
+            //         const { err, stderr } = error;
+            //         console.error(chalk.red(`\n代码lint校验失败：${stderr}`));
+            //         throw error;
+            //     }
+            // );
+            // spinner.stop();
+            // console.log(chalk.rgb(13, 188, 121)('\n lint校验成功', lintStaged));
             spinner = ora('代码git commit 中 .....');
             spinner.start();
             const commit = await this.PromiseExec(
