@@ -82,7 +82,7 @@ class Git {
         this.status = stdout;
         this.status = this.status.toString();
         if (this.status.match(addReg)) {
-            spinner = ora('代码 git add . 中.....');
+            spinner = ora('代码 git add . 中...');
             spinner.start();
             await this.PromiseExec('git add .').catch((error) => {
                 const { err, stderr } = error;
@@ -127,7 +127,7 @@ class Git {
                 },
             ]);
 
-            // spinner = ora('代码lint校验中.....');
+            // spinner = ora('代码lint校验中...');
             // spinner.start();
             // const { stdout: lintStaged, code: lintStagedCode } =
             //     await this.PromiseExec(`npm run lint-staged`).catch((error) => {
@@ -141,7 +141,7 @@ class Git {
             // }
             // console.log(chalk.rgb(13, 188, 121)('\n lint校验成功', lintStaged));
 
-            spinner = ora('代码 git commit 中.....');
+            spinner = ora('代码 git commit 中,调用lint校验...');
             spinner.start();
             const {
                 stdout: commitStdout,
@@ -171,7 +171,7 @@ class Git {
         let { status, remote, branch, addReg, pushReg, committedReg, spinner } =
             this;
         if (status.match(pushReg) || status.match(committedReg)) {
-            spinner = ora('代码在push中.....');
+            spinner = ora('代码在push中...');
             spinner.start();
             const { stdout: pushStdout, code: pushCode } =
                 await this.PromiseExec('git push').catch((error) => {
@@ -179,7 +179,6 @@ class Git {
                     console.error(
                         chalk.red(`\n 文件  git push  失败：${stderr}`)
                     );
-
                     return error;
                 });
             spinner.stop();
