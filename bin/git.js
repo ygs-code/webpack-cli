@@ -35,7 +35,9 @@ class Git {
             var workerProcess = exec(cmd, (err, stdout, stderr) => {
                 if (!err) {
                     reslove({
+                        cmd,
                         stdout,
+                        stderr,
                         code: 200,
                     });
                 } else {
@@ -141,19 +143,23 @@ class Git {
 
             spinner = ora('代码 git commit 中.....');
             spinner.start();
-            const { stdout: commitStdout, code: commitCode } =
-                await this.PromiseExec(
-                    `git commit -m "${
-                        commitType.split(':')[0]
-                    }: ${commitMessage}"`
-                ).catch((error) => {
-                    const { err, stderr, code } = error;
-                    console.error(
-                        chalk.red(`\n 文件  git commit  失败：${err}`)
-                    );
-                    spinner.stop();
-                    return error;
-                });
+            const {
+                stdout: commitStdout,
+                code: commitCode,
+                cmd,
+                stderr,
+            } = await this.PromiseExec(
+                `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
+            ).catch((error) => {
+                const { err, stderr, code } = error;
+                console.error(chalk.red(`\n 文件  git commit  失败：${err}`));
+                spinner.stop();
+                return error;
+            });
+            console.log('commitStdout=',commitStdout)
+            console.log('commitCode=',commitCode)
+            console.log('cmd=',cmd)
+            console.log('stderr=',stderr)
             spinner.stop();
             if (commitCode === 500) {
                 return;
