@@ -24,6 +24,9 @@ const PromiseExec = async (cmd, callback = () => {}) => {
 };
 
 const gitPush = async () => {
+    let remote = await PromiseExec('git remote -v');
+    console.log('remote=', remote);
+
     let { isSubmit } = await inquirer.prompt([
         {
             name: 'isSubmit',
@@ -35,7 +38,9 @@ const gitPush = async () => {
         console.log(chalk.rgb(13, 188, 121)('\n您取消了代码提交'));
         return false;
     }
-    const status = execSync('git status').toString();
+
+    let status = await PromiseExec('git status');
+    status = status.toString();
     if (status.match(addReg)) {
         spinner = ora('代码 git add . 中.....');
         spinner.start();
