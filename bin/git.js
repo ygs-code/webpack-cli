@@ -109,7 +109,7 @@ const gitPush = async () => {
             throw error;
         });
         spinner.stop();
-        console.log(chalk.rgb(13, 188, 121)(`\n git push 成功。git源地址：${remote}\n git分支:${branch}`));
+        console.log(chalk.rgb(13, 188, 121)(`\n git push 成功。\n git源地址：${remote}\n git分支:${branch}`));
     }
 };
 
