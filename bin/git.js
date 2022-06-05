@@ -53,6 +53,10 @@ const gitPush = async () => {
                 message: '请输入commit信息',
             },
         ]);
+
+       
+        execSync(`git commit -m "${commitMessage}"`);
+        console.log('commitMessage=',commitMessage)
     }
 
     if (status.match(pushReg)) {
