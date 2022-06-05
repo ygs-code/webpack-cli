@@ -81,9 +81,7 @@ const gitPush = async () => {
         ).catch((error) => {
             console.error(
                 chalk.red(
-                    `\n 文件 git commit -m "${
-                        commitType.split(':')[0]
-                    }: ${commitMessage}" 失败：${error}`
+                    `\n 文件 elint 校验失败：${error}`
                 )
             );
             throw error;
