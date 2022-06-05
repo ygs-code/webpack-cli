@@ -20,7 +20,7 @@ console.log("process ==", process); // 'test'
 var server_api_key = APP_CONFIG.api_key;
 console.log("APP_CONFIG  =", APP_CONFIG);
 
-console.log("proces  asdf asdfr s123345 asdfsdf  =", process);
+console.log("proces asdf  asdf asdfr s123345 asdfsdf  =", process);
 
 // 阿斯顿发
 const App = () => {
