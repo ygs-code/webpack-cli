@@ -11,13 +11,13 @@ let spinner;
 const PromiseExec = async (cmd, callback = () => {}) => {
     return new Promise((reslove, reject) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
-            console.log('err====',err)
-            console.log('stdout====',stdout)
-            console.log('stderr====',stderr)
             if (!err) {
                 reslove(stdout);
             } else {
-                reject(err);
+                reject({
+                    err,
+                    stderr,
+                });
             }
         });
         workerProcess.on('exit', (code) => {
@@ -54,7 +54,9 @@ const gitPush = async () => {
         spinner = ora('代码 git add . 中.....');
         spinner.start();
         const add = await PromiseExec('git add .').catch((error) => {
-            console.error(chalk.red(`\n 文件 git add . 失败：${error}`));
+            const { err, stderr } = error;
+
+            console.error(chalk.red(`\n 文件 git add . 失败：${stderr}`));
             throw error;
         });
         spinner.stop();
@@ -89,9 +91,18 @@ const gitPush = async () => {
                 message: '请输入commit信息',
             },
         ]);
-        spinner = ora('代码在检测lint中.....');
+        spinner = ora('代码lint校验中.....');
         spinner.start();
-        console.log( `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`)
+
+        // const lintStaged = await PromiseExec(`npm run lint-staged`).catch(
+        //     (error) => {
+        //         const { err, stderr } = error;
+        //         console.error(chalk.red(`\n代码lint校验失败：${stderr}`));
+        //         throw error;
+        //     }
+        // );
+        // console.log(chalk.rgb(13, 188, 121)('\n lint校验成功', lintStaged));
+        spinner = ora('代码git commit 中 .....');
         const commit = await PromiseExec(
             `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         ).catch((error) => {
@@ -99,21 +110,28 @@ const gitPush = async () => {
             throw error;
         });
         spinner.stop();
-        console.log(
-            chalk.rgb(13, 188, 121)('\n 检测lint成功，git commit成功：', commit)
-        );
+        console.log(chalk.rgb(13, 188, 121)('\n git commit成功：', commit));
     }
 
     if (status.match(pushReg) || status.match(committedReg)) {
         spinner = ora('代码在push中.....');
         spinner.start();
         const push = await PromiseExec('git push').catch((error) => {
-            console.error(chalk.red(`\n 文件  git push  失败：${error}`));
+            const { err, stderr } = error;
+            console.error(chalk.red(`\n 文件  git push  失败：${stderr}`));
 
             throw error;
         });
         spinner.stop();
-        console.log(chalk.rgb(13, 188, 121)(`\n git push 代码成功。\n git源地址：${remote}\n git分支:${branch}`));
+        console.log(
+            chalk.rgb(
+                13,
+                188,
+                121
+            )(
+                `\n git push 代码成功。\n git源地址：${remote}\n git分支:${branch}`
+            )
+        );
     }
 };
 
