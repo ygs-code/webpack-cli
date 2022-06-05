@@ -147,7 +147,7 @@ class Git {
                 stdout: commitStdout,
                 code: commitCode,
                 cmd,
-                stderr,
+                stderr:commitStderr,
             } = await this.PromiseExec(
                 `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
             ).catch((error) => {
@@ -156,21 +156,14 @@ class Git {
                 spinner.stop();
                 return error;
             });
-            console.log('commitStdout=')
-            console.log(commitStdout)
-            console.log('commitCode=')
-            console.log(commitCode)
-            console.log('cmd=')
-            console.log(cmd)
-            console.log('stderr=')
-            console.log(stderr)
+       
             spinner.stop();
             if (commitCode === 500) {
                 return;
             }
 
             console.log(
-                chalk.rgb(13, 188, 121)('\n git commit成功：', commitStdout)
+                chalk.rgb(13, 188, 121)('\n git commit成功：', commitStderr)
             );
         }
         callback();
