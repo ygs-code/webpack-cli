@@ -34,19 +34,15 @@ const gitPush = async () => {
     if (!isSubmit) {
         return false;
     }
-
     const status = execSync('git status').toString();
-
     if (status.match(addReg)) {
         spinner = ora('代码 git add . 中.....');
         spinner.start();
         const add = await PromiseExec('git add .').catch((error) => {
             console.error(chalk.red(`\n 文件 git add . 失败：${error}`));
-
             throw error;
         });
         spinner.stop();
-
         console.log(chalk.rgb(13, 188, 121)('\n 文件 git add . 成功。'));
     }
 
@@ -107,7 +103,6 @@ const gitPush = async () => {
             throw error;
         });
         spinner.stop();
-
         console.log(chalk.rgb(13, 188, 121)('\n git push 成功：', push));
     }
 };
