@@ -21,7 +21,7 @@ var server_api_key = APP_CONFIG.api_key;
 console.log("APP_CONFIG  =", APP_CONFIG);
 
 console.log(
-   "proce 啊水电费 sdsa asdf  asdfsd f asdf  asdf asasdf df  aasdf  sdf  asdf asdfr s123345 asdfsdf  =",
+   "proce 啊水电费 啊士大夫发射点 sdsa asdf  asdfsd f asdf  asdf asasdf df  aasdf  sdf  asdf asdfr s123345 asdfsdf  =",
    process
 );
 // 撒地方
