@@ -193,7 +193,7 @@
     "commit": "git-cz",
     "commitlint": "npx --no-install commitlint --edit $1",
     "lint-staged": "lint-staged",
-    "prepare": "husky install",
+    "husky-install": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
     "//注释0:": "如果用CommonJS运行则需要先运行copy指令",
     "copy": "node  copy",

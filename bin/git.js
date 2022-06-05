@@ -18,7 +18,7 @@ class Git {
         this.remote = remote.split('\n')[1];
         let { stdout: branch } = await this.PromiseExec('git branch');
         this.branch = branch.toString().match(/(?<=\*)\s*\w+/)[0];
-
+        await this.huskyInstall();
         await this.submit(() => {
             this.add(() => {
                 this.committed(() => {
@@ -30,6 +30,8 @@ class Git {
         // await this.committed();
         // await this.push();
     }
+
+    // 执行程序
     PromiseExec(cmd, callback = () => {}) {
         return new Promise((reslove, reject) => {
             var workerProcess = exec(cmd, (err, stdout, stderr) => {
@@ -52,6 +54,10 @@ class Git {
                 callback(code);
             });
         });
+    }
+
+    async huskyInstall() {
+        await this.PromiseExec('npm run husky-install');
     }
     async submit(callback = () => {}) {
         let { status, remote, branch, addReg, pushReg, committedReg, spinner } =
