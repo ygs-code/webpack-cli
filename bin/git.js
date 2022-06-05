@@ -7,22 +7,23 @@ const pushReg = /git push/gi;
 const committedReg = /committed/gi;
 let spinner;
 
-const PromiseExec = async (cmd) => {
+const PromiseExec = async (cmd, callback=()=>{}) => {
     return new Promise((reslove, reject) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
             if (!err) {
                 //stdout输出结果，stderr输出错误
                 // console.log('stdout:', stdout);
                 // console.log('stderr:', stderr);
-                reslove(stdout)
+                reslove(stdout);
             } else {
                 // console.log(err);
 
-                reject(err)
+                reject(err);
             }
         });
         workerProcess.on('exit', (code) => {
-            console.log('子进程已退出，退出码：' + code);
+            callback(code);
+            // console.log('子进程已退出，退出码：' + code);
         });
     });
 };
@@ -42,12 +43,11 @@ const gitPush = async () => {
     const status = execSync('git status').toString();
 
     if (status.match(addReg)) {
-
         spinner = ora('代码 git add . 中.....');
         spinner.start();
-        const add =  await PromiseExec('git add .')  // execSync('git add .');
+        const add = await PromiseExec('git add .'); // execSync('git add .');
         spinner.stop();
-        // console.log('文件git add .成功。');
+        console.log('文件git add .成功。');
     }
 
     if (status.match(committedReg)) {
@@ -81,8 +81,9 @@ const gitPush = async () => {
 
         spinner = ora('代码在检测lint中.....');
         spinner.start();
-        const commit =  await PromiseExec( `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`) 
-
+        const commit = await PromiseExec(
+            `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
+        );
         // const commit = execSync(
         //     `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         // ).toString();
@@ -93,7 +94,8 @@ const gitPush = async () => {
     if (status.match(pushReg)) {
         spinner = ora('代码在push中.....');
         spinner.start();
-        const push = execSync('git push');
+        // const push = execSync('git push');
+        const push = await PromiseExec('git push');
         spinner.stop();
         console.log('git push 成功：', push);
     }
