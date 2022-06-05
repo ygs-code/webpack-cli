@@ -191,7 +191,7 @@
   "scripts": {
     "git": "node ./bin/git.js",
     "commit": "git-cz",
-    "commitlint": "commitlint -E HUSKY_GIT_PARAMS",
+    "commitlint": "npx --no-install commitlint --edit $1",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "clear-node_modules": "rm -rf node_modules&&npm cache clear --force",
