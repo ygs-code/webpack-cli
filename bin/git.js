@@ -161,7 +161,7 @@ class Git {
         return new Promise((reslove, reject) => {
             var workerProcess = exec(cmd, (err, stdout, stderr) => {
                 if (!err) {
-                    console.log('stderr====',stderr)
+                    // console.log('stderr====',stderr)
                     reslove(stdout);
                 } else {
                     reject({
