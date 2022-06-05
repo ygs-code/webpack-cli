@@ -12,11 +12,11 @@ const PromiseExec = async (cmd) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
             if (!err) {
                 //stdout输出结果，stderr输出错误
-                console.log('stdout:', stdout);
-                console.log('stderr:', stderr);
+                // console.log('stdout:', stdout);
+                // console.log('stderr:', stderr);
                 reslove(stdout)
             } else {
-                console.log(err);
+                // console.log(err);
 
                 reject(err)
             }
