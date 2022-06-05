@@ -80,11 +80,7 @@ const gitPush = async () => {
         const commit = await PromiseExec(
             `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         ).catch((error) => {
-            console.error(
-                chalk.red(
-                    `\n 文件  git commit  失败：${error}`
-                )
-            );
+            console.error(chalk.red(`\n 文件  git commit  失败：${error}`));
             throw error;
         });
         spinner.stop();
@@ -93,7 +89,7 @@ const gitPush = async () => {
         );
     }
 
-    if (status.match(pushReg)) {
+    if (status.match(pushReg) || status.match(committedReg)) {
         spinner = ora('代码在push中.....');
         spinner.start();
         const push = await PromiseExec('git push').catch((error) => {
