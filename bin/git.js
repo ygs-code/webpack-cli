@@ -2,6 +2,7 @@ const inquirer = require('inquirer'); // 与用户互动
 const ora = require('ora');
 const execSync = require('child_process').execSync;
 const exec = require('child_process').exec;
+const chalk = require('chalk');
 const addReg = /git add/gi;
 const pushReg = /git push/gi;
 const committedReg = /committed/gi;
@@ -11,19 +12,13 @@ const PromiseExec = async (cmd, callback = () => {}) => {
     return new Promise((reslove, reject) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
             if (!err) {
-                //stdout输出结果，stderr输出错误
-                // console.log('stdout:', stdout);
-                // console.log('stderr:', stderr);
                 reslove(stdout);
             } else {
-                // console.log(err);
-
                 reject(err);
             }
         });
         workerProcess.on('exit', (code) => {
             callback(code);
-            // console.log('子进程已退出，退出码：' + code);
         });
     });
 };
@@ -46,10 +41,13 @@ const gitPush = async () => {
         spinner = ora('代码 git add . 中.....');
         spinner.start();
         const add = await PromiseExec('git add .').catch((error) => {
-            console.error(`文件git add . 失败：${error}`);
+            console.error(chalk.red(`文件git add . 失败：${error}`));
+
+            throw error;
         });
         spinner.stop();
-        console.log('文件git add . 成功。');
+
+        console.log(chalk.rgb(13, 188, 121)('文件git add . 成功。'));
     }
 
     if (status.match(committedReg)) {
@@ -80,23 +78,24 @@ const gitPush = async () => {
                 message: '请输入commit信息',
             },
         ]);
-
         spinner = ora('代码在检测lint中.....');
         spinner.start();
         const commit = await PromiseExec(
             `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         ).catch((error) => {
             console.error(
-                `文件 git commit -m "${
-                    commitType.split(':')[0]
-                }: ${commitMessage}" 失败：${error}`
+                chalk.red(
+                    `文件 git commit -m "${
+                        commitType.split(':')[0]
+                    }: ${commitMessage}" 失败：${error}`
+                )
             );
+            throw error;
         });
-        // const commit = execSync(
-        //     `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
-        // ).toString();
         spinner.stop();
-        console.log('检测lint成功，git commit成功：', commit);
+        console.log(
+            chalk.rgb(13, 188, 121)('检测lint成功，git commit成功：', commit)
+        );
     }
 
     if (status.match(pushReg)) {
@@ -104,10 +103,13 @@ const gitPush = async () => {
         spinner.start();
         // const push = execSync('git push');
         const push = await PromiseExec('git push').catch((error) => {
-            console.error(`文件  git push  失败：${error}`);
+            console.error(chalk.red(`文件  git push  失败：${error}`));
+
+            throw error;
         });
         spinner.stop();
-        console.log('git push 成功：', push);
+
+        console.log(chalk.rgb(13, 188, 121)('git push 成功：', push));
     }
 };
 
