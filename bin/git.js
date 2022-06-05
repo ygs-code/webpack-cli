@@ -11,6 +11,9 @@ let spinner;
 const PromiseExec = async (cmd, callback = () => {}) => {
     return new Promise((reslove, reject) => {
         var workerProcess = exec(cmd, (err, stdout, stderr) => {
+            console.log('err====',err)
+            console.log('stdout====',stdout)
+            console.log('stderr====',stderr)
             if (!err) {
                 reslove(stdout);
             } else {
