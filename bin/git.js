@@ -255,8 +255,10 @@ class Git {
                     throw error;
                 }
             );
+            spinner.stop();
             console.log(chalk.rgb(13, 188, 121)('\n lint校验成功', lintStaged));
             spinner = ora('代码git commit 中 .....');
+            spinner.start();
             const commit = await this.PromiseExec(
                 `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
             ).catch((error) => {
