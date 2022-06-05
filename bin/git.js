@@ -43,7 +43,10 @@ const gitPush = async () => {
 
     if (status.match(addReg)) {
 
+        spinner = ora('代码 git add . 中.....');
+        spinner.start();
         const add =  await PromiseExec('git add .')  // execSync('git add .');
+        spinner.stop();
         // console.log('文件git add .成功。');
     }
 
@@ -80,11 +83,10 @@ const gitPush = async () => {
         spinner.start();
         const commit =  await PromiseExec( `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`) 
 
-
         // const commit = execSync(
         //     `git commit -m "${commitType.split(':')[0]}: ${commitMessage}"`
         // ).toString();
-        // spinner.stop();
+        spinner.stop();
         console.log('检测lint成功，git commit成功：', commit);
     }
 
