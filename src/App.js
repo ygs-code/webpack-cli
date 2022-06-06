@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-06-06 11:50:12
+ * @LastEditTime: 2022-06-06 11:53:03
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -18,21 +18,21 @@ import "./App3.scss";
 console.log("process ==", process); // 'test'
 /*global APP_CONFIG*/
 var server_api_key = APP_CONFIG.api_key;
-console.log("APP_CONFIG=", APP_CONFIG);  
+console.log("APP_CONFIG=", APP_CONFIG);
 
 console.log(
-   "process asdfsadf sadf  dyuiopguysttyfugiho asdf asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
-   process
+  "process asd asdf   f asdfsadf sadf asdfasdf  dyuiopguysttyfugiho asdf asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
+  process
 );
 
 // 撒地方
 // 阿斯顿发
 const App = () => {
-   return (
-      <Provider store={store}>
-         <Home />
-      </Provider>
-   );
+  return (
+    <Provider store={store}>
+      <Home />
+    </Provider>
+  );
 };
 
 export default App;
