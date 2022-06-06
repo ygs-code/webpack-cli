@@ -35,6 +35,10 @@ class Git {
   PromiseExec(cmd, callback = () => {}) {
     return new Promise((reslove, reject) => {
       var workerProcess = exec(cmd, (err, stdout, stderr) => {
+          console.log('cmd=',cmd)
+          console.log('err=',err)
+          console.log('stdout=',stdout)
+          console.log('stderr=',stderr)
         if (!err) {
           reslove({
             cmd,
