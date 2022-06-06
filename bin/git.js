@@ -4,6 +4,7 @@ const ora = require('ora')
 const execSync = require('child_process').execSync
 const exec = require('child_process').exec
 const chalk = require('chalk')
+const path = require('path')
 
 class Git {
   constructor() {
@@ -59,6 +60,9 @@ class Git {
   }
 
   async huskyInstall() {
+    await this.PromiseExec(
+      `chmod -R 777 ${path.join(process.cwd(), '/.husky')}`,
+    )
     await this.PromiseExec('npm run husky-install')
   }
   async submit(callback = () => {}) {
