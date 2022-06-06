@@ -5,6 +5,13 @@ const execSync = require('child_process').execSync
 const exec = require('child_process').exec
 const chalk = require('chalk')
 const path = require('path')
+const semver = require('semver')
+// const { release, platform ,arch} = require('os')
+const {
+  arch, // 系统版本号
+  platform, //  标识操作系统平台 window 还是  mac(darwin) ，linux
+  release, // 操作系统
+} = require('process')
 
 class Git {
   constructor() {
@@ -60,9 +67,12 @@ class Git {
   }
 
   async huskyInstall() {
-    await this.PromiseExec(
-      `chmod -R 777 ${path.join(process.cwd(), '/.husky')}`,
-    )
+    if (platform === 'darwin' || platform === 'linux') {
+      await this.PromiseExec(
+        `chmod -R 777 ${path.join(process.cwd(), '/.husky')}`,
+      )
+    }
+
     await this.PromiseExec('npm run husky-install')
   }
   async submit(callback = () => {}) {
