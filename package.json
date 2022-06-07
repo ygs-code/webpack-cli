@@ -6,7 +6,7 @@
     "@babel/polyfill",
     "*.css"
   ],
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "",
   "main": "./bin/index.js",
   "bin": {
@@ -157,6 +157,7 @@
     "style-loader": "^3.3.1",
     "stylelint": "^14.8.5",
     "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-standard-scss": "^4.0.0",
     "stylelint-less": "^1.0.5",
     "stylelint-scss": "^4.2.0",
     "stylelint-webpack-plugin": "^3.3.0",

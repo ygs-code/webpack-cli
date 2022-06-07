@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 require('@babel/polyfill')
 const inquirer = require('inquirer') // 与用户互动
 const ora = require('ora')
