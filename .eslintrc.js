@@ -2,7 +2,7 @@
  * @Date: 2022-05-09 11:13:39
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-12 11:41:31
+ * @LastEditTime: 2022-06-10 15:37:24
  * @FilePath: /webpack-cli/.eslintrc.js
  * @Description:
  */
@@ -20,7 +20,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  plugins: ["react", "jsx-a11y", "import"],
+  plugins: ["react", "jsx-a11y", "import","@babel"],
   parser: "@babel/eslint-parser",
   parserOptions: {
     // parser: "@babel/eslint-parser",
@@ -59,5 +59,10 @@ module.exports = {
     // 'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     "no-undef": "error",
     // 'no-void': 2, //禁用void操作符
+    "@babel/new-cap": "error",
+    "@babel/no-invalid-this": "error",
+    "@babel/no-unused-expressions": "error",
+    "@babel/object-curly-spacing": "error",
+    "@babel/semi": "error"
   },
 };
