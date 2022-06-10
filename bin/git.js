@@ -197,7 +197,7 @@ class Git {
         return
       }
 
-      console.log(chalk.rgb(13, 188, 121)('\n git commit成功：'))
+      console.log(chalk.rgb(13, 188, 121)('\n lint校验成功 , git commit成功：'))
       console.log(chalk.rgb(13, 188, 121)(commitStderr))
     }
     callback()
