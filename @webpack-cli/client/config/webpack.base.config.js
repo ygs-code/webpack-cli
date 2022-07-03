@@ -43,8 +43,9 @@ const cacheLoader = (happypackId) => {
       ]
     : ['thread-loader', `happypack/loader?id=${happypackId}`]
 }
-// console.log("__dirname : " + __dirname);
+
 // console.log("resolve   : " + resolve("./"));
+// console.log("__dirname : " + __dirname);
 // console.log("cwd       : " + process.cwd());
 
 // webpack  loaders  https://webpack.javascriptc.com/loaders/
