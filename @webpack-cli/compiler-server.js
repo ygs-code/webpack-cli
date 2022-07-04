@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware')
 const portfinder = require('portfinder')
-const webpackHotMiddleware = require('webpack-hot-middleware')
+const webpackHotMiddleware = require('./client/webpack-hot-middleware')
 const connectHistoryApiFallback = require('connect-history-api-fallback')
 const rm = require('rimraf')
 // chalk插件，用来在命令行中输入不同颜色的文字
@@ -109,6 +109,7 @@ class App {
             chalk.red(
               stats.toString({
                 colors: true,
+                chunks: false,  // Makes the build much quieter
               }) + '\n\n',
             ),
         )

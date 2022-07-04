@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-06-10 15:37:54
+ * @LastEditTime: 2022-07-04 16:33:14
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -26,9 +26,9 @@ console.log(
   process
 );
 
-console.log("admin===========", admin);
+// console.log("admin===========", admin);
 
-// 撒地方
+// 撒地方;
 // 阿斯顿发
 const App = () => {
   return (

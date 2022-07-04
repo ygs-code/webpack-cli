@@ -2,7 +2,7 @@
  * @Date: 2022-04-27 20:24:09
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-12 19:36:35
+ * @LastEditTime: 2022-07-04 12:46:44
  * @FilePath: /webpack-cli/user-webpack-config/webpack.dev.config.js
  * @Description:
  */
@@ -37,12 +37,18 @@ module.exports = {
     module: {
         rules: [],
     },
+    watchOptions: {
+        //延迟监听时间
+        aggregateTimeout: 300,
+        //忽略监听文件夹
+        // ignored: [''],
+    },
     devServer: {
         output: {
             publicPath: '/', // 静态资源文件公开目录
         },
-        liveReload: false, // 编译之后是否自动刷新浏览器
-        writeToDisk: false, // 写入硬盘
+        liveReload: true, // 编译之后是否自动刷新浏览器
+        writeToDisk: true, // 写入硬盘
         // devMiddleware: { // 一个开发环境的中间件
         //   writeToDisk: true, // 写入硬盘
         // },

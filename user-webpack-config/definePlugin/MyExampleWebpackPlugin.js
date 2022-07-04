@@ -2,7 +2,7 @@
  * @Date: 2022-04-28 10:55:26
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-05-24 19:15:43
+ * @LastEditTime: 2022-07-04 13:36:09
  * @FilePath: /webpack-cli/user-webpack-config/definePlugin/MyExampleWebpackPlugin.js
  * @Description:
  */
@@ -19,7 +19,7 @@ class MyExampleWebpackPlugin {
   }
   // // 做兼容
   hook(compiler, hookName, pluginName, fn) {
-    if (arguments.length == 3) {
+    if (arguments.length === 3) {
       fn = pluginName;
       pluginName = hookName;
     }

@@ -84,14 +84,14 @@ module.exports = {
         // // },
         // // // 如果一个模块是在 require 时抛出异常，告诉 webpack 从模块实例缓存(require.cache)中删除这个模块。
         // // // 并且重启webpack的时候也会删除cache缓存
-        strictModuleExceptionHandling: false,
+        strictModuleExceptionHandling: true,
     },
     watch: true,
     watchOptions: {
         //延迟监听时间
         aggregateTimeout: 300,
         //忽略监听文件夹
-        ignored: '/node_modules/',
+        // ignored: '/node_modules/',
     },
     //启用编译缓存日志输出
     // infrastructureLogging: {
@@ -290,7 +290,7 @@ module.exports = {
         //   热刷新
         // new BrowserReloadPlugin(),
         // 热刷新和错误日志
-        new BrowserReloadErrorOverlayWepbackPlugin(),
+        // new BrowserReloadErrorOverlayWepbackPlugin(),
         // 有跨域问题
         // new ErrorOverlayPlugin(),
     ],
