@@ -1,13 +1,13 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import {createStore, applyMiddleware, combineReducers} from "redux";
 import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
-import { createLogger } from "redux-logger";
-import { CheckDataType } from "@/utils";
+import {createLogger} from "redux-logger";
+import {CheckDataType} from "@/utils";
 import * as reducers from "./reducers";
 import * as actions from "./actions";
 
 // 注入saga
-import saga, { actions as sagaActions } from "./saga";
+import saga, {actions as sagaActions} from "./saga";
 // 注入modelsReducers
 import modelsReducers, {
   actions as modelsActions,
@@ -67,5 +67,5 @@ const store = createStore(
 // then run the saga
 sagaMiddleware.run(saga);
 const allActions = checkMergeActions(actions, modelsActions, sagaActions);
-export { allActions as actions };
+export {allActions as actions};
 export default store;

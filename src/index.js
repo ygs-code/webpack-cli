@@ -8,7 +8,7 @@
  */
 import React from "react";
 // import ReactDOM from 'react-dom';
-import { createRoot } from "react-dom/client";
+import {createRoot} from "react-dom/client";
 import "./App.css";
 import App from "./App";  
   //  fugihojp8tyoupi[] 

@@ -24,12 +24,12 @@ export const register = (rootReducer) => {
       };
     }, {}),
     reducer: (state = initState, action) => {
-      const { type, payload } = action;
+      const {type, payload} = action;
       let fns = [];
       let code = `  switch (action.type) {`;
       for (let key of reducersKeys) {
         let modelsStore = store.get(name);
-        let { dispatch: modelsStoreDispatch } = modelsStore;
+        let {dispatch: modelsStoreDispatch} = modelsStore;
         store.set(name, {
           ...modelsStore,
           dispatch: {
@@ -54,7 +54,7 @@ export const register = (rootReducer) => {
 
       for (let key of effectsKeys) {
         let modelsStore = store.get(name);
-        let { dispatch: modelsStoreDispatch } = modelsStore;
+        let {dispatch: modelsStoreDispatch} = modelsStore;
         store.set(name, {
           ...modelsStore,
           dispatch: {
@@ -69,7 +69,7 @@ export const register = (rootReducer) => {
               //   let effectsObj = effects(newDispatch);
               // let effectsObj = effects(dispatch);
               return await effects(
-                ({ modelsName = "", type = "", payload = {} }) => {
+                ({modelsName = "", type = "", payload = {}}) => {
                   //更改他可以传modelsName
                   dispatch({
                     type: modelsName ? `${modelsName}_${type}` : type,
@@ -79,7 +79,7 @@ export const register = (rootReducer) => {
                     ? reduxStore.getState()[modelsName]
                     : reduxStore.getState();
                 }
-              )[key](state, { payload: data });
+              )[key](state, {payload: data});
             },
           },
         });

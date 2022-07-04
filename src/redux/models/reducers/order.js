@@ -6,14 +6,14 @@ export default {
     // userInfo: {},
   },
   reducers: {
-    setOrderInfo(state, { payload: orderInfo }) {
+    setOrderInfo(state, {payload: orderInfo}) {
       return {
         ...state,
         ...orderInfo,
       };
     },
 
-    setOrderList(state, { payload }) {
+    setOrderList(state, {payload}) {
       return {
         ...state,
         currentUser: {
@@ -26,7 +26,7 @@ export default {
   effects: (dispatch) => {
     return {
       // 登陆
-      login(state, { payload }) {
+      login(state, {payload}) {
         dispatch({
           type: "setUserInfo",
           payload: payload,

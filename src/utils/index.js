@@ -1,12 +1,12 @@
-import { throttle, stabilization, statusThrottle } from './throttlingStabilization'
+import {throttle, stabilization, statusThrottle} from './throttlingStabilization';
 // import {
 //     deepCopy
 // } from './deepCopy'
-import { SubscribePublished } from './SubscribePublished'
- import { CheckDataType } from './CheckDataType'
-import { filterTreeData, recursionTreeData, deepCopy, diffData, findTreeData } from './ergodic'
-import { FloatingBall } from './FloatingBall'
-import { getStyle } from './getCssAttr'
+import {SubscribePublished} from './SubscribePublished';
+ import {CheckDataType} from './CheckDataType';
+import {filterTreeData, recursionTreeData, deepCopy, diffData, findTreeData} from './ergodic';
+import {FloatingBall} from './FloatingBall';
+import {getStyle} from './getCssAttr';
 
 export {
   FloatingBall, // 浮动球 类
@@ -21,6 +21,6 @@ export {
   diffData, // 比较新旧两个数据
   findTreeData, //搜索到树数据的某一条数据单条 不包括父层数据的
   getStyle, // 获取样式
-}
+};
 // 整体输出
-export *  from  './regular.js'
+export *  from  './regular.js';

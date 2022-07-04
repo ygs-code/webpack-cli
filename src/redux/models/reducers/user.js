@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /webpackClient/src/redux/models/reducers/user.js
  */
-import { actions } from "@/redux/store";
+import {actions} from "@/redux/store";
 // import { getUserInfo } from "@/common/js/request";
 import modelsStore from "../modelsStore";
 // asd fds f
@@ -17,7 +17,7 @@ export default {
     userInfo: {},
   },
   reducers: {
-    setBreadcrumb(state, { payload }) {
+    setBreadcrumb(state, {payload}) {
       console.log("payload======", payload);
       return {
         ...state,
@@ -27,7 +27,7 @@ export default {
         ],
       };
     },
-    setUserInfo(state, { payload }) {
+    setUserInfo(state, {payload}) {
       return {
         ...state,
         userInfo: {
@@ -49,7 +49,7 @@ export default {
   },
   effects: (dispatch) => {
     return {
-      async getUserInfo(state, { payload: param = {} }) { 
+      async getUserInfo(state, {payload: param = {}}) { 
         // const { data } = await getUserInfo();
 
         // dispatch({

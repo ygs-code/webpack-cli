@@ -1,13 +1,13 @@
 const getStyle = (ele,attr) => {
-  var style = null
+  var style = null;
   if (window.getComputedStyle) {
-    style = window.getComputedStyle(ele, null)
+    style = window.getComputedStyle(ele, null);
   } else {
-    style = ele.currentStyle
+    style = ele.currentStyle;
   }
-  return attr? style[attr]:style
-}
+  return attr? style[attr]:style;
+};
 
 export{
     getStyle
-}
+};

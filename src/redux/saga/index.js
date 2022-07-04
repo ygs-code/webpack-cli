@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import {call, put, takeEvery, takeLatest} from "redux-saga/effects";
 import * as reducers from "./reducers";
 
 /*

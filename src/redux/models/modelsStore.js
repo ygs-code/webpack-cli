@@ -4,10 +4,10 @@ class ModelsStore {
   }
   get(key) {
     if(key in this.store && this.store.hasOwnProperty(key) && this.store[key]){
-      return this.store[key]
+      return this.store[key];
     }
-    this.set(key, {}) 
-    return {}
+    this.set(key, {}); 
+    return {};
   }
   set(key, value) {
     this.store = {
