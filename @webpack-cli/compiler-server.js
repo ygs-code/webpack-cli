@@ -293,7 +293,7 @@ class App {
           'shouldEmit',
           'html-webpack-plugin-after-emit',
           () => {
-            console.log('编译成功，自动重新刷新浏览器')
+            // console.log('编译成功，自动重新刷新浏览器')
           },
         )
       })

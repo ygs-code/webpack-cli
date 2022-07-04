@@ -13,6 +13,7 @@ var options = {
   overlayWarnings: false,
   ansiColors: {},
 };
+
 if (__resourceQuery) {
   var querystring = require('querystring');
   var overrides = querystring.parse(__resourceQuery.slice(1));
@@ -231,6 +232,27 @@ function createReporter() {
 }
 
 var subscribeAllHandler;
+
+function windowReload(messaves = []) {
+  if (!messaves.length) {
+    window.location.reload();
+    return;
+  }
+  let key = messaves.join('').replace(/\[((?:\d{1,3};?)+|)m\r*\n*\s*/g, '');
+  if (sessionStorage.getItem(key)) {
+    setTimeout(() => {
+      sessionStorage.removeItem(key);
+    }, 3000);
+    return false;
+  } else {
+    sessionStorage.setItem(key, key);
+    // debugger
+    // setTimeout(() => {
+      // sdfsdf
+      window.location.reload();
+    // }, 100);
+  }
+}
 function processMessage(obj) {
   switch (obj.action) {
     case 'building':
@@ -256,14 +278,17 @@ function processMessage(obj) {
 
     case 'error':
       if (obj.errors.length > 0) {
-        if (reporter) reporter.problems('errors', obj);
+        if (reporter) {
+          reporter.problems('errors', obj);
+          windowReload(obj.errors);
+        }
       }
       break;
     case 'warnings':
       if (obj.warnings.length > 0) {
         if (reporter) {
-          var overlayShown = reporter.problems('warnings', obj);
-          applyUpdate = overlayShown;
+          reporter.problems('warnings', obj);
+          windowReload(obj.warnings);
         }
       }
       break;
