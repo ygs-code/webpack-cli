@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware')
 const portfinder = require('portfinder')
-const webpackHotMiddleware = require('./client/webpack-hot-middleware')
+// const webpackHotMiddleware = require('./client/webpack-hot-middleware')
 const connectHistoryApiFallback = require('connect-history-api-fallback')
 const rm = require('rimraf')
 // chalk插件，用来在命令行中输入不同颜色的文字
@@ -40,7 +40,7 @@ class App {
       target === 'web'
         ? await clientWebpackConfig()
         : await serverWebpackConfig()
-    // console.log(" this.config =", this.config);
+  
     let { devServer: { port = 8080 } = {} } = this.config
 
     // 设置静态服务器
@@ -275,33 +275,33 @@ class App {
     }
   }
   //设置编译缓存
-  setHotMiddleware(compiler) {
-    const {
-      devServer: {
-        open: autoOpenBrowser, // 是否自动开启浏览器
-        liveReload, // 是否自动刷新
-      } = {},
-    } = this.config
-    this.hotMiddleware = webpackHotMiddleware(compiler, {
-      log: () => {},
-    })
+  // setHotMiddleware(compiler) {
+  //   const {
+  //     devServer: {
+  //       open: autoOpenBrowser, // 是否自动开启浏览器
+  //       liveReload, // 是否自动刷新
+  //     } = {},
+  //   } = this.config
+  //   this.hotMiddleware = webpackHotMiddleware(compiler, {
+  //     log: () => {},
+  //   })
 
-    this.hook(compiler, 'shouldEmit', 'compilation', () => {
-      stabilization(100).then(() => {
-        this.hook(
-          compiler,
-          'shouldEmit',
-          'html-webpack-plugin-after-emit',
-          () => {
-            // console.log('编译成功，自动重新刷新浏览器')
-          },
-        )
-      })
-    })
+  //   this.hook(compiler, 'shouldEmit', 'compilation', () => {
+  //     stabilization(100).then(() => {
+  //       this.hook(
+  //         compiler,
+  //         'shouldEmit',
+  //         'html-webpack-plugin-after-emit',
+  //         () => {
+  //           // console.log('编译成功，自动重新刷新浏览器')
+  //         },
+  //       )
+  //     })
+  //   })
 
-    this.app.use(this.hotMiddleware)
-    return this.hotMiddleware
-  }
+  //   this.app.use(this.hotMiddleware)
+  //   return this.hotMiddleware
+  // }
 
   setHotServerMiddleware(compiler) {
     this.app.use(webpackHotServerMiddleware(compiler))
@@ -436,8 +436,8 @@ class App {
       return false
     }
 
-    // 开启编译缓存
-    this.setHotMiddleware(compiler)
+    // // 开启dev刷新
+    // this.setHotMiddleware(compiler)
     // 如果是node不启动服务器
     if (target === 'node') {
       //   return Promise.reject();

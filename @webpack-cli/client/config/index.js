@@ -137,7 +137,7 @@ module.exports = async () => {
         //在所有js中 添加WebPACK热中间件  https://www.npmjs.com/package/webpack-hot-middleware
         config.entry[name] = [
           // 把中间件打包进去每个js中
-          path.join(__dirname, '../webpack-hot-middleware/client?noInfo=true&reload=true'),
+          // path.join(__dirname, '../webpack-hot-middleware/client?noInfo=true&reload=true'),
         ].concat(config.entry[name])
       })
     }

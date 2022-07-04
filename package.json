@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.10",
-    "@babel/eslint-parser": "^7.17.0",
+    "@babel/eslint-parser": "^7.18.2",
     "@babel/eslint-plugin": "^7.17.7",
     "@babel/node": "^7.16.8",
     "@babel/plugin-proposal-async-generator-functions": "^7.12.12",
@@ -82,16 +82,16 @@
     "directory-named-webpack-plugin": "^4.0.1",
     "esbuild": "^0.14.43",
     "esbuild-loader": "^2.19.0",
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-friendly-formatter": "^4.0.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "eslint": "^8.17.0",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
+    "eslint-webpack-plugin": "^3.1.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.17.3",
     "express-ws": "^5.0.2",
@@ -180,7 +180,8 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^5.0.2",
-    "ws": "^8.6.0"
+    "ws": "^8.6.0",
+    "webpack-hot-plugin": "^0.0.1"
   },
   "setupFiles": [
     "react-app-polyfill/jsdom"
@@ -223,7 +224,5 @@
     "node": ">= 13.0.0",
     "npm": ">= 6.0.0"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
