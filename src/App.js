@@ -2,7 +2,7 @@
  * @Date: 2022-04-24 11:14:32
  * @Author: Yao guan shou
  * @LastEditors: Yao guan shou
- * @LastEditTime: 2022-07-04 17:09:13
+ * @LastEditTime: 2022-07-05 15:35:37
  * @FilePath: /webpack-cli/src/App.js
  * @Description:
  */
@@ -21,6 +21,9 @@ console.log("process ==", process); // 'test'
 var server_api_key = APP_CONFIG.api_key;
 console.log("APP_CONFIG=", APP_CONFIG);
 
+
+
+   
 console.log(
   "process asd 阿斯顿发斯蒂芬   asdf asdf sasd fsdf    f asdfsadf sadf asdfasdf  dyuiopguysttyfugiho asdf asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
   process
