@@ -12,7 +12,7 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import Home from "@/pages/home";
 import admin from "./admin.sql";
-// import json from './data.json'
+// import json from  './data.json'
 import "./App.css";
 import "./App1.less";
 import "./App3.scss";
@@ -21,9 +21,6 @@ console.log("process ==", process); // 'test'
 var server_api_key = APP_CONFIG.api_key;
 console.log("APP_CONFIG=", APP_CONFIG);
 
-
-
-   
 console.log(
   "process asd 阿斯顿发斯蒂芬   asdf asdf sasd fsdf    f asdfsadf sadf asdfasdf  dyuiopguysttyfugiho asdf asdfsdf 安师大发生地方  gd dsf   sadf asdf=  ",
   process
