@@ -190,7 +190,7 @@
     }
   },
   "scripts": {
-    "git": "node ./bin/git.js",
+    "git": "node -r @babel/register  ./bin/git.js",
     "commit": "git-cz",
     "commitlint": "npx --no-install commitlint --edit $1",
     "lint-staged": "lint-staged",
