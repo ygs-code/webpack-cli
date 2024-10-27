@@ -43,6 +43,7 @@ class Git {
   // 执行程序
   PromiseExec(cmd, callback = () => {}) {
     return new Promise((reslove, reject) => {
+      console.log('cmd=========',cmd)
       var workerProcess = exec(cmd, (err, stdout, stderr) => {
         if (!err) {
           reslove({

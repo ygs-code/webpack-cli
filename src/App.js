@@ -11,7 +11,7 @@ import {Provider} from "react-redux";
 // import Router from "./router/index";
 import store from "./redux/store";
 import Home from "@/pages/home";
-import admin from "./admin.sql";
+// import admin from "./admin.sql";
 // import json from  './data.json'
 // import "./App.css";
 // import "./App1.less";
