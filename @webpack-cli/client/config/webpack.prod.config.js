@@ -225,40 +225,40 @@ module.exports = {
             },
 
             //  scss
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    // 'thread-loader',
-                    MiniCssExtractPlugin.loader,
-                    // Translates CSS into CommonJS
-                    'css-loader',
-                    // Compiles Sass to CSS
-                    // 'sass-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            // Prefer `dart-sass`
-                            implementation: require('sass'),
-                            sourceMap: true,
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [
-                                    [
-                                        'autoprefixer',
-                                        {
-                                            // Options
-                                        },
-                                    ],
-                                ],
-                            },
-                        },
-                    },
-                ],
-            },
+            // {
+            //     test: /\.s[ac]ss$/i,
+            //     use: [
+            //         // 'thread-loader',
+            //         MiniCssExtractPlugin.loader,
+            //         // Translates CSS into CommonJS
+            //         'css-loader',
+            //         // Compiles Sass to CSS
+            //         // 'sass-loader',
+            //         {
+            //             loader: 'sass-loader',
+            //             options: {
+            //                 // Prefer `dart-sass`
+            //                 implementation: require('sass'),
+            //                 sourceMap: true,
+            //             },
+            //         },
+            //         {
+            //             loader: 'postcss-loader',
+            //             options: {
+            //                 postcssOptions: {
+            //                     plugins: [
+            //                         [
+            //                             'autoprefixer',
+            //                             {
+            //                                 // Options
+            //                             },
+            //                         ],
+            //                     ],
+            //                 },
+            //             },
+            //         },
+            //     ],
+            // },
         ],
     },
     plugins: [

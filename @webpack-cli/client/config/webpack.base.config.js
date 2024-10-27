@@ -372,6 +372,21 @@ module.exports = {
         use: 'json-loader',
       },
 
+      {
+        test: /\.worker\.(c|m)?js$/i,
+        use: [
+          {
+            loader: "worker-loader",
+          },
+          // {
+          //   loader: "babel-loader",
+          //   options: {
+          //     presets: ["@babel/preset-env"],
+          //   },
+          // },
+        ],
+      },
+
       //处理图片
       //！默认处理不了html中的图片 <img src="./img/BM.jpg" alt=""> 打包后路径不会改变！
       {

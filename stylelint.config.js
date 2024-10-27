@@ -11,6 +11,7 @@ module.exports = {
   plugins: ['stylelint-scss', 'stylelint-less'],
   extends: ['stylelint-config-standard', 'stylelint-config-standard-scss'],
   rules: {
+    'indentation':null,
     'selector-pseudo-class-no-unknown': null,
     'shorthand-property-no-redundant-values': null,
     'at-rule-empty-line-before': null,

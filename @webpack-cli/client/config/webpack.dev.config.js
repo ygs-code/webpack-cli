@@ -6,7 +6,7 @@ const nodeExternals = require('webpack-node-externals');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const { ESBuildPlugin, ESBuildMinifyPlugin } = require('esbuild-loader');
 // const WebpackHotPlugin = require('browser-reload-error-overlay-wepback-plugin');
-const WebpackHotPlugin = require('webpack-hot-plugin');
+// const WebpackHotPlugin = require('webpack-hot-plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
@@ -291,7 +291,7 @@ module.exports = {
         //   热刷新
         // new BrowserReloadPlugin(),
         // 热刷新和错误日志
-        new WebpackHotPlugin(),
+        // new WebpackHotPlugin(),
         // 有跨域问题
         // new ErrorOverlayPlugin(),
     ],

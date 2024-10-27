@@ -143,7 +143,7 @@
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.4.1",
     "regenerator-runtime": "^0.13.7",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.0.5",
     "sass": "^1.52.1",
     "sass-loader": "^13.0.0",
     "semver": "^7.3.7",
@@ -175,11 +175,12 @@
     "webpack-cli": "^4.2.0",
     "webpack-dev-middleware": "^4.0.2",
     "webpack-hot-middleware": "^2.25.0",
+    "webpack-hot-plugin": "^0.0.2",
     "webpack-hot-server-middleware": "^0.6.1",
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^5.0.2",
-    "webpack-hot-plugin": "^0.0.2"
+    "worker-loader": "^3.0.8"
   },
   "setupFiles": [
     "react-app-polyfill/jsdom"
